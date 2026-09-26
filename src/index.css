@@ -1,0 +1,124 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'Eurostile Extended';
+  font-style: normal;
+  font-weight: 700;
+  src: url('/fonts/EurostileExtendedBlack.woff') format('woff');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Eurostile Extended';
+  font-style: normal;
+  font-weight: 900;
+  src: url('/fonts/EurostileExtendedBlack.woff') format('woff');
+  font-display: swap;
+}
+
+.font-eurostile {
+  font-family: 'Eurostile Extended', -apple-system, sans-serif;
+  font-weight: 700;
+}
+
+@layer base {
+  body {
+    font-family: 'Noto Serif Arabic', 'Lora', 'Amiri', Georgia, 'Times New Roman', serif;
+    background-color: #FAFAFA;
+    color: #171717;
+  }
+
+  h1, h2, h3, h4, .font-headline, .font-serif {
+    font-family: 'Noto Serif Arabic', 'Lora', 'Amiri', Georgia, 'Times New Roman', serif;
+    font-weight: 800;
+    line-height: 1.25;
+  }
+
+  code, pre, .font-mono {
+    font-family: 'Space Mono', monospace;
+  }
+
+  a {
+    color: #000000;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+}
+
+/* Custom helper borders */
+.border-thin {
+  border-width: 1px;
+}
+
+.border-thick {
+  border-width: 1px;
+}
+
+.border-heavy {
+  border-width: 1.5px;
+}
+
+/* Refined buttons - Modern Academic Standard */
+.btn-raw-primary {
+  background-color: #000000;
+  color: #FFFFFF;
+  border: 1px solid #000000;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+}
+.btn-raw-primary:hover {
+  background-color: #262626;
+  color: #FFFFFF;
+}
+.btn-raw-primary:active {
+  transform: scale(0.99);
+}
+
+.btn-raw-secondary {
+  background-color: #FFFFFF;
+  color: #171717;
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+}
+.btn-raw-secondary:hover {
+  background-color: #F9FAFB;
+  border-color: #D1D5DB;
+}
+.btn-raw-secondary:active {
+  transform: scale(0.99);
+}
+
+.btn-raw-destructive {
+  background-color: #DC2626;
+  color: #FFFFFF;
+  border: 1px solid #DC2626;
+  border-radius: 8px;
+  font-weight: 700;
+}
+.btn-raw-destructive:hover {
+  background-color: #B91C1C;
+  border-color: #B91C1C;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #F1F1F1;
+}
+::-webkit-scrollbar-thumb {
+  background: #C1C1C1;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #A8A8A8;
+}
