@@ -39,6 +39,8 @@ export const Navbar: React.FC<NavbarProps> = ({
   onNavigateHome,
   onNavigateProjects,
   onNavigateEducational,
+  onNavigateLearningPath,
+  onNavigateCertificates,
   onNavigateNews,
   onNavigateAbout
 }) => {
@@ -61,40 +63,40 @@ export const Navbar: React.FC<NavbarProps> = ({
           />
         </div>
 
-        {/* Navigation buttons - compact, original clean layout */}
-        <nav className="flex items-center gap-1 sm:gap-1.5 font-serif text-[11px] sm:text-xs md:text-sm font-bold shrink-0">
+        {/* Navigation buttons - fully responsive with clean horizontal scrolling on mobile */}
+        <nav className="flex items-center gap-1 sm:gap-1.5 font-serif text-[11px] sm:text-xs md:text-sm font-bold overflow-x-auto max-w-full pb-1 sm:pb-0">
           {/* 1. Search / All Papers */}
           <button
             onClick={onNavigateHome}
-            className={`min-h-[32px] sm:min-h-[34px] px-2.5 sm:px-3 py-1 border rounded-lg transition-all cursor-pointer flex items-center justify-center gap-1 text-center ${
+            className={`min-h-[32px] sm:min-h-[34px] px-2.5 sm:px-3 py-1 border rounded-lg transition-all cursor-pointer flex items-center justify-center gap-1 text-center shrink-0 ${
               activeView === 'home' || activeView === 'detail'
                 ? 'border-black bg-black text-white'
                 : 'border-neutral-200 bg-white text-neutral-800 hover:bg-neutral-50'
             }`}
           >
             <Search className="w-3.5 h-3.5 flex-shrink-0" />
-            <span className="truncate">{isEn ? 'Search' : 'الأبحاث'}</span>
+            <span className="truncate">{isEn ? 'Home / Papers' : 'الرئيسية والأبحاث'}</span>
           </button>
 
-          {/* 2. 6 Applied Projects */}
+          {/* 2. 8 Applied Projects */}
           {onNavigateProjects && (
             <button
               onClick={onNavigateProjects}
-              className={`min-h-[32px] sm:min-h-[34px] px-2.5 sm:px-3 py-1 border rounded-lg transition-all cursor-pointer flex items-center justify-center gap-1 text-center ${
+              className={`min-h-[32px] sm:min-h-[34px] px-2.5 sm:px-3 py-1 border rounded-lg transition-all cursor-pointer flex items-center justify-center gap-1 text-center shrink-0 ${
                 activeView === 'projects' || activeView === 'project-detail'
                   ? 'border-black bg-black text-white'
                   : 'border-neutral-200 bg-white text-neutral-800 hover:bg-neutral-50'
               }`}
             >
               <Cpu className="w-3.5 h-3.5 flex-shrink-0" />
-              <span className="truncate">{isEn ? 'Projects' : 'المشاريع'}</span>
+              <span className="truncate">{isEn ? 'Projects (8)' : 'المشاريع (8)'}</span>
             </button>
           )}
 
           {/* 3. Educational Articles */}
           <button
             onClick={onNavigateEducational}
-            className={`min-h-[32px] sm:min-h-[34px] px-2.5 sm:px-3 py-1 border rounded-lg transition-all cursor-pointer flex items-center justify-center gap-1 text-center ${
+            className={`min-h-[32px] sm:min-h-[34px] px-2.5 sm:px-3 py-1 border rounded-lg transition-all cursor-pointer flex items-center justify-center gap-1 text-center shrink-0 ${
               activeView === 'educational'
                 ? 'border-black bg-black text-white'
                 : 'border-neutral-200 bg-white text-neutral-800 hover:bg-neutral-50'
@@ -104,10 +106,38 @@ export const Navbar: React.FC<NavbarProps> = ({
             <span className="truncate">{isEn ? 'Articles' : 'المقالات'}</span>
           </button>
 
-          {/* 4. News */}
+          {/* 4. Learning Path Roadmap */}
+          {onNavigateLearningPath && (
+            <button
+              onClick={onNavigateLearningPath}
+              className={`min-h-[32px] sm:min-h-[34px] px-2.5 sm:px-3 py-1 border rounded-lg transition-all cursor-pointer flex items-center justify-center gap-1 text-center shrink-0 ${
+                activeView === 'path'
+                  ? 'border-black bg-black text-white'
+                  : 'border-neutral-200 bg-white text-neutral-800 hover:bg-neutral-50'
+              }`}
+            >
+              <span className="truncate">{isEn ? 'Roadmap' : 'مسار التعلم'}</span>
+            </button>
+          )}
+
+          {/* 5. Certificates */}
+          {onNavigateCertificates && (
+            <button
+              onClick={onNavigateCertificates}
+              className={`min-h-[32px] sm:min-h-[34px] px-2.5 sm:px-3 py-1 border rounded-lg transition-all cursor-pointer flex items-center justify-center gap-1 text-center shrink-0 ${
+                activeView === 'certificates'
+                  ? 'border-black bg-black text-white'
+                  : 'border-neutral-200 bg-white text-neutral-800 hover:bg-neutral-50'
+              }`}
+            >
+              <span className="truncate">{isEn ? 'Certificates' : 'الشهادات'}</span>
+            </button>
+          )}
+
+          {/* 6. News */}
           <button
             onClick={onNavigateNews}
-            className={`min-h-[32px] sm:min-h-[34px] px-2.5 sm:px-3 py-1 border rounded-lg transition-all cursor-pointer flex items-center justify-center gap-1 text-center ${
+            className={`min-h-[32px] sm:min-h-[34px] px-2.5 sm:px-3 py-1 border rounded-lg transition-all cursor-pointer flex items-center justify-center gap-1 text-center shrink-0 ${
               activeView === 'news'
                 ? 'border-black bg-black text-white'
                 : 'border-neutral-200 bg-white text-neutral-800 hover:bg-neutral-50'
@@ -117,10 +147,10 @@ export const Navbar: React.FC<NavbarProps> = ({
             <span className="truncate">{isEn ? 'News' : 'أخبار'}</span>
           </button>
 
-          {/* 5. About */}
+          {/* 7. About */}
           <button
             onClick={onNavigateAbout}
-            className={`min-h-[32px] sm:min-h-[34px] px-2.5 sm:px-3 py-1 border rounded-lg transition-all cursor-pointer flex items-center justify-center gap-1 text-center ${
+            className={`min-h-[32px] sm:min-h-[34px] px-2.5 sm:px-3 py-1 border rounded-lg transition-all cursor-pointer flex items-center justify-center gap-1 text-center shrink-0 ${
               activeView === 'about'
                 ? 'border-black bg-black text-white'
                 : 'border-neutral-200 bg-white text-neutral-800 hover:bg-neutral-50'
@@ -134,7 +164,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           <button
             onClick={onToggleLanguage}
             title={isEn ? 'تبديل للغة العربية' : 'Switch to English'}
-            className="min-h-[32px] sm:min-h-[34px] px-2.5 py-1 border border-neutral-300 rounded-lg bg-neutral-100 hover:bg-neutral-200 text-neutral-900 transition-all cursor-pointer flex items-center justify-center gap-1 font-serif font-bold text-center text-xs"
+            className="min-h-[32px] sm:min-h-[34px] px-2.5 py-1 border border-neutral-300 rounded-lg bg-neutral-100 hover:bg-neutral-200 text-neutral-900 transition-all cursor-pointer flex items-center justify-center gap-1 font-serif font-bold text-center text-xs shrink-0"
           >
             <span className="truncate">{isEn ? 'عربي' : 'EN'}</span>
           </button>

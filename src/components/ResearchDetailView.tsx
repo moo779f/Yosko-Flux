@@ -962,7 +962,7 @@ export const ResearchDetailView: React.FC<ResearchDetailViewProps> = ({
             onClick={onNavigateProjects}
             className="btn-raw-secondary min-h-[42px] px-5 py-2 text-xs font-bold flex items-center justify-center gap-2 cursor-pointer bg-neutral-100 hover:bg-neutral-200 border-neutral-300 text-black"
           >
-            <span>{isEn ? 'Applied Engineering Projects (6) →' : 'المشاريع الهندسية التطبيقية (6) ←'}</span>
+            <span>{isEn ? 'Applied Engineering Projects (8) →' : 'المشاريع الهندسية التطبيقية (8) ←'}</span>
           </button>
         )}
 

@@ -152,17 +152,20 @@ export interface EngineeringProject {
   comparisonTable: ProjectResultComparison[];
   sweepTable?: SweepTable;
   graphs: ProjectGraph[];
+  graphData?: ProjectGraph[];
   pythonCode?: string;
-  engineeringInterpretation: string;
-  engineeringInterpretationEn: string;
-  sourcesOfErrorAndLimitations: string[];
-  sourcesOfErrorAndLimitationsEn: string[];
-  whatILearned: string[];
-  whatILearnedEn: string[];
-  whatIWouldStudyNext: string[];
-  whatIWouldStudyNextEn: string[];
+  engineeringInterpretation?: string;
+  engineeringInterpretationEn?: string;
+  sourcesOfErrorAndLimitations?: string[];
+  sourcesOfErrorAndLimitationsEn?: string[];
+  whatILearned?: string[];
+  whatILearnedEn?: string[];
+  whatIWouldStudyNext?: string[];
+  whatIWouldStudyNextEn?: string[];
   completionChecklist: CompletionChecklistItem[];
   sources: ProjectSource[];
+  reflectionNotes?: string;
+  reflectionNotesEn?: string;
   
   // Legacy compatibility fields
   objective?: string;

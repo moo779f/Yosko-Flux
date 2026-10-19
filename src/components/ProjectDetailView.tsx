@@ -631,7 +631,7 @@ export const ProjectDetailView: React.FC<ProjectDetailViewProps> = ({
             : 'توثيق الفروق بين الافتراضات النظرية والواقع الفيزيائي بكل أمانة علمية:'}
         </p>
         <ul className="space-y-2 text-xs sm:text-sm font-serif text-neutral-700 list-disc list-inside bg-neutral-50 p-4 rounded-xl border border-neutral-200">
-          {(isEn ? project.sourcesOfErrorAndLimitationsEn : project.sourcesOfErrorAndLimitations).map((err, idx) => (
+          {((isEn ? project.sourcesOfErrorAndLimitationsEn : project.sourcesOfErrorAndLimitations) || []).map((err, idx) => (
             <li key={idx} className="leading-relaxed">
               {err}
             </li>
@@ -647,7 +647,7 @@ export const ProjectDetailView: React.FC<ProjectDetailViewProps> = ({
             {isEn ? '16. What I Learned' : '١٦. ماذا تعلمت من هذا المشروع؟'}
           </h2>
           <ul className="space-y-2 text-xs font-serif text-neutral-700 list-disc list-inside">
-            {(isEn ? project.whatILearnedEn : project.whatILearned).map((item, idx) => (
+            {((isEn ? project.whatILearnedEn : project.whatILearned) || []).map((item, idx) => (
               <li key={idx} className="leading-relaxed">
                 {item}
               </li>
@@ -661,7 +661,7 @@ export const ProjectDetailView: React.FC<ProjectDetailViewProps> = ({
             {isEn ? '17. What I Would Study Next' : '١٧. ماذا سأدرس في المرحلة القادمة؟'}
           </h2>
           <ul className="space-y-2 text-xs font-serif text-neutral-700 list-disc list-inside">
-            {(isEn ? project.whatIWouldStudyNextEn : project.whatIWouldStudyNext).map((item, idx) => (
+            {((isEn ? project.whatIWouldStudyNextEn : project.whatIWouldStudyNext) || []).map((item, idx) => (
               <li key={idx} className="leading-relaxed">
                 {item}
               </li>

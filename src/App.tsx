@@ -11,6 +11,7 @@ import { ProjectsView } from './components/ProjectsView';
 import { ProjectDetailView } from './components/ProjectDetailView';
 import { CertificatesView } from './components/CertificatesView';
 import { LearningPathView } from './components/LearningPathView';
+import { EducationalHomeSection } from './components/EducationalHomeSection';
 import { ENGINEERING_PROJECTS, EngineeringProject } from './data/projectsData';
 import {
   Search,
@@ -34,7 +35,7 @@ import {
   Globe
 } from 'lucide-react';
 
-const STORAGE_KEY = 'yosko_flux_academic_papers_v10';
+const STORAGE_KEY = 'yosko_flux_academic_papers_v11';
 
 export default function App() {
   const [language, setLanguage] = useState<Language>('ar');
@@ -72,6 +73,7 @@ export default function App() {
   const [selectedCategory, setSelectedCategory] = useState<TopicCategory | 'all'>('all');
   const [selectedType, setSelectedType] = useState<'all' | 'article' | 'research'>('all');
   const [searchQuery, setSearchQuery] = useState('');
+  const [homeTab, setHomeTab] = useState<'all' | 'projects' | 'curriculum' | 'educational'>('all');
 
   const handleOpenPaper = (paper: ResearchPaper, directToQuiz = false) => {
     setSelectedPaper(paper);
@@ -264,6 +266,59 @@ export default function App() {
                   <span>•</span>
                   <span>{isEn ? 'Self-Directed Portfolio' : 'ملف التعلم الذاتي'}</span>
                 </div>
+
+                {/* Primary Section Switcher - Quick access to all core learning dimensions */}
+                <div className="pt-4 border-t border-neutral-200 mt-4">
+                  <div className="flex items-center justify-center flex-wrap gap-2 text-xs font-serif font-bold">
+                    <button
+                      type="button"
+                      onClick={() => setHomeTab('all')}
+                      className={`px-3.5 py-1.5 rounded-lg border transition-all cursor-pointer ${
+                        homeTab === 'all'
+                          ? 'bg-black text-white border-black shadow-xs'
+                          : 'bg-white text-neutral-700 border-neutral-300 hover:bg-neutral-100'
+                      }`}
+                    >
+                      {isEn ? '🌟 All Content' : '🌟 عرض كافة الأقسام'}
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => setHomeTab('projects')}
+                      className={`px-3.5 py-1.5 rounded-lg border transition-all cursor-pointer ${
+                        homeTab === 'projects'
+                          ? 'bg-black text-white border-black shadow-xs'
+                          : 'bg-white text-neutral-700 border-neutral-300 hover:bg-neutral-100'
+                      }`}
+                    >
+                      {isEn ? `⚡ Applied Projects (${ENGINEERING_PROJECTS.length})` : `⚡ المشاريع الهندسية (${ENGINEERING_PROJECTS.length} مشاريع)`}
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => setHomeTab('curriculum')}
+                      className={`px-3.5 py-1.5 rounded-lg border transition-all cursor-pointer ${
+                        homeTab === 'curriculum'
+                          ? 'bg-black text-white border-black shadow-xs'
+                          : 'bg-white text-neutral-700 border-neutral-300 hover:bg-neutral-100'
+                      }`}
+                    >
+                      {isEn ? `📚 Curriculum (${papers.length})` : `📚 المنهج الدراسي (${papers.length})`}
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => setHomeTab('educational')}
+                      className={`px-3.5 py-1.5 rounded-lg border transition-all cursor-pointer ${
+                        homeTab === 'educational'
+                          ? 'bg-black text-white border-black shadow-xs'
+                          : 'bg-white text-neutral-700 border-neutral-300 hover:bg-neutral-100'
+                      }`}
+                    >
+                      {isEn ? '🧪 PhET Interactive Labs' : '🧪 المختبر التفاعلي ومحاكيات PhET'}
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </section>
@@ -277,8 +332,8 @@ export default function App() {
               </span>
               <span className="font-medium text-neutral-700 font-serif">
                 {isEn
-                  ? 'New engineering circuit simulations, mathematical derivations, and technical progress notes.'
-                  : 'تمت إضافة تحليلات الدوائر الرياضية ونماذج المحاكاة الستة وتحديثات التقدم في صفحة الأخبار.'}
+                  ? `Engineering Projects updated: ${ENGINEERING_PROJECTS.length} hands-on lab projects with Falstad & PhET simulations, math models, and IEEE schematics.`
+                  : `مختبر المشاريع الهندسية: ${ENGINEERING_PROJECTS.length} مشاريع تطبيقية متكاملة بالمحاكيات الأصلية ونماذج الاشتقاق الرياضي ومخططات IEEE.`}
               </span>
             </div>
             <button
@@ -293,8 +348,92 @@ export default function App() {
             </button>
           </div>
 
+          {/* ============================================================== */}
+          {/* SECTION 1: APPLIED ENGINEERING PROJECTS SHOWCASE (8 PROJECTS)  */}
+          {/* ============================================================== */}
+          {(homeTab === 'all' || homeTab === 'projects') && (
+            <section className="border-2 border-black rounded-2xl bg-neutral-50 p-5 sm:p-8 font-serif shadow-xs space-y-6">
+              <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-neutral-300 pb-5">
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="bg-black text-white px-2.5 py-0.5 text-xs font-mono font-bold uppercase rounded">
+                      {isEn ? 'PRACTICAL LAB' : 'المختبر الهندسي العملي'}
+                    </span>
+                    <span className="text-xs text-neutral-600 font-bold">
+                      {isEn ? `${ENGINEERING_PROJECTS.length} Hands-on Sim Projects` : `${ENGINEERING_PROJECTS.length} مشاريع تطبيقية بالمحاكي والحسابات`}
+                    </span>
+                  </div>
+                  <h2 className="text-xl sm:text-2xl lg:text-3xl font-black font-headline text-black">
+                    {isEn ? 'Applied Engineering Projects' : 'المشاريع الهندسية التطبيقية العملية'}
+                  </h2>
+                  <p className="text-xs sm:text-sm text-neutral-600 mt-1 max-w-2xl leading-relaxed">
+                    {isEn
+                      ? 'Self-directed engineering laboratory projects combining official simulators (Falstad CircuitJS & PhET), standard IEEE schematics, step-by-step mathematical derivations, and verification tables.'
+                      : 'مشاريع هندسية وتطبيقية شاملة تجمع بين المحاكيات الأصلية (Falstad و PhET)، ومخططات الدوائر القياسية وفق معايير IEEE، وخطوات الحساب الرياضي اليدوي، وجداول المقارنة التجريبية.'}
+                  </p>
+                </div>
+
+                <button
+                  onClick={() => {
+                    setActiveView('projects');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  className="btn-raw-primary min-h-[42px] px-5 py-2.5 text-xs sm:text-sm font-bold flex items-center justify-center gap-2 shrink-0 rounded-xl cursor-pointer"
+                >
+                  <span>{isEn ? `Open All ${ENGINEERING_PROJECTS.length} Projects Directory` : `فتح دليل المشاريع الـ ${ENGINEERING_PROJECTS.length} كاملاً`}</span>
+                  <span>{isEn ? '→' : '←'}</span>
+                </button>
+              </div>
+
+              {/* Grid of All Engineering Projects */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4">
+                {ENGINEERING_PROJECTS.map((proj) => (
+                  <div
+                    key={proj.id}
+                    onClick={() => {
+                      setSelectedProject(proj);
+                      setActiveView('project-detail');
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }}
+                    className="border border-neutral-300 hover:border-black rounded-xl p-4 sm:p-5 bg-white hover:bg-neutral-100/70 transition-all cursor-pointer flex flex-col justify-between group shadow-2xs"
+                  >
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="font-mono font-bold bg-black text-white px-2 py-0.5 rounded text-[11px]">
+                          {proj.projectNumber}
+                        </span>
+                        <span className="text-[11px] font-mono text-neutral-600 font-bold">
+                          {isEn ? proj.difficulty : proj.difficultyAr}
+                        </span>
+                      </div>
+
+                      <h3 className="font-bold text-sm text-black group-hover:underline font-headline leading-snug">
+                        {isEn ? proj.titleEn : proj.title}
+                      </h3>
+
+                      <p className="text-xs text-neutral-600 line-clamp-2 leading-relaxed">
+                        {isEn ? proj.subtitleEn : proj.subtitle}
+                      </p>
+                    </div>
+
+                    <div className="pt-3 mt-4 border-t border-neutral-200 flex items-center justify-between text-xs">
+                      <span className="font-mono text-[10px] text-neutral-500 font-semibold truncate max-w-[120px]">
+                        {proj.simulationSetup.toolName}
+                      </span>
+                      <span className="font-bold text-black flex items-center gap-1 group-hover:underline shrink-0">
+                        <span>{isEn ? 'Open' : 'عرض'}</span>
+                        <span>{isEn ? '→' : '←'}</span>
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
           {/* Articles & Papers Section */}
-          <section className="space-y-4 sm:space-y-5">
+          {(homeTab === 'all' || homeTab === 'curriculum') && (
+            <section className="space-y-4 sm:space-y-5">
             <div className="border-b border-neutral-200 pb-3 flex flex-wrap items-center justify-between gap-3">
               <div className="flex items-center gap-2.5 sm:gap-3">
                 <h2 className="text-xl sm:text-2xl lg:text-3xl font-black font-headline text-black">
@@ -392,30 +531,40 @@ export default function App() {
                 </button>
               </div>
             )}
-          </section>
+            </section>
+          )}
 
           {/* ============================================================== */}
-          {/* PROMINENT PROJECTS SHORTCUT SECTION AT THE BOTTOM OF HOME      */}
-          {/* اختصار واضح ومباشر للمشاريع الهندسية التطبيقية الـ 6             */}
+          {/* SECTION 3: EDUCATIONAL PHET LABS & GOOGLE SITES UPLOAD GUIDES  */}
           {/* ============================================================== */}
-          <section className="border-2 border-black rounded-2xl bg-neutral-50 p-6 sm:p-8 font-serif shadow-xs">
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-neutral-300 pb-5 mb-6">
-              <div>
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="bg-black text-white px-2.5 py-0.5 text-xs font-mono font-bold uppercase rounded">
-                    {isEn ? 'ENGINEERING PROJECTS' : 'المشاريع الهندسية التطبيقية'}
+          {(homeTab === 'all' || homeTab === 'educational') && (
+            <EducationalHomeSection
+              language={language}
+              onOpenArticleDetail={handleOpenArticleById}
+            />
+          )}
+
+          {/* ============================================================== */}
+          {/* SECTION 4: CLEAR BOTTOM PROJECTS SHORTCUT (ALL 8 PROJECTS)     */}
+          {/* ============================================================== */}
+          <section className="border-2 border-black rounded-2xl bg-white p-5 sm:p-7 font-serif shadow-xs space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-neutral-200 pb-4">
+              <div className="space-y-1">
+                <div className="flex items-center gap-2">
+                  <span className="bg-black text-white px-2.5 py-0.5 text-[11px] font-mono font-bold uppercase rounded">
+                    {isEn ? 'QUICK SHORTCUT' : 'اختصار مباشر تحت'}
                   </span>
-                  <span className="text-xs text-neutral-600 font-bold">
-                    {isEn ? '6 Complete Interactive Labs' : '٦ مشاريع بمحاكيات رسمية وحسابات يدوية'}
+                  <span className="text-xs text-neutral-600 font-bold font-mono">
+                    {isEn ? `${ENGINEERING_PROJECTS.length} Applied Projects` : `${ENGINEERING_PROJECTS.length} مشاريع هندسية تطبيقية`}
                   </span>
                 </div>
-                <h2 className="text-xl sm:text-2xl lg:text-3xl font-black font-headline text-black">
-                  {isEn ? 'Applied Engineering Projects' : 'اختصار المشاريع الهندسية التطبيقية'}
-                </h2>
-                <p className="text-xs sm:text-sm text-neutral-600 mt-1 max-w-2xl leading-relaxed">
+                <h3 className="text-lg sm:text-xl font-black font-headline text-black">
+                  {isEn ? 'Applied Engineering Projects Directory' : 'دليل المشاريع الهندسية التطبيقية (8 مشاريع)'}
+                </h3>
+                <p className="text-xs text-neutral-600 max-w-xl">
                   {isEn
-                    ? 'Explore 6 self-directed laboratory projects complete with official interactive simulators (Falstad CircuitJS & PhET), IEEE Std 315 schematics, step-by-step hand calculations, and experimental validation tables.'
-                    : 'استكشف ٦ مشاريع مخبرية وتطبيقية متكاملة تتضمن المحاكيات الأصلية (Falstad و PhET)، ومخططات IEEE القياسية، وخطوات الحساب اليدوي، وجداول مقارنة النتائج النظرية بالمحاكاة.'}
+                    ? 'Direct access to hands-on circuit experiments, IEEE schematics, Falstad simulations, and math verifications.'
+                    : 'وصول سريع ومباشر للتجارب المعملية ومخططات IEEE ومحاكيات Falstad و PhET مع خطوات الاشتقاق الرياضي.'}
                 </p>
               </div>
 
@@ -424,50 +573,46 @@ export default function App() {
                   setActiveView('projects');
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
-                className="btn-raw-primary min-h-[42px] px-5 py-2.5 text-xs sm:text-sm font-bold flex items-center justify-center gap-2 shrink-0 rounded-xl cursor-pointer"
+                className="btn-raw-primary min-h-[38px] px-4 py-2 text-xs font-bold flex items-center justify-center gap-2 shrink-0 rounded-xl cursor-pointer"
               >
-                <span>{isEn ? 'Open All 6 Projects Directory' : 'فتح صفحة المشاريع كاملة'}</span>
+                <span>{isEn ? 'Open Full Projects Lab' : 'فتح صفحة المشاريع كاملة'}</span>
                 <span>{isEn ? '→' : '←'}</span>
               </button>
             </div>
 
-            {/* Quick Cards Grid for the 6 Projects */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-4">
+            {/* Grid of the 8 projects shortcuts */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
               {ENGINEERING_PROJECTS.map((proj) => (
                 <div
-                  key={proj.id}
-                  onClick={() => {
-                    setSelectedProject(proj);
-                    setActiveView('project-detail');
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                  }}
-                  className="border border-neutral-300 hover:border-black rounded-xl p-4 sm:p-5 bg-white hover:bg-neutral-100/70 transition-all cursor-pointer flex flex-col justify-between group shadow-2xs"
+                  key={`bottom-${proj.id}`}
+                  onClick={() => handleOpenProjectById(proj.id)}
+                  className="border border-neutral-200 hover:border-black rounded-xl p-3.5 bg-neutral-50 hover:bg-white transition-all cursor-pointer flex flex-col justify-between group shadow-2xs"
                 >
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between text-xs">
-                      <span className="font-mono font-bold bg-black text-white px-2 py-0.5 rounded text-[11px]">
+                  <div className="space-y-1.5">
+                    <div className="flex items-center justify-between text-[11px]">
+                      <span className="font-mono font-bold bg-black text-white px-1.5 py-0.5 rounded text-[10px]">
                         {proj.projectNumber}
                       </span>
-                      <span className="text-[11px] font-mono text-neutral-600 font-bold">
-                        {isEn ? proj.difficulty : proj.difficultyAr}
+                      <span className="font-mono text-[10px] text-neutral-500 font-semibold truncate max-w-[110px]">
+                        {proj.simulationSetup.toolName}
                       </span>
                     </div>
 
-                    <h3 className="font-bold text-sm sm:text-base text-black group-hover:underline font-headline leading-snug">
+                    <h4 className="font-bold text-xs sm:text-sm text-black group-hover:underline font-headline leading-tight line-clamp-1">
                       {isEn ? proj.titleEn : proj.title}
-                    </h3>
+                    </h4>
 
-                    <p className="text-xs text-neutral-600 line-clamp-2 leading-relaxed">
+                    <p className="text-[11px] text-neutral-600 line-clamp-2 leading-relaxed">
                       {isEn ? proj.subtitleEn : proj.subtitle}
                     </p>
                   </div>
 
-                  <div className="pt-3 mt-4 border-t border-neutral-200 flex items-center justify-between text-xs">
-                    <span className="font-mono text-[10px] text-neutral-500 font-semibold">
-                      {proj.simulationSetup.toolName}
+                  <div className="pt-2 mt-2 border-t border-neutral-200 flex items-center justify-between text-[11px]">
+                    <span className="text-neutral-500 font-medium">
+                      {isEn ? proj.difficulty : proj.difficultyAr}
                     </span>
                     <span className="font-bold text-black flex items-center gap-1 group-hover:underline">
-                      <span>{isEn ? 'Open Project' : 'فتح المشروع'}</span>
+                      <span>{isEn ? 'Open Lab' : 'فتح التجربة'}</span>
                       <span>{isEn ? '→' : '←'}</span>
                     </span>
                   </div>
@@ -630,7 +775,7 @@ export default function App() {
                   className="group text-neutral-600 hover:text-black flex items-center gap-1.5 transition-colors cursor-pointer text-start font-bold"
                 >
                   {isEn ? <ChevronRight className="w-3.5 h-3.5 text-black" /> : <ChevronLeft className="w-3.5 h-3.5 text-black" />}
-                  <span>{isEn ? 'Engineering Projects (6 Projects)' : 'المشاريع الهندسية (6 مشاريع)'}</span>
+                  <span>{isEn ? `Engineering Projects (${ENGINEERING_PROJECTS.length} Projects)` : `المشاريع الهندسية (${ENGINEERING_PROJECTS.length} مشاريع)`}</span>
                 </button>
               </li>
               <li>
