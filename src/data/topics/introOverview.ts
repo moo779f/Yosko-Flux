@@ -30,6 +30,11 @@ export const INTRO_TOPIC: ResearchPaper = {
     'التيار المتردد (AC) هو الخيار الطبيعي لنقل الطاقة بكفاءة عبر المسافات الطويلة بفضل إمكانية رفع وخفض جهده بالمحولات.',
     'تخزين الطاقة في البطاريات هو الجسر الحيوي الذي يربط بين تقطع الطاقة المتجددة وحاجة الشبكة الكهربائية للتوازن المستمر.'
   ],
+  keyFindingsEn: [
+    'Electricity originates from electron drift, governed in basic circuits by voltage pressure and atomic resistance via Ohm’s Law.',
+    'Alternating Current (AC) is the natural choice for bulk transmission because voltage can be easily stepped up and down using transformers.',
+    'Battery energy storage acts as the vital bridge between intermittent renewable energy and continuous grid stability requirements.'
+  ],
   whatILearned: [
     'أدركت أن المفاهيم المتقدمة في هندسة القوى والشبكات ليست سوى تطبيقات موسعة للقوانين الأساسية التي ندرسها في الدوائر البسيطة.',
     'فهمت كيف تتضافر مجالات الرياضيات والفيزياء والكيمياء لتشغيل شبكة طاقة مستقرة ومستدامة.',
@@ -51,6 +56,7 @@ export const INTRO_TOPIC: ResearchPaper = {
       heading: '1. الخطوة الأولى: الإلكترونات، الشحنة، والدوائر البسيطة',
       headingEn: '1. The First Step: Electrons, Charge, and Simple Circuits',
       body: 'تبدأ القصة داخل الموصلات النحاسية، حيث توجد بحار من الإلكترونات الحرة. عندما نوفر مصدراً لفرق الجهد (مثل بطارية)، ينشأ مجال كهربائي يدفع تلك الإلكترونات للحركة المنظمة؛ هذا السيل من الشحنات هو ما نسميه بالتيار الكهربائي (I).\n\nالمقاومة (R) تمثل التصادمات الذرية التي تعيق هذا السيل، بينما قانون أوم V = I·R يربط بين الثلاثي الأهم في الكهرباء. من هنا نتعلم كيف نتحكم في تدفق الطاقة، ونحسب استهلاك القدرة (P = V·I) في أي جهاز منزلي أو تجربة معملية بسيطة.',
+      bodyEn: 'The journey starts inside copper conductors filled with vast seas of free valence electrons. Applying an electrical potential difference (such as a battery) creates an electric field that propels these electrons into organized motion—this drift of electric charge constitutes electrical current (I).\n\nResistance (R) represents atomic lattice collisions opposing this charge drift, while Ohm\'s Law V = I·R unifies these three pillars of electricity. From here we understand how to regulate energy flow and calculate power consumption (P = V·I) in any household appliance or laboratory experiment.',
       equations: [
         'V = I \\cdot R \\quad [\\text{قانون أوم الأساسي}]',
         'P = V \\cdot I = I^2 \\cdot R \\quad [\\text{القدرة الكهربائية وتبديد الحرارة}]'
@@ -66,12 +72,14 @@ export const INTRO_TOPIC: ResearchPaper = {
         caption: 'حركة الإلكترونات الحرة داخل الموصل وتدفق التيار وفق مبدأ حفظ الشحنة.',
         captionEn: 'Free electron drift inside a conductor and current flow obeying charge conservation.'
       },
-      keyTakeaway: 'الجهد يدفع، والتيار يسري، والمقاومة تعيق؛ هذه المعادلة البسيطة هي حجر الأساس لكل ما يليها.'
+      keyTakeaway: 'الجهد يدفع، والتيار يسري، والمقاومة تعيق؛ هذه المعادلة البسيطة هي حجر الأساس لكل ما يليها.',
+      keyTakeawayEn: 'Voltage pushes, current flows, and resistance restricts; this foundational relationship forms the bedrock of all electrical engineering.'
     },
     {
       heading: '2. الانتقال إلى التيار المتردد (AC) والأمواج والإشارات',
       headingEn: '2. The Shift to Alternating Current (AC), Waves, and Signals',
       body: 'بينما تضخ البطارية تياراً مستمراً (DC) في اتجاه واحد، تنتج المولدات الكهربائية الدوارة تياراً متناوباً يغير اتجاهه ومقداره بنمط جيبي نقي 50 أو 60 مرة في الثانية (50Hz / 60Hz).\n\nفي عالم AC، لا نكتفي بالمقاومة؛ بل تظهر المكثفات والملفات التي تخزن الطاقة مؤقتاً في مجالات كهربائية ومغناطيسية، وتحدث فروقاً في الطور (Phase Difference) بين الجهد والتيار. وعندما تجتمع هذه المكونات في دائرة RLC، تظهر ظاهرة "الرنين الكهربائي" التي تجعل أجهزة الراديو والمرشحات ممكنة.',
+      bodyEn: 'While DC batteries push current in a single steady direction, rotating electrical generators produce alternating current that reverses direction and amplitude in pure sinusoidal waveforms 50 or 60 times each second (50Hz / 60Hz).\n\nIn AC circuits, pure resistance is accompanied by reactive capacitors and inductors that temporarily store energy within electrostatic and magnetic fields, introducing phase shifts between voltage and current. Combining these elements creates electrical resonance, which powers radio tuners and frequency filters.',
       equations: [
         'v(t) = V_{\\max} \\sin(2\\pi f t) \\quad [\\text{الموجة الجيبية للجهد المتردد}]',
         'f_0 = \\frac{1}{2\\pi \\sqrt{L \\cdot C}} \\quad [\\text{تردد الرنين في دوائر RLC}]'
@@ -87,12 +95,14 @@ export const INTRO_TOPIC: ResearchPaper = {
         caption: 'تبادل الطاقة الكهرومغناطيسية بين المكثف والملف عند تردد الرنين.',
         captionEn: 'Electromagnetic energy exchange between capacitor and inductor at resonance.'
       },
-      keyTakeaway: 'التيار المتردد ليس مجرد خط مستقيم، بل رقصة هندسية موجية تحكمها الزوايا والتردد والرنين.'
+      keyTakeaway: 'التيار المتردد ليس مجرد خط مستقيم، بل رقصة هندسية موجية تحكمها الزوايا والتردد والرنين.',
+      keyTakeawayEn: 'Alternating current is not a static line, but a dynamic geometric wave governed by angular frequency, phase angles, and resonance.'
     },
     {
       heading: '3. نقل الطاقة عبر المسافات والشبكة الكهربائية المتجددة',
       headingEn: '3. Power Transmission & The Modern Renewable Grid',
       body: 'كيف ننقل ميغاوات من الطاقة من محطة توليد تبعد مئات الكيلومترات دون أن تذوب الأسلاك؟ السر يكمن في المحولات الكهربائية: برفع الجهد إلى مئات آلاف الفولتات، ينخفض التيار المار في الخطوط بنسب هائلة، مما يقضي على فواقد الحرارة P_loss = I²·R.\n\nواليوم، مع دخول مزارع الخلايا الشمسية وطاقة الرياح، تواجه الشبكة الكهربائية تحولاً تاريخياً: كيف نحافظ على ثبات تردد الشبكة (50.00 Hz) وتوازنها اللحظي الدقيق عندما تغيب الشمس خلف السحب؟ هنا يأتي دور بطاريات التخزين (BESS) وعواكس الطاقة الذكية التي تشكل مستقبل هندسة القوى.',
+      bodyEn: 'How do power grids transmit hundreds of megawatts from remote generators without melting transmission conductors? The solution lies in step-up transformers: boosting voltage to hundreds of kilovolts reduces line current by huge factors, nearly eliminating thermal losses (P_loss = I²·R).\n\nToday, with the widespread integration of solar PV farms and wind turbines, power systems face a new frontier: maintaining instantaneous 50.00 Hz frequency equilibrium when cloud cover suddenly drops solar generation. This elevates battery energy storage systems (BESS) and grid-forming smart inverters into the forefront of power engineering.',
       equations: [
         'P_{\\text{loss}} = I^2 \\cdot R \\quad [\\text{فقد النقل: تقليل التيار ينقذ الطاقة}]',
         'P = V \\cdot I \\implies I = \\frac{P}{V}'
@@ -108,7 +118,8 @@ export const INTRO_TOPIC: ResearchPaper = {
         caption: 'مخطط مراحل رفع الجهد للنقل ثم خفضه للتوزيع الآمن.',
         captionEn: 'Schematic of step-up transmission and step-down local distribution.'
       },
-      keyTakeaway: 'الشبكة الكهربائية كائن حي لحظي: كل واط يُولد يجب أن يُستهلك في نفس الثانية، وبطاريات التخزين هي صمام الأمان الجديد.'
+      keyTakeaway: 'الشبكة الكهربائية كائن حي لحظي: كل واط يُولد يجب أن يُستهلك في نفس الثانية، وبطاريات التخزين هي صمام الأمان الجديد.',
+      keyTakeawayEn: 'The electrical grid is an instantaneous balanced system: every watt produced must be consumed simultaneously, with battery storage providing modern stability reserves.'
     }
   ],
   simulationType: 'none',

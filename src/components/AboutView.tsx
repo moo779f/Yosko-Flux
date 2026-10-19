@@ -35,7 +35,7 @@ export const AboutView: React.FC<AboutViewProps> = ({
       <div>
         <button
           onClick={onBackToHome}
-          className="btn-raw-secondary px-3.5 py-1.5 font-mono text-xs font-bold flex items-center gap-2 cursor-pointer"
+          className="btn-raw-secondary px-3.5 py-1.5 font-serif text-xs font-bold flex items-center gap-2 cursor-pointer"
         >
           {isEn ? <ArrowLeft className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}
           {isEn ? 'Back to Research Portal' : 'العودة لبوابة البحث والأبحاث'}
@@ -49,42 +49,43 @@ export const AboutView: React.FC<AboutViewProps> = ({
             src="/logo.png"
             alt="YOSKO FLUX"
             className="h-10 sm:h-12 w-auto object-contain"
+            style={{ maxHeight: '48px', maxWidth: '220px', width: 'auto', height: 'auto' }}
           />
           <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
-            <span className="bg-black text-white px-2.5 py-1 font-mono text-[10px] sm:text-xs font-bold uppercase tracking-wider rounded-md">
+            <span className="bg-black text-white px-2.5 py-1 font-serif text-[10px] sm:text-xs font-bold uppercase tracking-wider rounded-md">
               {isEn ? 'OFFICIAL RESEARCH PORTAL' : 'المستودع البحثي الرسمي'}
             </span>
-            <span className="border border-neutral-200 bg-neutral-100 text-neutral-800 px-2 py-1 font-mono text-[10px] sm:text-xs font-bold rounded-md">
-              {isEn ? 'ADMISSIONS DOSSIER' : 'ملف القبول الجامعي'}
+            <span className="border border-neutral-200 bg-neutral-100 text-neutral-800 px-2 py-1 font-serif text-[10px] sm:text-xs font-bold rounded-md">
+              {isEn ? 'ENGINEERING & RESEARCH PORTFOLIO' : 'ملف الأبحاث والمشاريع الهندسية'}
             </span>
           </div>
         </div>
 
         <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black font-headline text-black mb-2">
           {isEn
-            ? 'Mustafa | Aspiring Electrical Engineering Student & Researcher'
-            : 'مصطفى | باحث وهاوٍ في الهندسة الكهربائية والرياضيات'}
+            ? 'Mustafa | High-School Graduate Preparing for Electrical Engineering'
+            : 'مصطفى | خريج ثانوية يستعد لدراسة الهندسة الكهربائية'}
         </h1>
 
         <p className="font-mono text-xs sm:text-sm text-neutral-500 mb-5">
           {isEn
-            ? 'Independent Self-Directed Research & Study Logs • Prepared for University Admissions'
-            : 'أبحاث ودراسات شخصية وتثقيفية • مشروع إعداد ملف القبول الجامعي في الهندسة'}
+            ? 'Originally from Chad • Residing in Al-Qassim (Buraidah) • Self-Directed Engineering Portfolio'
+            : 'من جمهورية تشاد • مقيم في القصيم (بريدة) • ملف التعلم الذاتي والمشاريع الهندسية'}
         </p>
 
         {/* Quick Stats Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 py-4 border-y border-neutral-200 my-5 font-mono text-xs bg-neutral-50 rounded-xl px-4">
           <div>
             <span className="text-neutral-500 block text-[11px]">
-              {isEn ? 'Current Status:' : 'الحالة الأكاديمية:'}
+              {isEn ? 'Current Status:' : 'الحالة الراهنة:'}
             </span>
             <span className="font-bold text-black text-xs sm:text-sm">
-              {isEn ? 'Recent Graduate (Prep for University)' : 'حديث تخرج (في مرحلة التقديم الجامعي)'}
+              {isEn ? 'High-School Graduate • Chad / Buraidah' : 'خريج ثانوية • تشاد / القصيم (بريدة)'}
             </span>
           </div>
           <div>
             <span className="text-neutral-500 block text-[11px]">
-              {isEn ? 'Target Discipline:' : 'التخصص المستهدف:'}
+              {isEn ? 'Future Discipline:' : 'الدراسة المستهدفة:'}
             </span>
             <span className="font-bold text-black text-xs sm:text-sm">
               {isEn ? 'B.Sc. Electrical Engineering' : 'بكالوريوس الهندسة الكهربائية'}
@@ -92,33 +93,35 @@ export const AboutView: React.FC<AboutViewProps> = ({
           </div>
           <div>
             <span className="text-neutral-500 block text-[11px]">
-              {isEn ? 'Published Papers & Lessons:' : 'المواد والأبحاث المنشورة:'}
+              {isEn ? 'Documented Study Work:' : 'المواد والأبحاث الموثقة:'}
             </span>
             <span className="font-bold text-black text-xs sm:text-sm">
-              {papersCount} {isEn ? 'Papers & Studies' : 'أوراق ودروس موثقة'}
+              {papersCount} {isEn ? 'Articles & 6 Projects' : 'مقالات و 6 مشاريع عملية'}
             </span>
           </div>
         </div>
 
         {/* Narrative & Motivation */}
         <div className="space-y-4 text-neutral-800 leading-relaxed text-xs sm:text-base">
-          <h2 className="text-lg sm:text-xl font-black font-headline text-black mt-5 flex items-center gap-2">
-            <Target className="w-5 h-5 text-black" />
-            <span>
-              {isEn
-                ? 'Purpose of this Platform & Academic Journey'
-                : 'الغاية من المستودع وقصة هذه الأبحاث'}
-            </span>
-          </h2>
-          <p>
+          <h2 className="text-lg sm:text-xl font-black font-headline text-black mt-5">
             {isEn
-              ? 'I am Mustafa, a recent graduate with an earnest passion for electrical circuits, renewable power generation, and applied mathematical physics. While I have not yet earned the formal title of an engineer, I built this independent repository to document my self-study, conduct rigorous research, and assemble a solid academic portfolio for my university applications.'
-              : 'أنا مصطفى، خريج حديث وشغوف بعالم الدوائر الكهربائية، استقرار شبكات الطاقة، والتحليلات الرياضية المرتبطة بها. لم أنل بعد لقب مهندس، وقمت بإنشاء هذا المستودع العلمي ليكون منصة بحثية شخصية وتثقيفية أدوّن فيها حصيلة دراساتي الذاتية وأشاركها مع زملائي، وكنواة لملف إنجازاتي وأعمالي (Portfolio) الموجه للتقديم على كليات الهندسة المرموقة.'}
+              ? 'About Mustafa & The YOSKO FLUX Journey'
+              : 'عن مصطفى وقصة منصة YOSKO FLUX'}
+          </h2>
+          <p className="font-serif font-medium text-black bg-neutral-50 p-4 border border-neutral-200 rounded-xl">
+            {isEn
+              ? '“I am a high-school graduate from Chad with a strong interest in Electrical Engineering, Physics, Power Systems and Renewable Energy. YOSKO FLUX documents my self-directed learning through technical articles, mathematical analysis, simulations and engineering projects.”'
+              : '«أنا خريج ثانوية من تشاد، ولدي شغف كبير بالهندسة الكهربائية، الفيزياء، شبكات القدرة، والطاقة المتجددة. توثق منصة YOSKO FLUX رحلتي في التعلم الذاتي من خلال المقالات التقنية، التحليلات الرياضية، المحاكاة الحاسوبية، والمشاريع الهندسية التطبيقية قبل الالتحاق بالجامعة.»'}
           </p>
           <p>
             {isEn
-              ? 'Rather than waiting for the university lecture hall, I believe true engineering mindset begins with proactive curiosity: analyzing governing differential equations, coding interactive waveform simulations, and verifying theoretical claims.'
-              : 'أؤمن أن الشغف الحقيقي بالهندسة يبدأ بالبحث والمبادرة الذاتية قبل دخول قاعات الجامعة؛ من خلال تفكيك المعادلات التفاضلية الحاكمة، وبناء نماذج المحاكاة التفاعلية، واختبار المفاهيم المعملية.'}
+              ? 'I currently reside in Al-Qassim (Buraidah). Rather than waiting passively for university classes to begin, I chose to dedicate this period to rigorous self-study: deriving circuit differential equations, building circuit simulations in Falstad and PhET, calculating real power flows, and understanding how solar panels and batteries integrate with the electrical grid.'
+              : 'أقيم حالياً في القصيم (بريدة). بدلاً من الانتظار السلبي لبدء الدراسة الجامعية، قررت استثمار هذه الفترة في الدراسة الذاتية الجادة: اشتقاق المعادلات التفاضلية للدوائر، وبناء نماذج المحاكاة على Falstad و PhET، وحساب تدفقات القدرة الحقيقية، وفهم تكامل الألواح الشمسية والبطاريات مع الشبكة الكهربائية.'}
+          </p>
+          <p>
+            {isEn
+              ? 'This website does not claim professional engineering status or university researcher credentials. It is a genuine, authentic learning lab demonstrating my curiosity, technical discipline, mathematical competence, and serious preparation for an Electrical Engineering degree.'
+              : 'هذا الموقع لا يدّعي أنني مهندس محترف أو باحث أكاديمي، بل هو مختبر تعلم شخصي حقيقي يعكس شغفي وانضباطي التقني وقدرتي الرياضية واستعدادي الأكاديمي الصادق لدراسة الهندسة الكهربائية.'}
           </p>
 
           <h3 className="text-base sm:text-lg font-bold font-headline text-black mt-5">
@@ -126,9 +129,8 @@ export const AboutView: React.FC<AboutViewProps> = ({
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 font-mono text-xs pt-1">
             <div className="border border-neutral-200 rounded-xl p-3.5 bg-neutral-50">
-              <div className="font-bold text-black mb-1 flex items-center gap-1.5">
-                <Zap className="w-4 h-4" />
-                <span>{isEn ? 'Electrical Engineering' : 'الهندسة الكهربائية'}</span>
+              <div className="font-bold text-black mb-1">
+                {isEn ? 'Electrical Engineering' : 'الهندسة الكهربائية'}
               </div>
               <p className="text-[11px] text-neutral-600 leading-normal">
                 {isEn
@@ -138,9 +140,8 @@ export const AboutView: React.FC<AboutViewProps> = ({
             </div>
 
             <div className="border border-neutral-200 rounded-xl p-3.5 bg-neutral-50">
-              <div className="font-bold text-black mb-1 flex items-center gap-1.5">
-                <Battery className="w-4 h-4" />
-                <span>{isEn ? 'Energy Systems' : 'أنظمة الطاقة والشبكات'}</span>
+              <div className="font-bold text-black mb-1">
+                {isEn ? 'Energy Systems' : 'أنظمة الطاقة والشبكات'}
               </div>
               <p className="text-[11px] text-neutral-600 leading-normal">
                 {isEn
@@ -150,9 +151,8 @@ export const AboutView: React.FC<AboutViewProps> = ({
             </div>
 
             <div className="border border-neutral-200 rounded-xl p-3.5 bg-neutral-50">
-              <div className="font-bold text-black mb-1 flex items-center gap-1.5">
-                <Pi className="w-4 h-4" />
-                <span>{isEn ? 'Applied Mathematics' : 'الرياضيات التطبيقية'}</span>
+              <div className="font-bold text-black mb-1">
+                {isEn ? 'Applied Mathematics' : 'الرياضيات التطبيقية'}
               </div>
               <p className="text-[11px] text-neutral-600 leading-normal">
                 {isEn

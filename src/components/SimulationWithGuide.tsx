@@ -289,10 +289,10 @@ export const GUIDES_DATABASE: Record<string, SimulationGuideData> = {
     ],
     finalResultExplanation: 'النتيجة المتوقعة: عند تردد الرنين تلغي المعاوقة الحثية XL المعاوقة السعوية XC، فتنخفض المعاوقة الكلية إلى R فقط وتتضاعف قيمة التيار للحد الأقصى.',
     finalResultExplanationEn: 'Expected outcome: At resonance, inductive and capacitive reactances cancel out, minimizing impedance to pure R and maximizing circuit current.',
-    videoUrl: 'https://www.youtube.com/embed/hp-yXvB7P1E',
+    videoUrl: 'https://www.youtube.com/embed/2GvqQvohP2k',
     videoTitle: 'التجربة والشرح لظاهرة الرنين في دوائر RLC (The Organic Chemistry Tutor)',
     videoTitleEn: 'Series RLC Circuits & Resonant Frequency (The Organic Chemistry Tutor)',
-    youtubeId: 'hp-yXvB7P1E',
+    youtubeId: '2GvqQvohP2k',
     videoDescription: 'شرح تفصيلي رائع لحسابات تردد الرنين والمفاعلة الحثية والسعوية بالمعادلات والرسومات.',
     videoDescriptionEn: 'Detailed tutorial on series RLC circuits, resonance calculations, reactances, and impedance.'
   },
@@ -513,10 +513,10 @@ export const GUIDES_DATABASE: Record<string, SimulationGuideData> = {
     ],
     finalResultExplanation: 'النتيجة المتوقعة: توازن دائم بين التوليد والاستهلاك (P_generation = P_load) واستقرار التردد عند 50.00Hz حتى مع غياب الشمس.',
     finalResultExplanationEn: 'Expected outcome: Dynamic equilibrium between generation and load maintaining 50.00Hz stability.',
-    videoUrl: 'https://www.youtube.com/embed/h7ps0sD6g28',
+    videoUrl: 'https://www.youtube.com/embed/7G4ipM2qjfw',
     videoTitle: 'تحديات ربط الطاقة الشمسية بالشبكة الكهربائية (Practical Engineering)',
     videoTitleEn: 'Connecting Solar to the Grid is Harder Than You Think (Practical Engineering)',
-    youtubeId: 'h7ps0sD6g28',
+    youtubeId: '7G4ipM2qjfw',
     videoDescription: 'شرح هندسي عميق للتحديات الفيزيائية لدمج الطاقة الشمسية والتقلبات المفاجئة وكيف تتكيف الشبكة معها.',
     videoDescriptionEn: 'In-depth engineering breakdown of solar intermittency, grid connection challenges, and modern solutions.'
   },
@@ -655,10 +655,10 @@ export const GUIDES_DATABASE: Record<string, SimulationGuideData> = {
     ],
     finalResultExplanation: 'النتيجة المتوقعة: الرنين الكهربائي الحاد (High Q) يعزل محطة إذاعية واحدة بدقة متناهية من بين آلاف الترددات المتداخلة في الهواء.',
     finalResultExplanationEn: 'Expected outcome: High-Q resonance sharp peak isolates a single broadcast frequency cleanly from ambient radio spectrum.',
-    videoUrl: 'https://www.youtube.com/embed/hp-yXvB7P1E',
+    videoUrl: 'https://www.youtube.com/embed/2GvqQvohP2k',
     videoTitle: 'التجربة العملية لظاهرة الرنين في دوائر LC (The Organic Chemistry Tutor)',
     videoTitleEn: 'LC Resonance & Tuner Circuits (The Organic Chemistry Tutor)',
-    youtubeId: 'hp-yXvB7P1E',
+    youtubeId: '2GvqQvohP2k',
     videoDescription: 'شرح تطبيقي يربط بين معادلة الرنين وتوليف محطات الراديو وفصل الإشارات.',
     videoDescriptionEn: 'Practical demonstration connecting resonance formulas to radio tuning and signal extraction.'
   },
@@ -698,10 +698,10 @@ export const GUIDES_DATABASE: Record<string, SimulationGuideData> = {
     ],
     finalResultExplanation: 'النتيجة المتوقعة: فهم عميق لمعنى زاوية الطور وكيف يحدد التردد 50Hz سرعة تذبذب الطاقة.',
     finalResultExplanationEn: 'Expected outcome: Solid intuition for phase angles and how 50Hz governs energy oscillation.',
-    videoUrl: 'https://www.youtube.com/embed/wzJ_zG8Y0Lw',
+    videoUrl: 'https://www.youtube.com/embed/kcL2_D33k3o',
     videoTitle: 'مقدمة في التيار المتردد والمستمر والموجات الجيبية (The Engineering Mindset)',
     videoTitleEn: 'AC and DC Electricity Basics (The Engineering Mindset)',
-    youtubeId: 'wzJ_zG8Y0Lw',
+    youtubeId: 'kcL2_D33k3o',
     videoDescription: 'شرح أساسي ممتاز يوضح حركة الإلكترونات المتأرجحة في التيار المتردد وشكل الموجة الجيبية.',
     videoDescriptionEn: 'Visual guide to alternating electron motion, frequency, and sinusoidal AC waveforms.'
   }
@@ -751,12 +751,12 @@ export const SimulationWithGuide: React.FC<SimulationWithGuideProps> = ({
         </div>
 
         {/* View toggle (Split view vs Fullscreen simulation) */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 font-serif">
           <a
             href={watchUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1 text-[11px] font-mono font-bold bg-red-600 hover:bg-red-700 text-white px-2.5 py-1 rounded-md transition-colors"
+            className="flex items-center gap-1 text-[11px] font-serif font-bold bg-red-600 hover:bg-red-700 text-white px-2.5 py-1 rounded-md transition-colors"
           >
             <Play className="w-3 h-3 fill-current" />
             <span>{isEn ? 'Watch Video' : 'فيديو الشرح'}</span>
@@ -765,7 +765,7 @@ export const SimulationWithGuide: React.FC<SimulationWithGuideProps> = ({
 
           <button
             onClick={() => setIsExpanded(!isExpanded)}
-            className="flex items-center gap-1 text-[11px] font-mono font-bold bg-neutral-800 hover:bg-neutral-700 text-neutral-200 px-2.5 py-1 rounded-md transition-colors cursor-pointer"
+            className="flex items-center gap-1 text-[11px] font-serif font-bold bg-neutral-800 hover:bg-neutral-700 text-neutral-200 px-2.5 py-1 rounded-md transition-colors cursor-pointer"
             title={isExpanded ? 'عرض المخطط التوجيهي والتفاعلات بجانب المحاكي' : 'تكبير المحاكي لكامل الشاشة'}
           >
             {isExpanded ? (
@@ -949,7 +949,7 @@ export const SimulationWithGuide: React.FC<SimulationWithGuideProps> = ({
                             <span className="font-mono font-bold text-[10px] bg-amber-200 text-amber-900 px-1.5 py-0.5 rounded shrink-0 mt-0.5">
                               {isEn ? 'Why? (Intuition):' : 'الشرح المبسط:'}
                             </span>
-                            <span className="leading-relaxed font-sans text-xs">
+                            <span className="leading-relaxed font-serif text-xs">
                               {isEn ? exp.simpleExplanationEn : exp.simpleExplanation}
                             </span>
                           </div>
@@ -963,7 +963,7 @@ export const SimulationWithGuide: React.FC<SimulationWithGuideProps> = ({
                 <div className="p-3 bg-neutral-900 text-white rounded-xl flex items-center justify-between gap-2">
                   <div className="flex items-center gap-2">
                     <Video className="w-4 h-4 text-red-400 shrink-0" />
-                    <div className="text-[11px] font-sans">
+                    <div className="text-[11px] font-serif">
                       <span className="font-bold block font-headline">{isEn ? 'Watch the Real Video Tutorial' : 'شاهد التجربة في فيديو يوتيوب حقيقي'}</span>
                       <span className="text-neutral-400 text-[10px]">{isEn ? guide.videoTitleEn : guide.videoTitle}</span>
                     </div>

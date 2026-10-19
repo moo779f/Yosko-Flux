@@ -1,14 +1,33 @@
 import React from 'react';
-import { User, Search, Newspaper, Globe } from 'lucide-react';
+import {
+  User,
+  Search,
+  Newspaper,
+  Globe,
+  Cpu
+} from 'lucide-react';
 import { Language } from '../types';
-import { YoskoFluxLogo } from './YoskoFluxLogo';
+
+export type AppView =
+  | 'home'
+  | 'projects'
+  | 'project-detail'
+  | 'educational'
+  | 'path'
+  | 'certificates'
+  | 'news'
+  | 'about'
+  | 'detail';
 
 interface NavbarProps {
-  activeView: 'home' | 'news' | 'about' | 'detail' | 'educational';
+  activeView: AppView;
   language: Language;
   onToggleLanguage: () => void;
   onNavigateHome: () => void;
+  onNavigateProjects?: () => void;
   onNavigateEducational: () => void;
+  onNavigateLearningPath?: () => void;
+  onNavigateCertificates?: () => void;
   onNavigateNews: () => void;
   onNavigateAbout: () => void;
 }
@@ -18,36 +37,37 @@ export const Navbar: React.FC<NavbarProps> = ({
   language,
   onToggleLanguage,
   onNavigateHome,
+  onNavigateProjects,
   onNavigateEducational,
   onNavigateNews,
-  onNavigateAbout,
+  onNavigateAbout
 }) => {
   const isEn = language === 'en';
 
   return (
-    <header className="border border-neutral-200 rounded-2xl bg-white mb-4 sm:mb-6 shadow-xs">
-      <div className="p-2.5 sm:p-4 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4">
-        {/* Official YOSKO FLUX Logo Header - Only the symbol without bottom text */}
+    <header className="border border-neutral-200 rounded-xl sm:rounded-2xl bg-white mb-5 sm:mb-8 shadow-2xs">
+      <div className="px-3 py-2 sm:px-5 sm:py-2.5 flex flex-wrap sm:flex-nowrap items-center justify-between gap-2.5 sm:gap-4">
+        {/* Official YOSKO FLUX Logo Symbol */}
         <div
           onClick={onNavigateHome}
-          className="flex items-center justify-between sm:justify-start cursor-pointer flex-shrink-0"
+          className="flex items-center cursor-pointer flex-shrink-0"
+          title="YOSKO FLUX Home"
         >
           <img
             src="/logo-symbol.png"
             alt="YOSKO FLUX"
-            className="h-9 sm:h-11 w-auto object-contain shrink-0"
+            className="h-8 sm:h-9 w-auto object-contain shrink-0"
+            style={{ maxHeight: '36px', maxWidth: '120px', width: 'auto', height: 'auto' }}
           />
-          <span className="sm:hidden border border-neutral-200 bg-neutral-100 text-neutral-800 px-2 py-0.5 font-mono text-[10px] font-bold rounded-md ms-2">
-            {isEn ? 'PORTFOLIO' : 'ملف التقديم'}
-          </span>
         </div>
 
-        {/* Navigation buttons */}
-        <div className="w-full sm:w-auto grid grid-cols-5 sm:flex items-center gap-1 sm:gap-2 font-serif text-[11px] sm:text-sm font-bold pt-1 sm:pt-0 border-t border-neutral-100 sm:border-0">
+        {/* Navigation buttons - compact, original clean layout */}
+        <nav className="flex items-center gap-1 sm:gap-1.5 font-serif text-[11px] sm:text-xs md:text-sm font-bold shrink-0">
+          {/* 1. Search / All Papers */}
           <button
             onClick={onNavigateHome}
-            className={`min-h-[38px] px-2 sm:px-3.5 py-1.5 border rounded-lg transition-all cursor-pointer flex items-center justify-center gap-1 text-center ${
-              activeView === 'home'
+            className={`min-h-[32px] sm:min-h-[34px] px-2.5 sm:px-3 py-1 border rounded-lg transition-all cursor-pointer flex items-center justify-center gap-1 text-center ${
+              activeView === 'home' || activeView === 'detail'
                 ? 'border-black bg-black text-white'
                 : 'border-neutral-200 bg-white text-neutral-800 hover:bg-neutral-50'
             }`}
@@ -56,9 +76,25 @@ export const Navbar: React.FC<NavbarProps> = ({
             <span className="truncate">{isEn ? 'Search' : 'الأبحاث'}</span>
           </button>
 
+          {/* 2. 6 Applied Projects */}
+          {onNavigateProjects && (
+            <button
+              onClick={onNavigateProjects}
+              className={`min-h-[32px] sm:min-h-[34px] px-2.5 sm:px-3 py-1 border rounded-lg transition-all cursor-pointer flex items-center justify-center gap-1 text-center ${
+                activeView === 'projects' || activeView === 'project-detail'
+                  ? 'border-black bg-black text-white'
+                  : 'border-neutral-200 bg-white text-neutral-800 hover:bg-neutral-50'
+              }`}
+            >
+              <Cpu className="w-3.5 h-3.5 flex-shrink-0" />
+              <span className="truncate">{isEn ? 'Projects' : 'المشاريع'}</span>
+            </button>
+          )}
+
+          {/* 3. Educational Articles */}
           <button
             onClick={onNavigateEducational}
-            className={`min-h-[38px] px-2 sm:px-3.5 py-1.5 border rounded-lg transition-all cursor-pointer flex items-center justify-center gap-1 text-center ${
+            className={`min-h-[32px] sm:min-h-[34px] px-2.5 sm:px-3 py-1 border rounded-lg transition-all cursor-pointer flex items-center justify-center gap-1 text-center ${
               activeView === 'educational'
                 ? 'border-black bg-black text-white'
                 : 'border-neutral-200 bg-white text-neutral-800 hover:bg-neutral-50'
@@ -68,9 +104,10 @@ export const Navbar: React.FC<NavbarProps> = ({
             <span className="truncate">{isEn ? 'Articles' : 'المقالات'}</span>
           </button>
 
+          {/* 4. News */}
           <button
             onClick={onNavigateNews}
-            className={`min-h-[38px] px-2 sm:px-3.5 py-1.5 border rounded-lg transition-all cursor-pointer flex items-center justify-center gap-1 text-center ${
+            className={`min-h-[32px] sm:min-h-[34px] px-2.5 sm:px-3 py-1 border rounded-lg transition-all cursor-pointer flex items-center justify-center gap-1 text-center ${
               activeView === 'news'
                 ? 'border-black bg-black text-white'
                 : 'border-neutral-200 bg-white text-neutral-800 hover:bg-neutral-50'
@@ -80,9 +117,10 @@ export const Navbar: React.FC<NavbarProps> = ({
             <span className="truncate">{isEn ? 'News' : 'أخبار'}</span>
           </button>
 
+          {/* 5. About */}
           <button
             onClick={onNavigateAbout}
-            className={`min-h-[38px] px-2 sm:px-3.5 py-1.5 border rounded-lg transition-all cursor-pointer flex items-center justify-center gap-1 text-center ${
+            className={`min-h-[32px] sm:min-h-[34px] px-2.5 sm:px-3 py-1 border rounded-lg transition-all cursor-pointer flex items-center justify-center gap-1 text-center ${
               activeView === 'about'
                 ? 'border-black bg-black text-white'
                 : 'border-neutral-200 bg-white text-neutral-800 hover:bg-neutral-50'
@@ -96,11 +134,11 @@ export const Navbar: React.FC<NavbarProps> = ({
           <button
             onClick={onToggleLanguage}
             title={isEn ? 'تبديل للغة العربية' : 'Switch to English'}
-            className="min-h-[38px] px-2 sm:px-3 py-1.5 border border-neutral-200 rounded-lg bg-neutral-100 hover:bg-neutral-200 text-neutral-900 transition-all cursor-pointer flex items-center justify-center gap-1 font-bold text-center"
+            className="min-h-[32px] sm:min-h-[34px] px-2.5 py-1 border border-neutral-300 rounded-lg bg-neutral-100 hover:bg-neutral-200 text-neutral-900 transition-all cursor-pointer flex items-center justify-center gap-1 font-serif font-bold text-center text-xs"
           >
             <span className="truncate">{isEn ? 'عربي' : 'EN'}</span>
           </button>
-        </div>
+        </nav>
       </div>
     </header>
   );

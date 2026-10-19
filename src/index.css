@@ -1,5 +1,32 @@
 @import "tailwindcss";
 
+:root {
+  --academic-serif: "Noto Serif Arabic", "Amiri", "Lora", Georgia, serif;
+  --academic-mono: "Space Mono", "Noto Serif Arabic", monospace;
+  --font-serif: var(--academic-serif);
+  --font-sans: var(--academic-serif);
+  --font-headline: var(--academic-serif);
+  --font-mono: var(--academic-mono);
+  --font-eurostile: "Eurostile Extended", "Michroma", "Orbitron", -apple-system, sans-serif;
+}
+
+html[lang="en"],
+html[dir="ltr"],
+body[dir="ltr"] {
+  --academic-serif: "Lora", "Noto Serif Arabic", "Amiri", Georgia, serif;
+  --font-serif: var(--academic-serif);
+  --font-sans: var(--academic-serif);
+  --font-headline: var(--academic-serif);
+}
+
+@theme {
+  --font-serif: "Noto Serif Arabic", "Amiri", "Lora", Georgia, serif;
+  --font-sans: "Noto Serif Arabic", "Amiri", "Lora", Georgia, serif;
+  --font-headline: "Noto Serif Arabic", "Amiri", "Lora", Georgia, serif;
+  --font-mono: "Space Mono", "Noto Serif Arabic", monospace;
+  --font-eurostile: "Eurostile Extended", "Michroma", "Orbitron", -apple-system, sans-serif;
+}
+
 @font-face {
   font-family: 'Eurostile Extended';
   font-style: normal;
@@ -17,34 +44,77 @@
 }
 
 .font-eurostile {
-  font-family: 'Eurostile Extended', -apple-system, sans-serif;
+  font-family: var(--font-eurostile);
   font-weight: 700;
 }
 
-@layer base {
-  body {
-    font-family: 'Noto Serif Arabic', 'Lora', 'Amiri', Georgia, 'Times New Roman', serif;
-    background-color: #FAFAFA;
-    color: #171717;
-  }
+html, body {
+  font-family: var(--academic-serif) !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
 
-  h1, h2, h3, h4, .font-headline, .font-serif {
-    font-family: 'Noto Serif Arabic', 'Lora', 'Amiri', Georgia, 'Times New Roman', serif;
-    font-weight: 800;
-    line-height: 1.25;
-  }
+body {
+  background-color: #FAFAFA;
+  color: #171717;
+}
 
-  code, pre, .font-mono {
-    font-family: 'Space Mono', monospace;
-  }
+/* Form controls and all interactive buttons strictly inherit the unified academic primary font */
+input,
+button,
+button *,
+textarea,
+select,
+[role="button"],
+.btn-raw-primary,
+.btn-raw-secondary,
+.btn-raw-destructive {
+  font-family: var(--academic-serif) !important;
+}
 
-  a {
-    color: #000000;
-  }
+h1, h2, h3, h4, h5, h6,
+.font-headline {
+  font-family: var(--academic-serif) !important;
+  line-height: 1.35;
+}
 
-  a:hover {
-    text-decoration: underline;
-  }
+.font-serif,
+.font-sans,
+p, li {
+  font-family: var(--academic-serif) !important;
+  line-height: 1.8;
+}
+
+/* Strict Logo Sizing - Prevents giant logo blowups under any render condition */
+img[src*="logo.png"] {
+  max-height: 58px !important;
+  max-width: 280px !important;
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain !important;
+  display: block;
+}
+
+img[src*="logo-symbol"] {
+  max-height: 36px !important;
+  max-width: 120px !important;
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain !important;
+  display: inline-block;
+}
+
+code, pre, .font-mono {
+  font-family: "Space Mono", "Noto Serif Arabic", monospace !important;
+}
+
+a {
+  color: #000000;
+}
+
+a:hover {
+  text-decoration: underline;
 }
 
 /* Custom helper borders */

@@ -11,6 +11,7 @@ import {
   FileCode,
   Lightbulb,
   Play,
+  Video,
   Share2,
   CheckCircle2,
   Layers,
@@ -29,6 +30,7 @@ export const EducationalHomeSection: React.FC<EducationalHomeSectionProps> = ({
   const isEn = language === 'en';
   const [expandedArticleId, setExpandedArticleId] = useState<string | null>(EDUCATIONAL_ARTICLES[0].id);
   const [activeSimId, setActiveSimId] = useState<string | null>(null);
+  const [activeVideoId, setActiveVideoId] = useState<string | null>(null);
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
   const [showGuide, setShowGuide] = useState<boolean>(false);
 
@@ -43,7 +45,10 @@ export const EducationalHomeSection: React.FC<EducationalHomeSectionProps> = ({
 
   const copyFullArticlePackage = (article: EducationalArticle, e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
-    const fullText = `${article.title}\n\n${article.paragraphs.join('\n\n')}\n\n${article.tryItYourselfPrompt}\n\n[كود التضمين للمحاكي في Google Sites]:\n${article.embedCodeHtml}\n\n[سطر النسبة]:\n${article.attribution}`;
+    const videoSection = article.videoUrl
+      ? `\n\n[المحاضرة المرئية / رابط YouTube]:\n${article.videoUrl.replace('/embed/', '/watch?v=')}\n\n[كود تضمين الفيديو في Google Sites]:\n${article.videoEmbedHtml || `<iframe width="100%" height="450" src="${article.videoUrl}" title="${article.videoTitle || ''}" frameborder="0" allowfullscreen></iframe>`}`
+      : '';
+    const fullText = `${article.title}\n\n${article.paragraphs.join('\n\n')}\n\n${article.tryItYourselfPrompt}\n\n[كود التضمين للمحاكي في Google Sites]:\n${article.embedCodeHtml}${videoSection}\n\n[سطر النسبة]:\n${article.attribution}`;
     handleCopy(fullText, `pkg-${article.id}`, e);
   };
 
@@ -124,8 +129,8 @@ export const EducationalHomeSection: React.FC<EducationalHomeSectionProps> = ({
                     {isEn ? step.titleEn : step.title}
                   </h4>
                 </div>
-                <p className="text-[11px] text-neutral-600 leading-relaxed font-sans ps-7">
-                  {step.instruction}
+                <p className="text-[11px] text-neutral-600 leading-relaxed font-serif ps-7">
+                  {isEn && step.instructionEn ? step.instructionEn : step.instruction}
                 </p>
               </div>
             ))}
@@ -147,6 +152,7 @@ export const EducationalHomeSection: React.FC<EducationalHomeSectionProps> = ({
         {EDUCATIONAL_ARTICLES.map((article) => {
           const isExpanded = expandedArticleId === article.id;
           const isSimActive = activeSimId === article.id;
+          const isVideoActive = activeVideoId === article.id;
 
           return (
             <div
@@ -179,6 +185,15 @@ export const EducationalHomeSection: React.FC<EducationalHomeSectionProps> = ({
                       <span className="font-mono text-[11px] text-neutral-600 bg-neutral-100 px-1.5 py-0.2 rounded">
                         PhET: {article.phetSimulationName.split('(')[0]}
                       </span>
+                      {article.videoUrl && (
+                        <>
+                          <span className="text-neutral-300">•</span>
+                          <span className="font-mono text-[11px] text-red-700 bg-red-50 border border-red-200 px-1.5 py-0.2 rounded flex items-center gap-1 font-semibold">
+                            <Video className="w-3 h-3 text-red-600" />
+                            {isEn ? 'Video Lecture' : 'شرح مرئي'}
+                          </span>
+                        </>
+                      )}
                     </div>
 
                     <h3 className="font-headline font-black text-base sm:text-lg text-black hover:text-neutral-800 transition-colors">
@@ -225,7 +240,7 @@ export const EducationalHomeSection: React.FC<EducationalHomeSectionProps> = ({
                     <span className="font-mono text-[11px] font-bold text-neutral-500">
                       {isEn ? 'Concepts:' : 'المفاهيم:'}
                     </span>
-                    {article.keyConcepts.map((concept, idx) => (
+                    {(isEn && article.keyConceptsEn ? article.keyConceptsEn : article.keyConcepts).map((concept, idx) => (
                       <span
                         key={idx}
                         className="border border-neutral-200 px-2 py-0.5 font-mono text-[11px] bg-neutral-50 text-neutral-700 rounded-md"
@@ -237,7 +252,7 @@ export const EducationalHomeSection: React.FC<EducationalHomeSectionProps> = ({
 
                   {/* Paragraphs */}
                   <div className="space-y-3.5 font-serif text-sm sm:text-base leading-relaxed text-neutral-800">
-                    {article.paragraphs.map((p, pIdx) => (
+                    {(isEn && article.paragraphsEn ? article.paragraphsEn : article.paragraphs).map((p, pIdx) => (
                       <p key={pIdx} className="leading-relaxed">
                         {p}
                       </p>
@@ -246,8 +261,109 @@ export const EducationalHomeSection: React.FC<EducationalHomeSectionProps> = ({
 
                   {/* "Try it yourself" prompt */}
                   <div className="p-3.5 bg-neutral-50 border-r-4 rtl:border-r-4 ltr:border-l-4 border-black rounded-lg text-neutral-900 font-semibold text-xs sm:text-sm">
-                    {article.tryItYourselfPrompt}
+                    {isEn && article.tryItYourselfPromptEn ? article.tryItYourselfPromptEn : article.tryItYourselfPrompt}
                   </div>
+
+                  {/* Video Lecture / YouTube Embed Container */}
+                  {article.videoUrl && (
+                    <div className="border border-neutral-200 rounded-xl p-4 bg-neutral-50/70 space-y-3">
+                      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5">
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <span className="bg-red-600 text-white px-2 py-0.5 font-mono text-[10px] font-bold uppercase rounded flex items-center gap-1">
+                              <Video className="w-3 h-3" />
+                              {isEn ? 'Video Lecture' : 'محاضرة مرئية'}
+                            </span>
+                            <h4 className="font-mono font-bold text-xs sm:text-sm text-neutral-900">
+                              {isEn && article.videoTitleEn ? article.videoTitleEn : article.videoTitle}
+                            </h4>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <button
+                            type="button"
+                            onClick={() => setActiveVideoId(isVideoActive ? null : article.id)}
+                            className={`px-3 py-1.5 text-xs font-mono font-bold flex items-center gap-1.5 rounded-lg border transition-all cursor-pointer ${
+                              isVideoActive
+                                ? 'bg-red-600 text-white border-red-600'
+                                : 'bg-white text-neutral-900 border-neutral-300 hover:bg-neutral-100'
+                            }`}
+                          >
+                            <Play className="w-3.5 h-3.5" />
+                            <span>
+                              {isVideoActive
+                                ? (isEn ? 'Close Video' : 'إغلاق الفيديو')
+                                : (isEn ? 'Watch Video' : 'مشاهدة الشرح المرئي 🎬')}
+                            </span>
+                          </button>
+
+                          {article.videoEmbedHtml && (
+                            <button
+                              type="button"
+                              onClick={(e) => handleCopy(article.videoEmbedHtml!, `vid-code-${article.id}`, e)}
+                              className="btn-raw-secondary px-2.5 py-1.5 text-xs font-mono font-bold flex items-center gap-1 rounded-lg border border-neutral-300 hover:bg-neutral-100"
+                              title="نسخ كود الـ HTML للفيديو لـ Google Sites"
+                            >
+                              {copiedKey === `vid-code-${article.id}` ? (
+                                <>
+                                  <Check className="w-3.5 h-3.5 text-emerald-600" />
+                                  <span>{isEn ? 'Copied!' : 'تم النسخ!'}</span>
+                                </>
+                              ) : (
+                                <>
+                                  <FileCode className="w-3.5 h-3.5 text-red-600" />
+                                  <span>{isEn ? 'Copy Video Embed' : 'نسخ كود الفيديو'}</span>
+                                </>
+                              )}
+                            </button>
+                          )}
+
+                          <a
+                            href={article.videoUrl.replace('/embed/', '/watch?v=')}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="btn-raw-secondary px-2.5 py-1.5 text-xs font-mono font-bold flex items-center gap-1 rounded-lg border border-neutral-300 hover:bg-neutral-100 text-red-600"
+                          >
+                            <span>{isEn ? 'YouTube ↗' : 'يوتيوب ↗'}</span>
+                          </a>
+                        </div>
+                      </div>
+
+                      {/* Video Player when active */}
+                      {isVideoActive && (
+                        <div className="mt-3 space-y-2 animate-fadeIn">
+                          <div className="rounded-xl overflow-hidden border border-neutral-300 bg-black aspect-video w-full shadow-md">
+                            <iframe
+                              src={article.videoUrl}
+                              title={article.videoTitle || 'Educational Video'}
+                              className="w-full h-full min-h-[340px] sm:min-h-[440px] border-none"
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                              allowFullScreen
+                              loading="lazy"
+                            />
+                          </div>
+                          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 p-2 bg-neutral-100 rounded-lg text-xs font-mono">
+                            <span className="text-neutral-600">
+                              {isEn
+                                ? 'If the video does not play inside the page, open it directly on YouTube:'
+                                : 'إذا ظهر المقطع غير متاح في الإطار لأي قيود، افتحه مباشرة على يوتيوب:'}
+                            </span>
+                            <a
+                              href={article.videoUrl.replace('/embed/', '/watch?v=')}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-red-600 hover:text-red-700 font-bold flex items-center gap-1 text-xs"
+                            >
+                              <Play className="w-3 h-3" />
+                              <span>{isEn ? 'Open on YouTube' : 'فتح على YouTube مباشرة'}</span>
+                              <ExternalLink className="w-3 h-3" />
+                            </a>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
 
                   {/* Simulation launcher / Live Embed Container */}
                   <div className="border border-neutral-200 rounded-xl p-4 bg-neutral-50/70 space-y-3">
@@ -258,7 +374,7 @@ export const EducationalHomeSection: React.FC<EducationalHomeSectionProps> = ({
                             PhET Simulation
                           </span>
                           <h4 className="font-mono font-bold text-xs sm:text-sm text-neutral-900">
-                            {article.phetSimulationName}
+                            {isEn && article.phetSimulationNameEn ? article.phetSimulationNameEn : article.phetSimulationName}
                           </h4>
                         </div>
                       </div>
@@ -328,7 +444,7 @@ export const EducationalHomeSection: React.FC<EducationalHomeSectionProps> = ({
                         <span className="font-bold text-neutral-800">
                           {isEn ? 'Legal Attribution (Paste below embed in Google Sites):' : 'سطر النسبة القانوني (ألصقه تحت المحاكي في Google Sites):'}
                         </span>
-                        <p className="text-neutral-600 select-all font-sans">
+                        <p className="text-neutral-600 select-all font-mono">
                           {article.attribution}
                         </p>
                       </div>

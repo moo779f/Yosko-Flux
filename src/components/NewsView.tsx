@@ -49,18 +49,18 @@ export const NewsView: React.FC<NewsViewProps> = ({ language, onBackToHome }) =>
         <div className="flex items-center gap-2 mb-2.5">
           <span className="bg-black text-white px-2.5 py-0.5 font-mono text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 rounded-md">
             <GraduationCap className="w-3.5 h-3.5" />
-            {isEn ? 'Research Logs & Admission Journey' : 'سجل الأبحاث ورحلة القبول الجامعي'}
+            {isEn ? 'Engineering Research & Project Logs' : 'سجل الأبحاث والتطوير الهندسي'}
           </span>
         </div>
 
         <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black font-headline text-black mb-2">
-          {isEn ? 'Latest News & Project Updates' : 'آخر الأخبار ومستجدات المشاريع'}
+          {isEn ? 'Engineering Logs & Technical Updates' : 'آخر الأخبار ومستجدات المشاريع الهندسية'}
         </h1>
 
         <p className="font-mono text-xs sm:text-sm text-neutral-500 leading-relaxed max-w-3xl">
           {isEn
-            ? 'A dedicated journal documenting my self-directed studies, mathematical simulations, and personal research papers prepared for electrical engineering university admission.'
-            : 'مدونة وسجل توثيقي مخصص لمتابعة مشاريعي الهندسية الذاتية، التطورات الرياضية، ومستجدات ملف التقديم الجامعي لتخصص الهندسة الكهربائية.'}
+            ? 'A technical journal documenting independent engineering research, circuit simulations, power systems analysis, and open-source lab developments.'
+            : 'مدونة وسجل توثيقي مخصص لمتابعة الأبحاث الهندسية الذاتية، محاكيات الدوائر الحية، تحليلات نظم الطاقة، والمشاريع التقنية المستمرة.'}
         </p>
       </div>
 
@@ -110,13 +110,13 @@ export const NewsView: React.FC<NewsViewProps> = ({ language, onBackToHome }) =>
                   {title}
                 </h2>
 
-                <p className="font-sans text-xs sm:text-sm text-neutral-700 leading-relaxed mb-3">
+                <p className="font-serif text-xs sm:text-sm text-neutral-700 leading-relaxed mb-3">
                   {summary}
                 </p>
 
                 {/* Expanded Full Content */}
                 {isExpanded && (
-                  <div className="mt-3 pt-3 space-y-2.5 font-sans text-xs sm:text-sm text-neutral-900 bg-neutral-50 border border-neutral-200 rounded-xl p-3 sm:p-4 leading-relaxed">
+                  <div className="mt-3 pt-3 space-y-2.5 font-serif text-xs sm:text-sm text-neutral-900 bg-neutral-50 border border-neutral-200 rounded-xl p-3 sm:p-4 leading-relaxed">
                     {content.map((p, idx) => (
                       <p key={idx}>{p}</p>
                     ))}
@@ -126,7 +126,7 @@ export const NewsView: React.FC<NewsViewProps> = ({ language, onBackToHome }) =>
                 {/* Tags and toggle action */}
                 <div className="mt-3 pt-3 border-t border-neutral-200 flex flex-wrap items-center justify-between gap-2.5">
                   <div className="flex flex-wrap gap-1 font-mono text-[10px]">
-                    {item.tags.map((t, idx) => (
+                    {(isEn && item.tagsEn ? item.tagsEn : item.tags).map((t, idx) => (
                       <span
                         key={idx}
                         className="border border-neutral-200 rounded-md bg-neutral-50 text-neutral-700 px-2 py-0.5 font-medium"

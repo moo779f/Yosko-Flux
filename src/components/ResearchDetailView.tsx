@@ -19,9 +19,10 @@ import {
   Info,
   FileText,
   CheckSquare,
-  ListOrdered
+  ListOrdered,
+  Lightbulb,
+  Compass
 } from 'lucide-react';
-import { SimulationViewer } from './Simulations';
 import { QuizSection } from './QuizSection';
 import { MathFormula } from './MathFormula';
 import { SimulationWithGuide } from './SimulationWithGuide';
@@ -31,6 +32,7 @@ interface ResearchDetailViewProps {
   paper: ResearchPaper;
   language: Language;
   onBack: () => void;
+  onNavigateProjects?: () => void;
   startAtQuiz?: boolean;
 }
 
@@ -38,6 +40,7 @@ export const ResearchDetailView: React.FC<ResearchDetailViewProps> = ({
   paper,
   language,
   onBack,
+  onNavigateProjects,
   startAtQuiz,
 }) => {
   const isEn = language === 'en';
@@ -46,9 +49,6 @@ export const ResearchDetailView: React.FC<ResearchDetailViewProps> = ({
   const [fontSizeClass, setFontSizeClass] = useState<'normal' | 'large'>('normal');
   const [isTocOpen, setIsTocOpen] = useState(false);
   const [isDeepDiveOpen, setIsDeepDiveOpen] = useState(false);
-  const [simEngine, setSimEngine] = useState<'builtin' | 'phet'>(
-    paper.type === 'article' || paper.id.startsWith('paper-edu') ? 'phet' : 'builtin'
-  );
 
   const phetData = {
     'paper-intro-electrons-grid': {
@@ -203,6 +203,26 @@ export const ResearchDetailView: React.FC<ResearchDetailViewProps> = ({
         return isEn ? 'Energy Systems & Grids' : 'أنظمة الطاقة والشبكات';
       case 'mathematics':
         return isEn ? 'Applied Mathematics' : 'الرياضيات التطبيقية';
+      case 'foundations':
+      case 'basic_circuits':
+      case 'electrical_circuits':
+        return isEn ? 'Foundations & Circuits' : 'الأساسيات والدوائر';
+      case 'ac_signals':
+        return isEn ? 'AC & Signals' : 'التيار المتردد والإشارات';
+      case 'power_engineering':
+      case 'electrical_power':
+      case 'power_transmission':
+      case 'electrical_grid':
+      case 'power_systems':
+        return isEn ? 'Power Engineering & Grid' : 'هندسة القوى والشبكات';
+      case 'solar_energy':
+      case 'batteries':
+      case 'renewable_energy':
+        return isEn ? 'Renewable Energy & Solar' : 'الطاقة المتجددة والشمسية';
+      default:
+        return isEn
+          ? paper.progressionCategoryEn || 'Engineering Study'
+          : paper.progressionCategory || 'دراسة هندسية';
     }
   };
 
@@ -337,15 +357,15 @@ export const ResearchDetailView: React.FC<ResearchDetailViewProps> = ({
                 {isEn ? 'Researcher / Author:' : 'إعداد وتوثيق:'}
               </span>
               <span className="font-bold text-black text-xs sm:text-sm">
-                {isEn ? 'Mustafa | Independent Researcher' : 'مصطفى | باحث وهاوٍ مستقل'}
+                {isEn ? paper.authorEn || 'Mustafa | Independent Researcher' : paper.author || 'مصطفى | باحث وهاوٍ مستقل'}
               </span>
             </div>
             <div>
               <span className="text-neutral-500 block text-[10px] sm:text-[11px] uppercase mb-0.5">
-                {isEn ? 'Academic Focus:' : 'الغاية الأكاديمية:'}
+                {isEn ? 'Domain / Focus:' : 'مجال البحث والمشروع:'}
               </span>
               <span className="font-bold text-black text-xs sm:text-sm">
-                {isEn ? 'Electrical Eng. University Portfolio' : 'ملف التقديم الجامعي في الهندسة'}
+                {isEn ? paper.affiliationEn || 'Electrical Engineering & Power Systems' : paper.affiliation || 'الهندسة الكهربائية ونظم القوى والطاقة'}
               </span>
             </div>
           </div>
@@ -357,7 +377,7 @@ export const ResearchDetailView: React.FC<ResearchDetailViewProps> = ({
                 <CheckSquare className="w-4 h-4 text-emerald-400" />
               </span>
               <div>
-                <div className="font-sans font-bold text-xs sm:text-sm text-neutral-900">
+                <div className="font-serif font-bold text-xs sm:text-sm text-neutral-900">
                   {isEn ? 'Comprehension Quiz Available' : 'اختبار قياس الاستيعاب متاح لهذا البحث'}
                 </div>
                 <div className="font-mono text-[11px] text-neutral-500">
@@ -410,12 +430,41 @@ export const ResearchDetailView: React.FC<ResearchDetailViewProps> = ({
           </div>
         </header>
 
-        {/* SECTION 1: EXECUTIVE ABSTRACT & KEY FINDINGS */}
+        {/* SECTION 01 & 02: THE QUESTION & WHY IT MATTERS */}
+        {(paper.investigationQuestion || paper.motivation) && (
+          <div className="space-y-4 font-serif">
+            {paper.investigationQuestion && (
+              <div className="border border-neutral-900 bg-neutral-50 rounded-xl p-4 sm:p-5 space-y-1.5 shadow-2xs">
+                <div className="font-mono text-xs font-black uppercase text-black flex items-center gap-2">
+                  <span className="bg-black text-white px-2 py-0.5 rounded text-[11px]">01</span>
+                  <span>{isEn ? 'The Question (Core Problem)' : 'السؤال الجوهري للمقال'}</span>
+                </div>
+                <p className="text-sm sm:text-base text-neutral-900 font-medium leading-relaxed">
+                  {isEn ? paper.investigationQuestionEn || paper.investigationQuestion : paper.investigationQuestion}
+                </p>
+              </div>
+            )}
+
+            {paper.motivation && (
+              <div className="border border-neutral-200 bg-white rounded-xl p-4 sm:p-5 space-y-1.5">
+                <div className="font-mono text-xs font-bold uppercase text-neutral-700 flex items-center gap-2">
+                  <span className="border border-neutral-300 bg-neutral-100 text-neutral-800 px-2 py-0.5 rounded text-[11px]">02</span>
+                  <span>{isEn ? 'Why It Matters (Engineering Motivation)' : 'لماذا هذا المفهوم مهم هندسياً؟'}</span>
+                </div>
+                <p className="text-xs sm:text-sm text-neutral-700 leading-relaxed font-serif">
+                  {isEn ? paper.motivationEn || paper.motivation : paper.motivation}
+                </p>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* SECTION 03: CORE CONCEPT & KEY FINDINGS */}
         <section ref={abstractRef} className="space-y-4">
           <div className="border-r-4 rtl:border-r-4 ltr:border-l-4 border-neutral-900 bg-neutral-50/60 rounded-xl pr-4 sm:pr-6 pl-3 py-3 space-y-3">
             <div className="font-mono text-xs font-bold uppercase text-neutral-800 flex items-center gap-2">
-              <Award className="w-4 h-4 text-black" />
-              <span>{isEn ? 'Executive Summary & Key Findings' : 'ملخص الورقة وأبرز النتائج الجوهرية'}</span>
+              <span className="bg-black text-white px-2 py-0.5 rounded text-[11px]">03</span>
+              <span>{isEn ? 'Core Concept & Executive Summary' : 'المفهوم الجوهري وخلاصة الفكرة'}</span>
             </div>
 
             <p className="text-sm sm:text-lg leading-relaxed text-neutral-900 font-medium">
@@ -424,10 +473,11 @@ export const ResearchDetailView: React.FC<ResearchDetailViewProps> = ({
 
             {paper.keyFindings && paper.keyFindings.length > 0 && (
               <div className="border-t border-neutral-200 pt-3 mt-3 space-y-2">
-                <div className="font-mono text-xs font-bold text-neutral-600">
-                  {isEn ? 'Core Conclusions:' : 'الاستنتاجات الأساسية:'}
+                <div className="font-mono text-xs font-bold text-neutral-600 flex items-center gap-2">
+                  <span className="bg-neutral-800 text-white px-1.5 py-0.2 rounded text-[10px]">07</span>
+                  <span>{isEn ? 'Results & Core Conclusions:' : 'النتائج والاستنتاجات الأساسية:'}</span>
                 </div>
-                <ul className="space-y-2 font-sans text-xs sm:text-base text-neutral-900">
+                <ul className="space-y-2 font-serif text-xs sm:text-base text-neutral-900">
                   {(isEn ? paper.keyFindingsEn || paper.keyFindings : paper.keyFindings).map(
                     (finding, idx) => (
                       <li key={idx} className="flex items-start gap-2 sm:gap-2.5">
@@ -551,8 +601,7 @@ export const ResearchDetailView: React.FC<ResearchDetailViewProps> = ({
                 {section.equations && section.equations.length > 0 && (
                   <div className="my-3 sm:my-5 py-3 border-y border-neutral-200 space-y-2">
                     <div className="font-mono text-xs uppercase font-bold text-neutral-600 flex items-center justify-between">
-                      <span className="flex items-center gap-1.5 text-[11px] sm:text-xs">
-                        <Bookmark className="w-3.5 h-3.5 text-neutral-500" />
+                      <span className="text-[11px] sm:text-xs">
                         {isEn ? 'Governing Equations' : 'المعادلات والصيغ الحاكمة'}
                       </span>
                       <span className="text-[10px] sm:text-[11px] text-neutral-500">
@@ -564,6 +613,23 @@ export const ResearchDetailView: React.FC<ResearchDetailViewProps> = ({
                       {section.equations.map((eq, eqIdx) => (
                         <MathFormula key={eqIdx} rawEquation={eq} language={language} />
                       ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Worked Numerical / Lab Example Box (أمثلة حسابية ورقمية محلولة) */}
+                {(section.diagramNotes || section.diagramNotesEn) && (
+                  <div className="my-4 p-3.5 sm:p-4 rounded-xl border border-neutral-300 bg-neutral-50/90 space-y-2 font-serif text-xs sm:text-sm shadow-2xs">
+                    <div className="font-mono text-xs font-bold text-neutral-900 flex items-center gap-1.5 border-b border-neutral-200 pb-2">
+                      <span className="w-5 h-5 rounded bg-black text-white flex items-center justify-center text-[10px] font-mono font-bold shrink-0">
+                        EX
+                      </span>
+                      <span>
+                        {isEn ? 'Worked Numerical & Practical Example:' : 'مثال تطبيقي وحسابي ملموس:'}
+                      </span>
+                    </div>
+                    <div className="text-neutral-800 leading-relaxed whitespace-pre-line font-mono text-[11px] sm:text-xs">
+                      {isEn ? section.diagramNotesEn || section.diagramNotes : section.diagramNotes}
                     </div>
                   </div>
                 )}
@@ -688,7 +754,7 @@ export const ResearchDetailView: React.FC<ResearchDetailViewProps> = ({
               </div>
 
               {isDeepDiveOpen ? (
-                <div className="mt-3 p-3.5 sm:p-5 bg-neutral-50 border border-neutral-200 rounded-xl font-sans text-xs sm:text-base leading-relaxed text-neutral-900">
+                <div className="mt-3 p-3.5 sm:p-5 bg-neutral-50 border border-neutral-200 rounded-xl font-serif text-xs sm:text-base leading-relaxed text-neutral-900">
                   <p className="whitespace-pre-line">
                     {isEn ? paper.deepDiveContentEn || paper.deepDiveContent : paper.deepDiveContent}
                   </p>
@@ -706,7 +772,7 @@ export const ResearchDetailView: React.FC<ResearchDetailViewProps> = ({
 
         {/* Quick Transition Callout to Assessment */}
         <div className="border border-neutral-200 rounded-xl p-3 sm:p-4 bg-neutral-50/80 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
-          <div className="text-xs sm:text-sm font-sans font-semibold text-neutral-800">
+          <div className="text-xs sm:text-sm font-serif font-semibold text-neutral-800">
             {isEn
               ? 'Ready to test your comprehension? You can jump straight to the questions.'
               : 'هل ترغب باختبار مدى استيعابك للمفاهيم؟ يمكنك الانتقال مباشرة للأسئلة.'}
@@ -721,80 +787,115 @@ export const ResearchDetailView: React.FC<ResearchDetailViewProps> = ({
           </button>
         </div>
 
-        {/* SECTION 4: INTERACTIVE VISUAL SIMULATION (Fitted for mobile without redundant side borders) */}
-        {paper.simulationType !== 'none' && (
-          <section ref={simRef} className="my-5 sm:my-8 border-y sm:border sm:rounded-2xl border-neutral-200 -mx-3 sm:mx-0 px-3 py-4 sm:p-6 bg-white overflow-hidden">
+        {/* SECTION 4: OFFICIAL CERTIFIED INTERACTIVE SIMULATION */}
+        {phetData && (
+          <section ref={simRef} className="my-5 sm:my-8 border-y sm:border sm:rounded-2xl border-neutral-200 -mx-3 sm:mx-0 px-3 py-4 sm:p-6 bg-white overflow-hidden font-serif">
             <div className="border-b border-neutral-200 pb-3 mb-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
               <div>
                 <div className="flex items-center gap-2">
-                  <span className="bg-black text-white px-2 py-0.5 font-mono text-[10px] sm:text-xs font-bold uppercase inline-block rounded-md">
-                    {isEn ? 'Interactive Simulation Engine' : 'محرك المحاكاة التفاعلية'}
+                  <span className="bg-black text-white px-2 py-0.5 font-serif text-[10px] sm:text-xs font-bold uppercase inline-block rounded-md">
+                    {isEn ? 'OFFICIAL SIMULATOR • PHET INTERACTIVE' : 'المحاكي الأصلي المعتمد • PhET'}
                   </span>
-                  <span className="font-mono text-xs text-neutral-500">
-                    {simEngine === 'builtin' ? '[CANVAS 60FPS]' : '[PhET LAB CC-BY-4.0]'}
+                  <span className="font-serif text-xs text-neutral-500">
+                    [CC-BY-4.0 • University of Colorado Boulder]
                   </span>
                 </div>
                 <h3 className="text-lg sm:text-2xl font-black font-headline mt-1">
-                  {isEn ? 'Visual Waveform & System Response' : 'راسم الاستجابة والتحليل الحركي للظاهرة'}
+                  {isEn ? 'Official Interactive Laboratory & Practical Experiments' : 'المختبر التفاعلي الأصلي والتجارب المعملية المعتمدة'}
                 </h3>
               </div>
 
-              {/* Simulation Switcher */}
-              <div className="flex items-center gap-1.5 p-1 bg-neutral-100 rounded-xl border border-neutral-200 font-mono text-xs">
-                <button
-                  type="button"
-                  onClick={() => setSimEngine('builtin')}
-                  className={`px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer ${
-                    simEngine === 'builtin'
-                      ? 'bg-black text-white shadow-xs'
-                      : 'text-neutral-700 hover:text-black'
-                  }`}
+              {/* Direct Open Button to Official Simulator */}
+              <div className="flex items-center gap-2">
+                <a
+                  href={phetData.link || phetData.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-raw-primary px-3 py-1.5 text-xs font-serif font-bold flex items-center gap-1.5 rounded-lg"
                 >
-                  {isEn ? 'Interactive Canvas' : 'المحاكي المدمج'}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setSimEngine('phet')}
-                  className={`px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer ${
-                    simEngine === 'phet'
-                      ? 'bg-black text-white shadow-xs'
-                      : 'text-neutral-700 hover:text-black'
-                  }`}
-                >
-                  {isEn ? 'PhET Official Lab' : 'محاكي PhET التفاعلي'}
-                </button>
+                  <span>{isEn ? 'Open at PhET.colorado.edu' : 'فتح المحاكي في موقعه الأصلي'}</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
               </div>
             </div>
 
-            {simEngine === 'builtin' ? (
-              <SimulationViewer type={paper.simulationType} />
-            ) : (
-              <SimulationWithGuide
-                simulationUrl={phetData.url}
-                simulationTitle={phetData.name}
-                guideType={
-                  paper.id.includes('fourier') || paper.id.includes('waveform') || paper.id === 'paper-signal-waveforms' || paper.id === 'paper-edu-3'
-                    ? 'fourier_waves'
-                    : paper.id.includes('transmission') || paper.id === 'paper-power-transmission' || paper.id === 'paper-edu-1'
-                    ? 'transmission_grid'
-                    : paper.id.includes('solar') || paper.id.includes('battery') || paper.id.includes('renewable') || paper.id.includes('grid') || paper.id === 'paper-edu-4'
-                    ? 'grid_solar'
-                    : paper.id.includes('ac') || paper.id.includes('rlc') || paper.id.includes('resonance') || paper.id.includes('power-factor') || paper.id === 'paper-edu-2'
-                    ? 'ac_rlc'
-                    : 'dc_circuit'
-                }
-                language={language}
-              />
-            )}
+            <SimulationWithGuide
+              simulationUrl={phetData.url}
+              simulationTitle={phetData.name}
+              guideType={
+                paper.id.includes('kirchhoff')
+                  ? 'kirchhoff_circuit'
+                  : paper.id.includes('capacitor') || paper.id.includes('inductor')
+                  ? 'ac_rc_rl'
+                  : paper.id.includes('phase') || paper.id === 'paper-ac-sinewaves'
+                  ? 'ac_phase'
+                  : paper.id.includes('power-factor')
+                  ? 'power_factor'
+                  : paper.id.includes('battery')
+                  ? 'battery_storage'
+                  : paper.id.includes('frequency')
+                  ? 'grid_frequency'
+                  : paper.id.includes('fourier') || paper.id.includes('waveform') || paper.id === 'paper-signal-waveforms' || paper.id === 'paper-edu-3'
+                  ? 'fourier_waves'
+                  : paper.id.includes('transmission') || paper.id === 'paper-power-transmission' || paper.id === 'paper-edu-1'
+                  ? 'transmission_grid'
+                  : paper.id.includes('solar') || paper.id === 'paper-edu-4'
+                  ? 'grid_solar'
+                  : paper.id.includes('ac') || paper.id.includes('rlc') || paper.id.includes('resonance') || paper.id === 'paper-edu-2'
+                  ? 'ac_rlc'
+                  : 'dc_circuit'
+              }
+              language={language}
+            />
           </section>
         )}
 
-        {/* SECTION 5: REFERENCES */}
+        {/* SECTION 08: WHAT I LEARNED */}
+        {paper.whatILearned && paper.whatILearned.length > 0 && (
+          <section className="border border-neutral-200 rounded-xl p-4 sm:p-6 bg-neutral-50 space-y-3 font-serif">
+            <h3 className="text-base sm:text-lg font-black font-headline text-black flex items-center gap-2">
+              <span className="font-mono text-xs bg-black text-white px-2 py-0.5 rounded font-bold">08</span>
+              <span>{isEn ? 'What I Learned (Reflections)' : 'ما تعلمته من دراسة هذا المفهوم'}</span>
+            </h3>
+            <ul className="space-y-2 text-xs sm:text-sm text-neutral-800">
+              {(isEn ? paper.whatILearnedEn || paper.whatILearned : paper.whatILearned).map((item, idx) => (
+                <li key={idx} className="flex items-start gap-2">
+                  <span className="font-mono text-[10px] bg-white border border-neutral-300 text-black px-1.5 py-0.2 rounded mt-0.5 font-bold shrink-0">
+                    ✓
+                  </span>
+                  <span className="leading-relaxed">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {/* SECTION 09: WHAT COMES NEXT */}
+        {paper.nextStudyGoals && paper.nextStudyGoals.length > 0 && (
+          <section className="border border-neutral-200 rounded-xl p-4 sm:p-6 bg-white space-y-3 font-serif">
+            <h3 className="text-base sm:text-lg font-black font-headline text-black flex items-center gap-2">
+              <span className="font-mono text-xs border border-neutral-400 bg-neutral-100 text-neutral-900 px-2 py-0.5 rounded font-bold">09</span>
+              <span>{isEn ? 'What Comes Next (Next Study Goals)' : 'ما سأبحثه وأستقصيه في الخطوة التالية'}</span>
+            </h3>
+            <ul className="space-y-2 text-xs sm:text-sm text-neutral-800">
+              {(isEn ? paper.nextStudyGoalsEn || paper.nextStudyGoals : paper.nextStudyGoals).map((goal, idx) => (
+                <li key={idx} className="flex items-start gap-2">
+                  <span className="font-mono text-[11px] text-neutral-500 font-bold shrink-0 mt-0.5">
+                    →
+                  </span>
+                  <span className="leading-relaxed">{goal}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {/* SECTION 10: SOURCES & REFERENCES */}
         {paper.references && paper.references.length > 0 && (
           <section ref={referencesRef} className="border-t border-neutral-200 pt-4 sm:pt-6 font-mono text-[11px] sm:text-xs">
-            <h3 className="font-bold text-xs sm:text-sm uppercase text-black mb-2 flex items-center gap-1.5">
-              <FileText className="w-3.5 h-3.5 text-neutral-500" />
-              {isEn ? 'Academic References & Readings:' : 'المراجع الأكاديمية والكتب المعتمدة:'}
+            <h3 className="font-bold text-xs sm:text-sm uppercase text-black mb-2 flex items-center gap-2">
+              <span className="bg-black text-white px-1.5 py-0.2 rounded text-[10px]">10</span>
+              <span>{isEn ? 'Sources & Academic References:' : 'المصادر والمراجع الأكاديمية:'}</span>
             </h3>
             <ol className="space-y-1.5 list-decimal list-inside text-neutral-700 pr-1">
               {paper.references.map((ref, idx) => (
@@ -808,8 +909,7 @@ export const ResearchDetailView: React.FC<ResearchDetailViewProps> = ({
 
         {/* Tags */}
         <div className="flex flex-wrap items-center gap-1.5 pt-3 border-t border-neutral-200">
-          <span className="font-mono text-xs font-bold flex items-center gap-1 text-neutral-500">
-            <Tag className="w-3.5 h-3.5" />
+          <span className="font-mono text-xs font-bold text-neutral-500">
             {isEn ? 'Tags:' : 'الوسوم:'}
           </span>
           {(isEn ? paper.tagsEn || paper.tags : paper.tags).map((t, idx) => (
@@ -848,21 +948,30 @@ export const ResearchDetailView: React.FC<ResearchDetailViewProps> = ({
       </article>
 
       {/* Bottom Actions Toolbar */}
-      <div className="print:hidden border border-neutral-200 rounded-2xl p-3 sm:p-4 bg-white flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-4">
+      <div className="print:hidden border border-neutral-200 rounded-2xl p-3 sm:p-4 bg-white flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-4 font-serif">
         <button
           onClick={onBack}
-          className="btn-raw-secondary min-h-[42px] px-5 py-2 font-mono text-xs font-bold flex items-center justify-center gap-2 cursor-pointer"
+          className="btn-raw-secondary min-h-[42px] px-5 py-2 text-xs font-bold flex items-center justify-center gap-2 cursor-pointer"
         >
           {isEn ? <ArrowLeft className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}
-          {isEn ? 'Back to All Papers' : 'العودة لكافة الأبحاث'}
+          <span>{isEn ? 'Back to All Papers' : 'العودة لكافة الأبحاث'}</span>
         </button>
+
+        {onNavigateProjects && (
+          <button
+            onClick={onNavigateProjects}
+            className="btn-raw-secondary min-h-[42px] px-5 py-2 text-xs font-bold flex items-center justify-center gap-2 cursor-pointer bg-neutral-100 hover:bg-neutral-200 border-neutral-300 text-black"
+          >
+            <span>{isEn ? 'Applied Engineering Projects (6) →' : 'المشاريع الهندسية التطبيقية (6) ←'}</span>
+          </button>
+        )}
 
         <button
           onClick={handleDownloadPDF}
-          className="btn-raw-primary min-h-[42px] px-5 py-2 font-mono text-xs font-bold flex items-center justify-center gap-2 cursor-pointer"
+          className="btn-raw-primary min-h-[42px] px-5 py-2 text-xs font-bold flex items-center justify-center gap-2 cursor-pointer"
         >
           <Download className="w-4 h-4" />
-          {isEn ? 'Download Paper as PDF' : 'تنزيل البحث بصيغة PDF'}
+          <span>{isEn ? 'Download Paper as PDF' : 'تنزيل البحث بصيغة PDF'}</span>
         </button>
       </div>
 

@@ -3,6 +3,7 @@ export type TopicCategory =
   | 'basic_circuits'
   | 'electrical_circuits'
   | 'ac_signals'
+  | 'power_engineering'
   | 'electrical_power'
   | 'power_transmission'
   | 'solar_energy'
@@ -168,6 +169,7 @@ export interface NewsItem {
   content: string[];
   contentEn: string[];
   tags: string[];
+  tagsEn?: string[];
   readTime: string;
   readTimeEn: string;
 }

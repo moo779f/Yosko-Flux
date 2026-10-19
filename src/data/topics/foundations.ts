@@ -32,6 +32,11 @@ export const FOUNDATIONS_TOPICS: ResearchPaper[] = [
       'شدة التيار (I) هي معدل تدفق الشحنة بالزمن (1 أمبير = 1 كولوم في الثانية ≈ 6.24 × 10¹⁸ إلكترون/ث).',
       'المقاومة (R) تسبب تبديداً للطاقة الكهربائية على شكل حرارة بفعل تصادم الإلكترونات بذرات الموصل (P = I²·R).'
     ],
+    keyFindingsEn: [
+      'Electrical potential difference (V) is work per unit charge, representing the electromotive driving pressure.',
+      'Current (I) is the time rate of charge flow (1 Ampere = 1 Coulomb per second ≈ 6.24 × 10¹⁸ electrons/s).',
+      'Resistance (R) causes electrical dissipation into heat through electron collisions with metal atoms (P = I²·R).'
+    ],
     whatILearned: [
       'فهمت أن البطارية لا تصنع إلكترونات جديدة، بل توفر فرق الجهد الذي يدفع الإلكترونات الموجودة أصلاً في ذرات السلك.',
       'تعلمت كيف أحسب المقاومة المناسبة لحماية أي LED: R = (V_supply - V_led) / I_led.',
@@ -53,6 +58,7 @@ export const FOUNDATIONS_TOPICS: ResearchPaper[] = [
         heading: '1. الشحنة والجهد والتيار: الصورة الفيزيائية المجهرية',
         headingEn: '1. Charge, Voltage and Current: The Microscopic Picture',
         body: 'الكهرباء في أبسط صورها هي حركة جسيمات دقيقة سالبة الشحنة تسمى الإلكترونات.\nفي سلك نحاسي، تملك ذرات النحاس إلكترونات تكافؤ حرة تتحرك عشوائياً. عندما نصل بطارية، ينشأ مجال كهربائي داخل السلك يمارس قوة على هذه الإلكترونات، مما يجبرها على الانجراف في اتجاه منتظم (Drift Velocity).\n\n- فرق الجهد (Voltage - V): يُقاس بالفولت (V)، وهو مقياس للطاقة الممنوحة لكل وحدة شحنة (1 Volt = 1 Joule / Coulomb). إنه يمثل "الضغط" أو "الدافع" الذي يحث الشحنات على الحركة.\n- شدة التيار (Current - I): تُقاس بالأمبير (A)، وهي كمية الشحنة الكهربائية التي تعبر مقطعاً من الموصل خلال ثانية واحدة (1 Ampere = 1 Coulomb / second).',
+        bodyEn: 'Electricity in its purest physical form is the drift of microscopic negatively charged particles called electrons.\nIn a copper conductor, atoms share delocalized valence electrons that drift randomly at thermal equilibrium. Connecting a DC battery creates an internal electric field that exerts a directional force on these carriers, producing an organized drift velocity.\n\n- Voltage (V): Measured in volts, it quantifies electrical work done per unit charge (1 V = 1 Joule / Coulomb), representing the driving pressure propelling charges.\n- Current (I): Measured in amperes, it tracks the charge volume crossing a conductor cross-section per second (1 A = 1 Coulomb / second).',
         equations: [
           'I = \\frac{\\Delta Q}{\\Delta t} \\quad [\\text{تعريف شدة التيار}]',
           'V = \\frac{W}{Q} \\quad [\\text{فرق الجهد: الشغل المبذول لكل وحدة شحنة}]'
@@ -68,19 +74,23 @@ export const FOUNDATIONS_TOPICS: ResearchPaper[] = [
           caption: 'مخطط يوضح انجراف الإلكترونات تحت تأثير المجال الكهربائي ومفهوم شدة التيار.',
           captionEn: 'Electron drift velocity through conductor lattice.'
         },
-        keyTakeaway: 'الجهد هو "الضغط الدافِع"، والتيار هو "معدل التدفق الفعلي للإلكترونات".'
+        keyTakeaway: 'الجهد هو "الضغط الدافِع"، والتيار هو "معدل التدفق الفعلي للإلكترونات".',
+        keyTakeawayEn: 'Voltage is the driving pressure, while current is the actual flow rate of drifting charges.'
       },
       {
         heading: '2. المقاومة وقانون أوم: الاحتكاك الذري وتبديد الطاقة',
         headingEn: '2. Resistance and Ohm\'s Law: Atomic Collisions and Power',
         body: 'أثناء حركة الإلكترونات داخل الموصل، تصطدم بأيونات الشبكة البلورية للمعدن وتفقد جزءاً من طاقتها الحركية لتتحول إلى اهتزازات حرارية. هذه الإعاقة تسمى "المقاومة الكهربائية" (Resistance - R) وتُقاس بالأوم (Ω).\n\nفي عام 1827، اكتشف الفيزيائي الألماني جورج سيمون أوم تجريبياً أن شدة التيار المار في موصل معدني تتناسب طردياً مع فرق الجهد بين طرفيه (عند ثبوت درجة الحرارة):\n\nV = I · R\n\nأما القدرة الكهربائية المبددة في المقاومة فتُعطى بالعلاقة:\nP = V · I = I² · R',
+        bodyEn: 'As drifting electrons traverse the conductor lattice, they scatter against vibrating copper ions and dissipate kinetic momentum into thermal lattice vibrations. This opposition is defined as electrical resistance (R) and measured in ohms (Ω).\n\nIn 1827, German physicist Georg Simon Ohm experimentally formulated that current through a metallic conductor is directly proportional to applied voltage at constant temperature:\n\nV = I · R\n\nElectrical power dissipated across the resistive element is given by:\nP = V · I = I² · R',
         equations: [
           'V = I \\cdot R \\quad [\\text{قانون أوم الأساسي}]',
           'P = V \\cdot I = I^2 R = \\frac{V^2}{R} \\quad [\\text{القدرة الكهربائية بالواط}]',
           'R = \\rho \\frac{L}{A} \\quad [\\text{مقاومة السلك بدلالة المقاومية والطول والمساحة}]'
         ],
         diagramNotes: 'مثال عددي بسيط قمت بحسابه ثم قياسه معملياً: إذا وصلنا مقاومة R = 100 Ω بمصدر جهد 9V، فإن شدة التيار المار تكون:\nI = V / R = 9 / 100 = 0.09 A (أي 90 ميلي أمبير).\nوالقدرة الحرارية المبددة فيها:\nP = 9V × 0.09A = 0.81 W. لذلك نحتاج لمقاومة تتحمل 1 واط على الأقل حتى لا تسخن وتحترق!',
-        keyTakeaway: 'كلما زادت المقاومة قل التيار عند ثبوت الجهد، وتتحول الطاقة الكهربائية إلى حرارة وفق قانون جول.'
+        diagramNotesEn: 'Worked numerical calculation & lab measurement: Connecting R = 100 Ω across a 9V source yields:\nI = V / R = 9 / 100 = 0.09 A (90 mA).\nDissipated thermal power:\nP = 9V × 0.09A = 0.81 W. Hence, at least a 1W-rated power resistor is required to prevent overheating and thermal damage!',
+        keyTakeaway: 'كلما زادت المقاومة قل التيار عند ثبوت الجهد، وتتحول الطاقة الكهربائية إلى حرارة وفق قانون جول.',
+        keyTakeawayEn: 'Higher resistance restricts current proportionally at constant voltage, converting electrical power into heat via Joule dissipation.'
       }
     ],
     simulationType: 'none',
@@ -180,6 +190,11 @@ export const FOUNDATIONS_TOPICS: ResearchPaper[] = [
       'قانون كيرشوف للجهد (KVL): المجموع الجبري لفروق الجهد في أي مسار مغلق يساوي صفراً (حفظ الطاقة).',
       'تحويل الدوائر الكهربائية إلى جملة معادلات خطية هو الأساس الذي تعتمد عليه كافة برامج محاكاة الدوائر الاحترافية (SPICE).'
     ],
+    keyFindingsEn: [
+      'Kirchhoff’s Current Law (KCL): The sum of currents entering any circuit node must equal the sum of currents leaving (charge conservation).',
+      'Kirchhoff’s Voltage Law (KVL): The algebraic sum of electrical potential differences around any closed circuit loop equals zero (energy conservation).',
+      'Translating circuit loops into simultaneous linear equations is the foundation behind all modern SPICE circuit simulation algorithms.'
+    ],
     whatILearned: [
       'تحديد العقد (Nodes) والمسارات المغلقة (Loops) هو أول خطوة لتحليل أي دائرة بدقة.',
       'اصطلاح الإشارات في KVL: الصعود في الجهد موجب (+) والهبوط في الجهد عبر المقاومة سالب (-I·R).',
@@ -201,6 +216,7 @@ export const FOUNDATIONS_TOPICS: ResearchPaper[] = [
         heading: '1. قانون كيرشوف للتيار (KCL) وحفظ الشحنة الكهربائية',
         headingEn: '1. Kirchhoff\'s Current Law (KCL) & Charge Conservation',
         body: 'ينص قانون كيرشوف الأول (KCL) على أن المجموع الجبري للتيارات عند أي عقدة كهربائية (Junction Node) يساوي صفراً:\n\nΣ I_in = Σ I_out\n\nالأساس الفيزيائي لهذا القانون هو مبدأ راسخ لا يتزعزع: حفظ الشحنة الكهربائية (Conservation of Charge). الإلكترونات لا تتراكم داخل العقدة ولا تختفي؛ فكل كولوم يدخل من سلك يجب أن يغادر عبر الأسلاك الأخرى في نفس اللحظة.',
+        bodyEn: 'Kirchhoff’s First Law (KCL) dictates that the algebraic sum of currents at any circuit junction equals zero:\n\nΣ I_in = Σ I_out\n\nThe physical foundation of this law is absolute charge conservation. Conductor junctions cannot accumulate or destroy electrons; every coulomb that enters a node must leave through connected branches simultaneously.',
         equations: [
           '\\sum_{k=1}^{n} I_k = 0 \\quad [\\text{صيغة KCL عند العقدة}]',
           'I_{\\text{in, 1}} + I_{\\text{in, 2}} = I_{\\text{out, 3}}'
@@ -216,19 +232,23 @@ export const FOUNDATIONS_TOPICS: ResearchPaper[] = [
           caption: 'مخطط دائرة ببطاريتين وحل تيارات الفروع بمعادلات كيرشوف الخطية.',
           captionEn: 'Two-source multi-loop circuit solved via Kirchhoff linear equations.'
         },
-        keyTakeaway: 'العقدة لا تخزن شحنات؛ ما يدخل العقدة يساوي ما يخرج منها بالضبط.'
+        keyTakeaway: 'العقدة لا تخزن شحنات؛ ما يدخل العقدة يساوي ما يخرج منها بالضبط.',
+        keyTakeawayEn: 'Circuit nodes cannot store charge; total current entering must exactly equal total current exiting.'
       },
       {
         heading: '2. قانون كيرشوف للجهد (KVL) وتطبيق عملي خطوة بخطوة',
         headingEn: '2. Kirchhoff\'s Voltage Law (KVL) & Step-by-Step Calculation',
         body: 'ينص قانون كيرشوف الثاني (KVL) على أن المجموع الجبري لفروق الجهد الكهربائي عبر أي مسار مغلق (Loop) في الدائرة يساوي صفراً:\n\nΣ V_loop = 0\n\nوهذا هو التعبير الكهربائي المباشر عن مبدأ حفظ الطاقة (Conservation of Energy): الطاقة التي يكتسبها الإلكترون عند عبور البطارية يستهلكها بالكامل في المقاومات أثناء دورته حتى يعود لنفس نقطة البداية بنفس طاقة الوضع.',
+        bodyEn: 'Kirchhoff’s Second Law (KVL) states that the directed sum of potential differences around any closed circuit loop must equal zero:\n\nΣ V_loop = 0\n\nThis is the direct circuit representation of energy conservation: the potential energy gained by an electron traversing an electromotive source is entirely dissipated across circuit components before returning to its initial state.',
         equations: [
           '\\sum_{k=1}^{m} V_k = 0 \\quad [\\text{صيغة KVL للمسار المغلق}]',
           'V_1 - I_1 R_1 - I_3 R_3 = 0 \\quad [\\text{معادلة الحلقة الأولى}]',
           'V_2 - I_2 R_2 - I_3 R_3 = 0 \\quad [\\text{معادلة الحلقة الثانية}]'
         ],
         diagramNotes: 'مثال عددي قمت بحله:\nالبطارية الأولى V₁ = 12V مع R₁ = 4Ω، والبطارية الثانية V₂ = 6V مع R₂ = 2Ω، والمقاومة المشتركة R₃ = 6Ω.\nبالتعويض في المعادلتين مع I₃ = I₁ + I₂:\n12 - 4 I₁ - 6(I₁ + I₂) = 0  =>  10 I₁ + 6 I₂ = 12\n6 - 2 I₂ - 6(I₁ + I₂) = 0  =>  6 I₁ + 8 I₂ = 6\nبحل المعادلتين نحصل بدقة على: I₁ = 1.36 A، و I₂ = -0.27 A (الإشارة السالبة تعني أن البطارية الثانية يتم شحنها في الواقع!)، و I₃ = 1.09 A.',
-        keyTakeaway: 'قوانين كيرشوف تتيح حل أعقد الشبكات الكهربائية عبر تحويل الفيزياء إلى معادلات جبرية مباشرة.'
+        diagramNotesEn: 'Worked numerical two-loop example:\nBattery V₁ = 12V with R₁ = 4Ω, Battery V₂ = 6V with R₂ = 2Ω, shared central branch R₃ = 6Ω.\nSubstituting into KVL equations with I₃ = I₁ + I₂:\n12 - 4 I₁ - 6(I₁ + I₂) = 0  =>  10 I₁ + 6 I₂ = 12\n6 - 2 I₂ - 6(I₁ + I₂) = 0  =>  6 I₁ + 8 I₂ = 6\nSolving this 2x2 linear system yields: I₁ = 1.36 A, I₂ = -0.27 A (the negative sign proves the 6V battery is actually being charged by the 12V source!), and I₃ = 1.09 A.',
+        keyTakeaway: 'قوانين كيرشوف تتيح حل أعقد الشبكات الكهربائية عبر تحويل الفيزياء إلى معادلات جبرية مباشرة.',
+        keyTakeawayEn: 'Kirchhoff\'s laws enable the systematic solution of arbitrarily complex networks by mapping circuit physics into solvable linear algebraic equations.'
       }
     ],
     simulationType: 'none',
@@ -307,6 +327,11 @@ export const FOUNDATIONS_TOPICS: ResearchPaper[] = [
       'الملف يخزن الطاقة في مجال كهرومغناطيسي ويقاوم التغير المفاجئ في شدة التيار (v = L · di/dt) وفق قانون لنز.',
       'المقاومة تستهلك الطاقة نهائياً كحرارة (تبديد إيجابي)، بينما المكثف والملف يتبادلان الطاقة مع المصدر دون إتلافها (طاقة تفاعلية).'
     ],
+    keyFindingsEn: [
+      'Capacitors store charge within an electrostatic field and resist instantaneous changes in voltage (i = C · dv/dt).',
+      'Inductors store energy within an electromagnetic field and oppose instantaneous changes in current (v = L · di/dt) per Lenz’s Law.',
+      'Resistors permanently dissipate energy as heat, whereas ideal capacitors and inductors exchange stored energy with the circuit reactively.'
+    ],
     whatILearned: [
       'فهمت معنى الثابت الزمني τ = R·C: بعد زمن قدره 1τ يشحن المكثف بنسبة 63.2% من جهد المصدر، وبعد 5τ يشحن بالكامل تقريباً (99.3%).',
       'فهمت لماذا يقفز شرار عند فصل الملفات الحثية: محاولة قطع التيار فجأة تجعل di/dt سالباً كبيراً جداً، فيولد الملف جهداً حثياً عكسياً هائلاً V = -L(di/dt)!',
@@ -328,6 +353,7 @@ export const FOUNDATIONS_TOPICS: ResearchPaper[] = [
         heading: '1. المكثف الكهربائي: تخزين الطاقة في المجال الكهربي (Electric Field)',
         headingEn: '1. The Capacitor: Energy Storage in Electrostatic Fields',
         body: 'يتكون المكثف في أبسط أشكاله من لوحين موصلين متوازيين تفصل بينهما مادة عازلة (Dielectric) مثل الهواء أو السيراميك أو المايكا.\nعند توصيل المكثف ببطارية، تتراكم إلكترونات على أحد اللوحين وتفرغ من اللوح المقابل، فينشأ مجال كهربائي شديد في الفراغ العازل بينهما.\n\nالطاقة المخزنة في هذا المجال الكهربائي تُعطى بالمعادلة:\nE = ½ C V²\n\nحيث C هي السعة الكهربائية وتُقاس بالفاراد (Farad). خاصية المكثف الجوهرية: إنه يقاوم التغير اللحظي في الجهد، لأن الجهد لا يمكن أن يقفز فجأة إلا إذا تدفق تيار لا نهائي (i = C · dv/dt).',
+        bodyEn: 'A capacitor consists of two conductive plates separated by an insulating dielectric medium (such as air, ceramic, or mica).\nWhen connected to a potential source, opposite charges accumulate on the plates, establishing an intense electrostatic field across the dielectric gap.\n\nEnergy stored within this electrostatic field is given by:\nE = ½ C V²\n\nwhere C is capacitance in farads (F). The defining physical property of a capacitor is that it opposes instantaneous changes in voltage (i = C · dv/dt).',
         equations: [
           'q = C \\cdot V \\quad [\\text{شحنة المكثف بدلالة السعة والجهد}]',
           'i(t) = C \\frac{dv(t)}{dt} \\quad [\\text{العلاقة التفاضلية لتيار المكثف}]',
@@ -344,19 +370,23 @@ export const FOUNDATIONS_TOPICS: ResearchPaper[] = [
           caption: 'مقارنة فيزيائية بين تخزين الطاقة في المكثف والملف.',
           captionEn: 'Physical comparison of electrostatic vs magnetic energy storage.'
         },
-        keyTakeaway: 'المكثف خزان جهد: يشحن ببطء ويفرغ ببطء حسب الثابت الزمني τ = RC.'
+        keyTakeaway: 'المكثف خزان جهد: يشحن ببطء ويفرغ ببطء حسب الثابت الزمني τ = RC.',
+        keyTakeawayEn: 'A capacitor is a potential reservoir: it charges and discharges smoothly according to the circuit time constant τ = RC.'
       },
       {
         heading: '2. الملف الحثي: عزم القصور الذاتي المغناطيسي (Magnetic Field)',
         headingEn: '2. The Inductor: Magnetic Momentum and Lenz\'s Law',
         body: 'الملف (Inductor) هو سلك موصل ملفوف في حلقات حلزونية. عندما يمر فيه تيار، ينشأ داخل القلب مجال مغناطيسي يحمل طاقة:\n\nE = ½ L I²\n\nحيث L هي معامل الحث الذاتي ويُقاس بالهنري (Henry).\nوفق قانون فراداي وقانون لنز، عندما نحاول تغيير شدة التيار المار في الملف، يولد الملف قوة دافعة كهربائية عكسية (Back EMF) تقاوم هذا التغير:\n\nv(t) = L · (di/dt)\n\nالملف يشبه جسماً ميكانيكياً ذا كتلة ثقيلة: يكره أن يتوقف فجأة إذا كان يتحرك، ويكره أن يتحرك فجأة إذا كان ساكناً!',
+        bodyEn: 'An inductor consists of conductive wire coiled into helical loops. When current flows, a concentrated magnetic field forms within the core carrying stored energy:\n\nE = ½ L I²\n\nwhere L is self-inductance measured in henries (H).\nPer Faraday’s and Lenz’s laws, attempting to alter the current induces a counter-electromotive force (Back-EMF) that opposes the change:\n\nv(t) = L · (di/dt)\n\nAn inductor behaves like mechanical inertia: it opposes sudden stops and opposes sudden acceleration.',
         equations: [
           'v(t) = L \\frac{di(t)}{dt} \\quad [\\text{الجهد الحثي المستحث في الملف}]',
           'E_L = \\frac{1}{2} L I^2 \\quad [\\text{الطاقة المغناطيسية المخزونة بالجول}]',
           '\\tau = \\frac{L}{R} \\quad [\\text{الثابت الزمني لدائرة RL الحثية}]'
         ],
         diagramNotes: 'تفسير الشرارة المعملية: إذا كان الملف يمر به 2A وفتحنا القاطع خلال 1 ميلي ثانية (0.001s)، وكان L = 1H:\nV = 1 × (2 / 0.001) = 2,000 فولت! هذا الجهد العالي يؤين الهواء ويصنع تلك الشرارة اللحظية المدهشة.',
-        keyTakeaway: 'الملف يقاوم تغير التيار كما يقاوم المكثف تغير الجهد؛ واجتماعهما معاً يصنع ظاهرة الرنين الكهربائي.'
+        diagramNotesEn: 'Lab spark calculation: If an inductor carries 2A and the contact switch opens in 1 millisecond (0.001s) with L = 1H:\nV = L · (ΔI/Δt) = 1 × (2 / 0.001) = 2,000 Volts! This extreme back-EMF spike ionizes the surrounding air gap, creating that visible inductive spark.',
+        keyTakeaway: 'الملف يقاوم تغير التيار كما يقاوم المكثف تغير الجهد؛ واجتماعهما معاً يصنع ظاهرة الرنين الكهربائي.',
+        keyTakeawayEn: 'Inductors oppose current changes just as capacitors oppose voltage changes; combining both creates electrical resonance.'
       }
     ],
     simulationType: 'none',

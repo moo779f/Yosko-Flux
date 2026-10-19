@@ -39,14 +39,14 @@ export const ResearchCard: React.FC<ResearchCardProps> = ({ paper, language, onO
       <div className="space-y-3">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div className="flex flex-wrap items-center gap-1.5">
-            <span className="border border-neutral-200 bg-neutral-50 text-neutral-800 px-2 py-0.5 font-mono text-[10px] sm:text-[11px] font-bold uppercase rounded-md">
+            <span className="border border-neutral-200 bg-neutral-50 text-neutral-800 px-2 py-0.5 font-serif text-[10px] sm:text-[11px] font-bold uppercase rounded-md">
               {getCategoryLabel()}
             </span>
-            <span className="bg-black text-white px-2 py-0.5 font-mono text-[10px] sm:text-[11px] font-bold uppercase rounded-md">
+            <span className="bg-black text-white px-2 py-0.5 font-serif text-[10px] sm:text-[11px] font-bold uppercase rounded-md">
               {getTypeLabel()}
             </span>
           </div>
-          <div className="font-mono text-[11px] sm:text-xs text-neutral-500 flex items-center gap-1 font-medium">
+          <div className="font-serif text-[11px] sm:text-xs text-neutral-500 flex items-center gap-1 font-medium">
             <Clock className="w-3.5 h-3.5" />
             {paper.readingTimeMinutes} {isEn ? 'min' : 'دقيقة'}
           </div>
@@ -61,7 +61,7 @@ export const ResearchCard: React.FC<ResearchCardProps> = ({ paper, language, onO
         </h3>
 
         {paper.titleEn && !isEn && (
-          <div className="font-mono text-[11px] sm:text-xs text-neutral-500 font-medium">
+          <div className="font-serif text-[11px] sm:text-xs text-neutral-500 font-medium">
             {paper.titleEn}
           </div>
         )}
@@ -72,11 +72,11 @@ export const ResearchCard: React.FC<ResearchCardProps> = ({ paper, language, onO
         </p>
 
         {/* Tags with clean spacious layout */}
-        <div className="flex flex-wrap gap-1.5 pt-1 font-mono text-[10px] sm:text-[11px]">
+        <div className="flex flex-wrap gap-1.5 pt-1 font-serif text-[10px] sm:text-[11px]">
           {(isEn ? paper.tagsEn || paper.tags : paper.tags).slice(0, 3).map((tag, idx) => (
             <span
               key={idx}
-              className="border border-neutral-200 bg-neutral-50 px-2 py-0.5 text-neutral-600 font-medium rounded-md"
+              className="border border-neutral-200 bg-neutral-50 px-2 py-0.5 text-neutral-600 font-medium rounded-md font-serif"
             >
               #{tag}
             </span>

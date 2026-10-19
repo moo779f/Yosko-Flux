@@ -26,6 +26,7 @@ export const YoskoFluxLogo: React.FC<YoskoFluxLogoProps> = ({
         <img
           src="/logo.png"
           alt="YOSKO FLUX"
+          style={{ maxHeight: '60px', maxWidth: '300px', width: 'auto', height: 'auto' }}
           className={`w-full ${maxWidths[size]} h-auto object-contain mx-auto`}
         />
       </div>
@@ -33,16 +34,17 @@ export const YoskoFluxLogo: React.FC<YoskoFluxLogoProps> = ({
   }
 
   const heights = {
-    sm: 'h-8 sm:h-9',
-    md: 'h-9 sm:h-10',
-    lg: 'h-12 sm:h-14',
-    xl: 'h-16 sm:h-20',
+    sm: 'h-7 sm:h-8',
+    md: 'h-8 sm:h-9',
+    lg: 'h-10 sm:h-12',
+    xl: 'h-12 sm:h-14',
   };
 
   return (
     <img
       src="/logo.png"
       alt="YOSKO FLUX"
+      style={{ maxHeight: '58px', maxWidth: '280px', width: 'auto', height: 'auto' }}
       className={`${heights[size]} w-auto object-contain select-none shrink-0 ${className}`}
     />
   );

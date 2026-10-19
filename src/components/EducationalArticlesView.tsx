@@ -1,477 +1,254 @@
 import React, { useState } from 'react';
-import { EDUCATIONAL_ARTICLES, GOOGLE_SITES_GUIDE_STEPS, EducationalArticle } from '../data/educationalArticles';
-import { Language } from '../types';
-import { SimulationWithGuide } from './SimulationWithGuide';
+import { CURRICULUM_16_ARTICLES } from '../data/topics/curriculum16';
+import { Language, ResearchPaper } from '../types';
 import { MathFormula } from './MathFormula';
 import {
   BookOpen,
-  Copy,
-  Check,
-  ExternalLink,
-  HelpCircle,
-  Sparkles,
+  ArrowRight,
+  ArrowLeft,
+  Cpu,
   Layers,
-  ChevronDown,
-  ChevronUp,
-  FileCode,
-  Share2,
+  Sparkles,
+  Zap,
+  Battery,
+  Search,
   CheckCircle2,
-  Lightbulb,
-  Video,
-  Play
+  ExternalLink,
+  Tag,
+  Clock
 } from 'lucide-react';
 
 interface EducationalArticlesViewProps {
   language: Language;
   onOpenArticleDetail?: (articleId: string) => void;
+  onOpenProject?: (projectId: string) => void;
 }
 
 export const EducationalArticlesView: React.FC<EducationalArticlesViewProps> = ({
   language,
   onOpenArticleDetail,
+  onOpenProject
 }) => {
   const isEn = language === 'en';
-  const [selectedArticleId, setSelectedArticleId] = useState<string>(EDUCATIONAL_ARTICLES[0].id);
-  const [copiedKey, setCopiedKey] = useState<string | null>(null);
-  const [showGuide, setShowGuide] = useState<boolean>(true);
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [searchQuery, setSearchQuery] = useState<string>('');
 
-  const activeArticle =
-    EDUCATIONAL_ARTICLES.find((a) => a.id === selectedArticleId) || EDUCATIONAL_ARTICLES[0];
+  const categoryGroups = [
+    { id: 'all', titleAr: 'كافة المقالات الـ 16', titleEn: 'All 16 Articles', count: 16 },
+    { id: 'foundations', titleAr: '1. الأساسيات والدوائر (1-4)', titleEn: '1. Foundations (1-4)', count: 4 },
+    { id: 'ac_signals', titleAr: '2. التيار المتردد والإشارات (5-8)', titleEn: '2. AC & Signals (5-8)', count: 4 },
+    { id: 'power_engineering', titleAr: '3. هندسة القوى (9-11)', titleEn: '3. Power Engineering (9-11)', count: 3 },
+    { id: 'renewable_energy', titleAr: '4. الطاقة المتجددة (12-16)', titleEn: '4. Renewable Energy (12-16)', count: 5 }
+  ];
 
-  const handleCopy = (text: string, key: string) => {
-    navigator.clipboard?.writeText(text);
-    setCopiedKey(key);
-    setTimeout(() => {
-      setCopiedKey(null);
-    }, 2000);
-  };
-
-  const copyFullArticlePackage = (article: EducationalArticle) => {
-    let fullText = `${article.title}\n\n${article.paragraphs.join('\n\n')}`;
-    if (article.equations && article.equations.length > 0) {
-      fullText += `\n\n[الصيغ والمعادلات الرياضية]:\n${article.equations.join('\n')}`;
+  const filteredArticles = CURRICULUM_16_ARTICLES.filter((art) => {
+    if (selectedCategory !== 'all') {
+      if (selectedCategory === 'foundations' && art.category !== 'foundations') return false;
+      if (selectedCategory === 'ac_signals' && art.category !== 'ac_signals') return false;
+      if (selectedCategory === 'power_engineering' && art.category !== 'power_engineering') return false;
+      if (selectedCategory === 'renewable_energy' && art.category !== 'renewable_energy') return false;
     }
-    fullText += `\n\n${article.tryItYourselfPrompt}\n\n[كود التضمين للمحاكي PhET]:\n${article.embedCodeHtml}`;
-    if (article.videoEmbedHtml) {
-      fullText += `\n\n[كود التضمين للفيديو المرئي]:\n${article.videoEmbedHtml}`;
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase();
+      const matchTitle = art.title.toLowerCase().includes(q) || art.titleEn.toLowerCase().includes(q);
+      const matchAbstract = art.abstract.toLowerCase().includes(q) || (art.abstractEn && art.abstractEn.toLowerCase().includes(q));
+      const matchQuestion =
+        (art.investigationQuestion && art.investigationQuestion.toLowerCase().includes(q)) ||
+        (art.investigationQuestionEn && art.investigationQuestionEn.toLowerCase().includes(q));
+      return matchTitle || matchAbstract || matchQuestion;
     }
-    fullText += `\n\n[سطر النسبة القانوني]:\n${article.attribution}`;
-    handleCopy(fullText, `package-${article.id}`);
+    return true;
+  });
+
+  // Project linkage map
+  const projectLinkMap: Record<number, { num: string; id: string; titleAr: string; titleEn: string }> = {
+    1: { num: 'PROJECT 01', id: 'project-01-voltage-divider', titleAr: 'مجزئ الجهد', titleEn: 'Voltage Divider' },
+    2: { num: 'PROJECT 01', id: 'project-01-voltage-divider', titleAr: 'مجزئ الجهد', titleEn: 'Voltage Divider' },
+    3: { num: 'PROJECT 01', id: 'project-01-voltage-divider', titleAr: 'مجزئ الجهد', titleEn: 'Voltage Divider' },
+    4: { num: 'PROJECT 02', id: 'project-02-rc-circuit', titleAr: 'دائرة شحن المكثف RC', titleEn: 'RC Charging Circuit' },
+    5: { num: 'PROJECT 03', id: 'project-03-rlc-resonance', titleAr: 'رنين الدوائر المتوالية RLC', titleEn: 'Series RLC Resonance' },
+    6: { num: 'PROJECT 03', id: 'project-03-rlc-resonance', titleAr: 'رنين الدوائر المتوالية RLC', titleEn: 'Series RLC Resonance' },
+    7: { num: 'PROJECT 03', id: 'project-03-rlc-resonance', titleAr: 'رنين الدوائر المتوالية RLC', titleEn: 'Series RLC Resonance' },
+    8: { num: 'PROJECT 03', id: 'project-03-rlc-resonance', titleAr: 'رنين الدوائر المتوالية RLC', titleEn: 'Series RLC Resonance' },
+    9: { num: 'PROJECT 06', id: 'project-06-solar-battery-grid', titleAr: 'منظومة الطاقة والشبكة', titleEn: 'Solar + Battery + Grid' },
+    10: { num: 'PROJECT 06', id: 'project-06-solar-battery-grid', titleAr: 'منظومة الطاقة والشبكة', titleEn: 'Solar + Battery + Grid' },
+    11: { num: 'PROJECT 06', id: 'project-06-solar-battery-grid', titleAr: 'منظومة الطاقة والشبكة', titleEn: 'Solar + Battery + Grid' },
+    12: { num: 'PROJECT 05', id: 'project-05-solar-irradiance-temp', titleAr: 'أداء اللوح الشمسي والحرارة', titleEn: 'Solar Output vs Sunlight / Temp' },
+    13: { num: 'PROJECT 05', id: 'project-05-solar-irradiance-temp', titleAr: 'أداء اللوح الشمسي والحرارة', titleEn: 'Solar Output vs Sunlight / Temp' },
+    14: { num: 'PROJECT 04', id: 'project-04-solar-battery-load', titleAr: 'نظام الطاقة الشمسية والبطارية', titleEn: 'Solar Panel + Battery + Load' },
+    15: { num: 'PROJECT 06', id: 'project-06-solar-battery-grid', titleAr: 'منظومة الطاقة والشبكة', titleEn: 'Solar + Battery + Grid' },
+    16: { num: 'PROJECT 06', id: 'project-06-solar-battery-grid', titleAr: 'منظومة الطاقة والشبكة', titleEn: 'Solar + Battery + Grid' }
   };
 
   return (
-    <div className="space-y-6 sm:space-y-8 animate-fadeIn">
+    <div className="space-y-6 sm:space-y-8 animate-fadeIn max-w-6xl mx-auto font-serif pb-16">
       {/* Header Hub Banner */}
-      <section className="border border-neutral-200 rounded-2xl bg-white p-5 sm:p-8">
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b border-neutral-100 pb-5">
+      <section className="border border-neutral-200 rounded-2xl bg-white p-5 sm:p-8 md:p-10 shadow-2xs space-y-4">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-neutral-200 pb-5">
           <div className="space-y-2">
-            <div className="flex items-center gap-2">
-              <span className="bg-black text-white px-2.5 py-0.5 font-mono text-[11px] sm:text-xs font-bold uppercase rounded-md">
-                {isEn ? 'Educational Content & Publishing Kit' : 'محتوى تثقيفي • الطاقة والكهرباء'}
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="bg-black text-white px-2.5 py-0.5 font-mono text-[11px] font-bold uppercase rounded-md tracking-wider">
+                {isEn ? 'ELECTRICAL ENGINEERING CURRICULUM' : 'المسار التعليمي للهندسة الكهربائية'}
               </span>
-              <span className="border border-neutral-200 bg-neutral-50 text-neutral-600 px-2 py-0.5 font-mono text-[11px] rounded-md font-semibold">
-                {isEn ? `${EDUCATIONAL_ARTICLES.length} Articles + Google Sites Guide` : `${EDUCATIONAL_ARTICLES.length} مقالات جاهزة للنشر + دليل Google Sites`}
+              <span className="border border-neutral-200 bg-neutral-100 text-neutral-800 px-2 py-0.5 font-mono text-[11px] rounded-md font-bold">
+                16 {isEn ? 'Structured Articles' : 'مقالة تخصصية متدرجة'}
               </span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-black font-headline text-black">
-              {isEn
-                ? 'Educational Electricity Articles & PhET Interactive Labs'
-                : 'المقالات التثقيفية الجاهزة للنشر مع محاكيات PhET'}
+
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black font-headline text-black">
+              {isEn ? 'Technical Articles & Engineering Fundamentals' : 'المقالات الهندسية والفيزيائية التأسيسية'}
             </h1>
-            <p className="text-xs sm:text-sm text-neutral-600 font-serif max-w-2xl leading-relaxed">
+
+            <p className="text-xs sm:text-sm text-neutral-600 font-serif max-w-3xl leading-relaxed">
               {isEn
-                ? 'Four structured public-education articles on power, resonance, wave analysis, and solar energy in Chad. Ready to be exported directly to Google Sites with one-click interactive embed codes.'
-                : 'أربع مقالات علمية مبسطة ومعدة بعناية للنشر العام في مواقع Google Sites أو المنصات التعليمية، مزودة بمحاكيات PhET التفاعلية المرخصة وأزرار نسخ فورية لنصوص المقالات وأكواد التضمين.'}
+                ? 'Organized into 4 progressive disciplines: Foundations, AC & Signals, Power Engineering, and Renewable Energy. Each article follows a 10-step pedagogical structure connecting theory to practical circuit calculations and experiments.'
+                : 'منظمة في 4 مراحل تعليمية متدرجة: الأساسيات والدوائر، التيار المتردد والإشارات، هندسة القوى، والطاقة المتجددة. يتبع كل مقال هيكلاً تعليمياً من 10 خطوات يربط النظرية بالحسابات والمحاكاة.'}
             </p>
           </div>
 
-          <div className="flex items-center gap-2 shrink-0">
-            <button
-              onClick={() => setShowGuide(!showGuide)}
-              className="btn-raw-secondary px-3.5 py-2 text-xs font-mono font-bold flex items-center gap-1.5 cursor-pointer rounded-lg border border-neutral-200 hover:bg-neutral-100"
-            >
-              <HelpCircle className="w-4 h-4 text-neutral-700" />
-              <span>{showGuide ? (isEn ? 'Hide Guide' : 'إخفاء دليل الرفع') : (isEn ? 'Show Google Sites Guide' : 'عرض دليل الرفع')}</span>
-              {showGuide ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
-            </button>
+          <div className="p-3 border border-neutral-200 rounded-xl bg-neutral-50 font-mono text-xs text-center shrink-0">
+            <span className="text-neutral-500 block text-[10px] uppercase">
+              {isEn ? 'Progression' : 'التدرج العلمي'}
+            </span>
+            <span className="font-bold text-black text-xs">
+              01 → 16 Sequential
+            </span>
           </div>
         </div>
 
-        {/* Google Sites Step-by-Step Interactive Guide Box */}
-        {showGuide && (
-          <div className="mt-5 p-4 sm:p-5 bg-neutral-50/80 border border-neutral-200 rounded-xl space-y-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Lightbulb className="w-4 h-4 text-amber-600" />
-                <h3 className="font-headline font-bold text-sm sm:text-base text-neutral-900">
-                  {isEn ? 'Google Sites Quick Upload Guide (5 Minutes per Article)' : 'دليل الرفع السريع في Google Sites (5 دقائق لكل مقالة)'}
-                </h3>
-              </div>
-              <a
-                href="https://sites.google.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xs font-mono font-bold text-neutral-900 underline hover:text-neutral-600 flex items-center gap-1"
+        {/* 4 Category Filters + Search */}
+        <div className="pt-2 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 font-mono text-xs">
+          <div className="flex flex-wrap items-center gap-1.5">
+            {categoryGroups.map((cat) => (
+              <button
+                key={cat.id}
+                onClick={() => setSelectedCategory(cat.id)}
+                className={`px-3 py-1.5 rounded-lg border font-bold transition-all cursor-pointer ${
+                  selectedCategory === cat.id
+                    ? 'bg-black text-white border-black'
+                    : 'bg-white text-neutral-700 border-neutral-200 hover:bg-neutral-50 hover:border-black'
+                }`}
               >
-                <span>sites.google.com</span>
-                <ExternalLink className="w-3 h-3" />
-              </a>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-              {GOOGLE_SITES_GUIDE_STEPS.map((step) => (
-                <div
-                  key={step.stepNumber}
-                  className="bg-white p-3 sm:p-3.5 border border-neutral-200 rounded-lg space-y-1 shadow-2xs"
-                >
-                  <div className="flex items-center gap-2">
-                    <span className="w-5 h-5 rounded-full bg-black text-white text-[11px] font-mono font-bold flex items-center justify-center shrink-0">
-                      {step.stepNumber}
-                    </span>
-                    <h4 className="font-bold text-xs text-neutral-900">
-                      {isEn ? step.titleEn : step.title}
-                    </h4>
-                  </div>
-                  <p className="text-[11px] sm:text-xs text-neutral-600 leading-relaxed font-sans ps-7">
-                    {step.instruction}
-                  </p>
-                </div>
-              ))}
-            </div>
-
-            <div className="p-3 bg-amber-50/80 border border-amber-200 rounded-lg text-amber-900 text-xs flex items-center gap-2 font-mono">
-              <span className="font-bold shrink-0">⚠ {isEn ? 'Mandatory Rule:' : 'شرط قانوني إلزامي:'}</span>
-              <span>
-                {isEn
-                  ? 'Always include the Attribution line beneath each embedded simulation. It is the sole requirement to use PhET simulations for free under CC-BY-4.0.'
-                  : 'لا تنسَ وضع سطر النسبة (Attribution) تحت كل محاكي في موقعك — هو الشرط القانوني الوحيد لاستخدام محاكيات PhET مجانًا وفق رخصة المشاع الإبداعي CC-BY-4.0.'}
-              </span>
-            </div>
+                <span>{isEn ? cat.titleEn : cat.titleAr}</span>
+              </button>
+            ))}
           </div>
-        )}
+
+          <div className="relative min-w-[200px] sm:min-w-[240px]">
+            <Search className="w-3.5 h-3.5 absolute start-2.5 top-1/2 -translate-y-1/2 text-neutral-400" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder={isEn ? 'Search articles...' : 'ابحث في المقالات...'}
+              className="w-full ps-8 pe-3 py-1.5 border border-neutral-200 rounded-lg text-xs font-mono bg-neutral-50/70 focus:outline-none focus:border-black"
+            />
+          </div>
+        </div>
       </section>
 
-      {/* Article Selector Navigation Tabs */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 font-serif">
-        {EDUCATIONAL_ARTICLES.map((article) => {
-          const isSelected = article.id === selectedArticleId;
+      {/* 16 Articles Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
+        {filteredArticles.map((article) => {
+          const indexNum = article.progressionIndex || 1;
+          const linkedProject = projectLinkMap[indexNum];
+
           return (
-            <button
+            <div
               key={article.id}
-              onClick={() => setSelectedArticleId(article.id)}
-              className={`p-3 sm:p-4 rounded-xl border text-start transition-all cursor-pointer flex flex-col justify-between gap-2 ${
-                isSelected
-                  ? 'border-black bg-black text-white shadow-sm'
-                  : 'border-neutral-200 bg-white hover:bg-neutral-50 text-neutral-800'
-              }`}
+              className="border border-neutral-200 rounded-2xl bg-white p-5 sm:p-6 space-y-3.5 hover:border-black hover:shadow-md transition-all flex flex-col justify-between"
             >
-              <div className="flex items-center justify-between gap-1">
-                <span
-                  className={`font-mono text-[10px] font-bold px-1.5 py-0.5 rounded ${
-                    isSelected ? 'bg-neutral-800 text-neutral-200' : 'bg-neutral-100 text-neutral-600'
-                  }`}
-                >
-                  {isEn ? `Article ${article.articleNumber}` : `المقالة ${article.articleNumber}`}
-                </span>
-                <span className="font-mono text-[10px] opacity-75">
-                  {article.readingTimeMinutes} {isEn ? 'min' : 'د'}
-                </span>
+              <div className="space-y-3">
+                {/* Meta Header */}
+                <div className="flex items-center justify-between gap-2 border-b border-neutral-100 pb-2.5">
+                  <div className="flex items-center gap-2">
+                    <span className="font-mono text-xs font-black bg-black text-white px-2 py-0.5 rounded">
+                      {indexNum < 10 ? `ARTICLE 0${indexNum}` : `ARTICLE ${indexNum}`}
+                    </span>
+                    <span className="font-mono text-[10px] sm:text-[11px] text-neutral-500 uppercase font-bold">
+                      {isEn ? article.progressionCategoryEn : article.progressionCategory}
+                    </span>
+                  </div>
+
+                  <span className="font-mono text-[11px] text-neutral-500 flex items-center gap-1">
+                    <Clock className="w-3 h-3" />
+                    <span>{article.readingTimeMinutes} {isEn ? 'min' : 'دقائق'}</span>
+                  </span>
+                </div>
+
+                {/* Title */}
+                <div>
+                  <h3
+                    onClick={() => onOpenArticleDetail && onOpenArticleDetail(article.id)}
+                    className="text-lg sm:text-xl font-black font-headline text-black hover:underline cursor-pointer leading-tight"
+                  >
+                    {isEn ? article.titleEn : article.title}
+                  </h3>
+
+                  {/* Investigation question (01 - The Question) */}
+                  {article.investigationQuestion && (
+                    <div className="mt-2 p-2.5 bg-neutral-50 border border-neutral-200 rounded-lg text-xs font-serif text-neutral-800">
+                      <span className="font-mono text-[10px] font-bold text-neutral-500 uppercase block mb-0.5">
+                        {isEn ? '01 — The Question:' : '٠١ — السؤال الجوهري:'}
+                      </span>
+                      <p className="line-clamp-2 leading-relaxed">
+                        {isEn ? article.investigationQuestionEn || article.investigationQuestion : article.investigationQuestion}
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Abstract */}
+                  <p className="text-xs sm:text-sm text-neutral-600 font-serif mt-2 line-clamp-3 leading-relaxed">
+                    {isEn ? article.abstractEn || article.abstract : article.abstract}
+                  </p>
+                </div>
+
+                {/* Key takeaway or formula preview */}
+                {article.contentSections && article.contentSections[0] && article.contentSections[0].equations && article.contentSections[0].equations[0] && (
+                  <div className="p-2 border border-neutral-200 rounded-lg bg-white overflow-x-auto text-xs font-mono">
+                    <span className="text-[10px] text-neutral-400 block mb-0.5">
+                      {isEn ? 'Key Equation:' : 'المعادلة المحورية:'}
+                    </span>
+                    <MathFormula formula={article.contentSections[0].equations[0]} block={false} />
+                  </div>
+                )}
               </div>
-              <h4 className="font-bold text-xs sm:text-sm line-clamp-2 leading-snug">
-                {isEn ? article.titleEn : article.title}
-              </h4>
-            </button>
+
+              {/* Bottom Card Footer: Linked Project + Read Article Button */}
+              <div className="pt-3 border-t border-neutral-100 space-y-2">
+                {linkedProject && (
+                  <div className="flex items-center justify-between text-xs font-mono bg-neutral-50 p-2 rounded-lg border border-neutral-200">
+                    <span className="text-neutral-500 text-[10px] uppercase font-bold flex items-center gap-1">
+                      <Cpu className="w-3 h-3 text-black" />
+                      {isEn ? 'Applied Project:' : 'المشروع المرتبط:'}
+                    </span>
+                    <button
+                      onClick={() => onOpenProject && onOpenProject(linkedProject.id)}
+                      className="font-bold text-neutral-900 hover:text-black hover:underline cursor-pointer flex items-center gap-1 text-[11px]"
+                    >
+                      <span className="bg-black text-white px-1.5 py-0.2 rounded text-[10px]">
+                        {linkedProject.num}
+                      </span>
+                      <span className="truncate max-w-[140px]">
+                        {isEn ? linkedProject.titleEn : linkedProject.titleAr}
+                      </span>
+                      {isEn ? <ArrowRight className="w-3 h-3" /> : <ArrowLeft className="w-3 h-3" />}
+                    </button>
+                  </div>
+                )}
+
+                <button
+                  onClick={() => onOpenArticleDetail && onOpenArticleDetail(article.id)}
+                  className="w-full btn-raw-secondary min-h-[38px] px-3.5 py-1.5 font-mono text-xs font-bold flex items-center justify-center gap-1.5 rounded-lg cursor-pointer hover:bg-black hover:text-white transition-all"
+                >
+                  <span>{isEn ? 'Read Complete 10-Step Article' : 'قراءة المقال الكامل (الهيكل ذو الـ 10 خطوات)'}</span>
+                  {isEn ? <ArrowRight className="w-3.5 h-3.5" /> : <ArrowLeft className="w-3.5 h-3.5" />}
+                </button>
+              </div>
+            </div>
           );
         })}
       </div>
-
-      {/* Main Selected Article Detail Card */}
-      <article className="border border-neutral-200 rounded-2xl bg-white p-5 sm:p-8 space-y-6">
-        {/* Article Meta Bar & Quick Copy Actions */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-neutral-200 pb-4">
-          <div className="space-y-1">
-            <span className="font-mono text-xs font-bold text-neutral-500 uppercase">
-              {isEn ? `Educational Article #${activeArticle.articleNumber}` : `المقالة التثقيفية #${activeArticle.articleNumber}`}
-            </span>
-            <h2 className="text-xl sm:text-3xl font-black font-headline text-black">
-              {isEn ? activeArticle.titleEn : activeArticle.title}
-            </h2>
-          </div>
-
-          <div className="flex flex-wrap items-center gap-2">
-            {onOpenArticleDetail && (
-              <button
-                onClick={() => onOpenArticleDetail(activeArticle.id)}
-                className="btn-raw-secondary px-3.5 py-2 text-xs font-mono font-bold flex items-center gap-1.5 cursor-pointer rounded-lg border border-neutral-300 hover:bg-neutral-100"
-                title={isEn ? 'Open Full Interactive Study Mode' : 'فتح في قارئ الأبحاث التفاعلي الكامل'}
-              >
-                <ExternalLink className="w-3.5 h-3.5" />
-                <span>{isEn ? 'Interactive Study & Quiz' : 'الدراسة التفاعلية والاختبار'}</span>
-              </button>
-            )}
-
-            <button
-              onClick={() => copyFullArticlePackage(activeArticle)}
-              className="btn-raw-primary px-3.5 py-2 text-xs font-mono font-bold flex items-center gap-1.5 cursor-pointer rounded-lg bg-black text-white hover:bg-neutral-800"
-              title={isEn ? 'Copy full package' : 'نسخ المقالة كاملة مع كود المحاكي والنسبة'}
-            >
-              {copiedKey === `package-${activeArticle.id}` ? (
-                <>
-                  <Check className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>{isEn ? 'Package Copied!' : 'تم نسخ المقالة بالكامل!'}</span>
-                </>
-              ) : (
-                <>
-                  <Copy className="w-3.5 h-3.5" />
-                  <span>{isEn ? 'Copy Full Package' : 'نسخ حزمة النشر كاملة'}</span>
-                </>
-              )}
-            </button>
-          </div>
-        </div>
-
-        {/* Concepts tags */}
-        <div className="flex flex-wrap items-center gap-1.5">
-          <span className="font-mono text-[11px] font-bold text-neutral-500">
-            {isEn ? 'Key Themes:' : 'المحاور والمفاهيم:'}
-          </span>
-          {activeArticle.keyConcepts.map((concept, idx) => (
-            <span
-              key={idx}
-              className="border border-neutral-200 px-2 py-0.5 font-mono text-[11px] bg-neutral-50 text-neutral-700 rounded-md"
-            >
-              {concept}
-            </span>
-          ))}
-        </div>
-
-        {/* Article Text Content */}
-        <div className="space-y-4 font-serif text-sm sm:text-base leading-relaxed text-neutral-800">
-          <div className="flex items-center justify-between border-b border-neutral-100 pb-2">
-            <span className="font-mono text-xs font-bold text-neutral-500">
-              {isEn ? 'Article Body (Copy to Text Box)' : 'نص المقالة (جاهز للصق في مربع النص):'}
-            </span>
-            <button
-              onClick={() =>
-                handleCopy(
-                  `${activeArticle.title}\n\n${activeArticle.paragraphs.join('\n\n')}`,
-                  `text-${activeArticle.id}`
-                )
-              }
-              className="text-xs font-mono font-bold text-neutral-900 hover:text-black flex items-center gap-1 cursor-pointer"
-            >
-              {copiedKey === `text-${activeArticle.id}` ? (
-                <span className="text-emerald-600 flex items-center gap-1">
-                  <Check className="w-3 h-3" /> {isEn ? 'Copied' : 'تم النسخ'}
-                </span>
-              ) : (
-                <>
-                  <Copy className="w-3 h-3" /> {isEn ? 'Copy Text' : 'نسخ النص'}
-                </>
-              )}
-            </button>
-          </div>
-
-          {activeArticle.paragraphs.map((para, pIdx) => (
-            <p key={pIdx} className="leading-relaxed">
-              {para}
-            </p>
-          ))}
-
-          {/* Mathematical Formulas Section */}
-          {activeArticle.equations && activeArticle.equations.length > 0 && (
-            <div className="pt-2 border-t border-neutral-100 space-y-2">
-              <span className="font-mono text-xs font-bold text-neutral-600 block">
-                {isEn ? 'Governing Equations & Formulas:' : 'الصيغ والمعادلات الرياضية الحاكمة:'}
-              </span>
-              <div className="space-y-2.5">
-                {activeArticle.equations.map((eq, eqIdx) => (
-                  <MathFormula key={eqIdx} rawEquation={eq} language={language} />
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Try It Yourself callout */}
-          <div className="p-3.5 bg-neutral-50 border-r-4 rtl:border-r-4 ltr:border-l-4 border-black rounded-lg text-neutral-900 font-semibold text-xs sm:text-sm">
-            {activeArticle.tryItYourselfPrompt}
-          </div>
-        </div>
-
-        {/* Video Lecture Template Section */}
-        {activeArticle.videoUrl && (
-          <section className="border border-neutral-200 rounded-2xl p-4 sm:p-6 bg-white space-y-4">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-neutral-200 pb-3">
-              <div>
-                <div className="flex items-center gap-2">
-                  <span className="bg-red-600 text-white px-2 py-0.5 font-mono text-[10px] font-bold uppercase rounded-md flex items-center gap-1">
-                    <Video className="w-3 h-3" />
-                    {isEn ? 'Video Template' : 'فيديو الشرح المرفق'}
-                  </span>
-                  <span className="font-mono text-xs font-bold text-neutral-800">
-                    {isEn ? activeArticle.videoTitleEn || activeArticle.videoTitle : activeArticle.videoTitle}
-                  </span>
-                </div>
-                <p className="text-[11px] text-neutral-500 font-mono mt-1">
-                  {isEn
-                    ? 'Official verified video ready for embedding in Google Sites.'
-                    : 'فيديو توضيحي معتمد وجاهز للتضمين في Google Sites بنقرة واحدة.'}
-                </p>
-              </div>
-
-              <div className="flex items-center gap-2 shrink-0">
-                {activeArticle.videoEmbedHtml && (
-                  <button
-                    onClick={() => handleCopy(activeArticle.videoEmbedHtml || '', `video-embed-${activeArticle.id}`)}
-                    className="btn-raw-secondary px-3 py-1.5 text-xs font-mono font-bold flex items-center gap-1.5 cursor-pointer rounded-lg border border-neutral-300 hover:bg-neutral-100"
-                    title={isEn ? 'Copy Video HTML code' : 'نسخ كود HTML للفيديو'}
-                  >
-                    {copiedKey === `video-embed-${activeArticle.id}` ? (
-                      <>
-                        <Check className="w-3.5 h-3.5 text-emerald-600" />
-                        <span>{isEn ? 'Video Code Copied!' : 'تم نسخ كود الفيديو!'}</span>
-                      </>
-                    ) : (
-                      <>
-                        <FileCode className="w-3.5 h-3.5 text-red-600" />
-                        <span>{isEn ? 'Copy Video Code' : 'نسخ كود HTML للفيديو'}</span>
-                      </>
-                    )}
-                  </button>
-                )}
-
-                {activeArticle.youtubeId && (
-                  <a
-                    href={`https://www.youtube.com/watch?v=${activeArticle.youtubeId}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn-raw-secondary px-3 py-1.5 text-xs font-mono font-bold flex items-center gap-1.5 rounded-lg border border-red-200 text-red-600 bg-red-50 hover:bg-red-100"
-                  >
-                    <Play className="w-3 h-3" />
-                    <span>{isEn ? 'Open on YouTube ↗' : 'مشاهدة على YouTube ↗'}</span>
-                  </a>
-                )}
-              </div>
-            </div>
-
-            {/* Embedded Video Player */}
-            <div className="aspect-video w-full rounded-xl overflow-hidden border border-neutral-300 bg-black shadow-xs">
-              <iframe
-                src={activeArticle.videoUrl}
-                title={activeArticle.videoTitle || 'Educational Video'}
-                className="w-full h-full border-none"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
-            </div>
-          </section>
-        )}
-
-        {/* Interactive PhET Simulation Live View */}
-        <section className="border border-neutral-200 rounded-2xl p-4 sm:p-6 bg-neutral-50/50 space-y-4">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-neutral-200 pb-3">
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="bg-black text-white px-2 py-0.5 font-mono text-[10px] font-bold uppercase rounded-md">
-                  PhET Interactive Lab
-                </span>
-                <span className="font-mono text-xs font-bold text-neutral-700">
-                  {activeArticle.phetSimulationName}
-                </span>
-              </div>
-              <p className="text-[11px] text-neutral-500 font-mono mt-1">
-                {isEn ? 'Interactive simulation embedded live below — students can run experiments directly here or on your Google Site.' : 'المحاكي يعمل مباشرة أدناه — يمكن للطلاب التفاعل معه هنا أو في موقع Google Sites الخاص بك.'}
-              </p>
-            </div>
-
-            <div className="flex items-center gap-2 shrink-0">
-              <button
-                onClick={() => handleCopy(activeArticle.embedCodeHtml, `embed-${activeArticle.id}`)}
-                className="btn-raw-secondary px-3 py-1.5 text-xs font-mono font-bold flex items-center gap-1.5 cursor-pointer rounded-lg border border-neutral-300 hover:bg-neutral-100"
-                title={isEn ? 'Copy HTML code for Google Sites' : 'نسخ كود التضمين لـ Google Sites'}
-              >
-                {copiedKey === `embed-${activeArticle.id}` ? (
-                  <>
-                    <Check className="w-3.5 h-3.5 text-emerald-600" />
-                    <span>{isEn ? 'Embed Code Copied!' : 'تم نسخ كود التضمين!'}</span>
-                  </>
-                ) : (
-                  <>
-                    <FileCode className="w-3.5 h-3.5" />
-                    <span>{isEn ? 'Copy Embed Code' : 'نسخ كود HTML للمحاكي'}</span>
-                  </>
-                )}
-              </button>
-
-              <a
-                href={activeArticle.phetUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-raw-secondary px-3 py-1.5 text-xs font-mono font-bold flex items-center gap-1.5 rounded-lg border border-neutral-300 hover:bg-neutral-100"
-              >
-                <span>{isEn ? 'PhET Link' : 'رابط PhET'}</span>
-                <ExternalLink className="w-3 h-3" />
-              </a>
-            </div>
-          </div>
-
-          {/* The Embed Frame with Blueprint and Step-by-Step Guide */}
-          <SimulationWithGuide
-            simulationUrl={activeArticle.phetEmbedUrl}
-            simulationTitle={activeArticle.phetSimulationName}
-            guideType={activeArticle.targetDiagramType || 'dc_circuit'}
-            language={language}
-          />
-
-          {/* Legal Attribution Box */}
-          <div className="p-3 bg-white border border-neutral-200 rounded-lg flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 font-mono text-[11px] sm:text-xs">
-            <div className="space-y-0.5">
-              <span className="font-bold text-neutral-800 block">
-                {isEn ? 'Required Attribution Line (Paste under embed in Google Sites):' : 'سطر النسبة الإلزامي (ألصقه تحت المحاكي في Google Sites):'}
-              </span>
-              <span className="text-neutral-600 select-all font-sans">
-                {activeArticle.attribution}
-              </span>
-            </div>
-
-            <button
-              onClick={() => handleCopy(activeArticle.attribution, `attr-${activeArticle.id}`)}
-              className="btn-raw-secondary px-2.5 py-1 text-xs font-mono font-bold flex items-center gap-1 shrink-0 rounded-md border border-neutral-300 cursor-pointer"
-            >
-              {copiedKey === `attr-${activeArticle.id}` ? (
-                <>
-                  <Check className="w-3 h-3 text-emerald-600" />
-                  <span>{isEn ? 'Copied' : 'تم النسخ'}</span>
-                </>
-              ) : (
-                <>
-                  <Copy className="w-3 h-3" />
-                  <span>{isEn ? 'Copy Attribution' : 'نسخ سطر النسبة'}</span>
-                </>
-              )}
-            </button>
-          </div>
-        </section>
-
-        {/* Ready-to-Copy HTML Embed Code Block for easy preview */}
-        <div className="border border-neutral-200 rounded-xl p-4 bg-neutral-50 space-y-2">
-          <div className="flex items-center justify-between">
-            <span className="font-mono text-xs font-bold text-neutral-700 flex items-center gap-1.5">
-              <FileCode className="w-3.5 h-3.5 text-neutral-500" />
-              {isEn ? 'HTML Embed Code for Google Sites:' : 'كود الـ HTML للتضمين في Google Sites:'}
-            </span>
-            <button
-              onClick={() => handleCopy(activeArticle.embedCodeHtml, `code-${activeArticle.id}`)}
-              className="text-xs font-mono font-bold text-neutral-900 underline hover:text-black cursor-pointer"
-            >
-              {copiedKey === `code-${activeArticle.id}` ? (isEn ? 'Copied!' : 'تم النسخ!') : (isEn ? 'Copy' : 'نسخ')}
-            </button>
-          </div>
-          <pre className="font-mono text-[11px] sm:text-xs bg-white p-3 border border-neutral-200 rounded-lg overflow-x-auto text-neutral-800 dir-ltr text-left">
-            {activeArticle.embedCodeHtml}
-          </pre>
-        </div>
-      </article>
     </div>
   );
 };

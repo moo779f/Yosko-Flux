@@ -51,7 +51,7 @@ export const QuizSection: React.FC<QuizProps> = ({
   const englishLetters = ['A', 'B', 'C', 'D', 'E'];
 
   return (
-    <div className="font-sans space-y-6">
+    <div className="font-serif space-y-6">
       {/* Clean Quiz Header */}
       <div className="border-b border-neutral-200 pb-4 flex flex-wrap items-center justify-between gap-3">
         <div>
@@ -111,7 +111,7 @@ export const QuizSection: React.FC<QuizProps> = ({
                   {isEn ? `Q${qIndex + 1}` : `سؤال ${qIndex + 1}`}
                 </span>
                 <h4 className="text-sm sm:text-base font-bold text-black flex-1 leading-snug">
-                  {q.question}
+                  {isEn ? q.questionEn || q.question : q.question}
                 </h4>
               </div>
 
@@ -121,6 +121,7 @@ export const QuizSection: React.FC<QuizProps> = ({
                   const checked = currentSelection === optIndex;
                   const isThisCorrectOption = optIndex === q.correctIndex;
                   const letter = isEn ? englishLetters[optIndex] || '' : arabicLetters[optIndex] || '';
+                  const optionLabel = isEn && q.optionsEn && q.optionsEn[optIndex] ? q.optionsEn[optIndex] : opt;
 
                   let optionStyles = 'border border-neutral-200 bg-white hover:bg-neutral-50 text-black';
                   if (checked && !submitted) {
@@ -156,7 +157,7 @@ export const QuizSection: React.FC<QuizProps> = ({
 
                       {/* Option text */}
                       <span className="text-xs sm:text-sm font-medium flex-1 leading-snug">
-                        {opt}
+                        {optionLabel}
                       </span>
 
                       {/* Submission status indicators */}
@@ -183,8 +184,8 @@ export const QuizSection: React.FC<QuizProps> = ({
                   <div className="font-bold text-black flex items-center gap-1.5">
                     <span>{isEn ? 'Scientific Explanation:' : 'الشرح العلمي والتحليلي:'}</span>
                   </div>
-                  <div className="text-neutral-800 leading-relaxed font-sans">
-                    {q.explanation}
+                  <div className="text-neutral-800 leading-relaxed font-serif">
+                    {isEn ? q.explanationEn || q.explanation : q.explanation}
                   </div>
                 </div>
               )}
@@ -207,7 +208,7 @@ export const QuizSection: React.FC<QuizProps> = ({
             <button
               onClick={() => setSubmitted(true)}
               disabled={!allAnswered}
-              className={`btn-raw-primary w-full sm:w-auto min-h-[46px] px-6 py-2.5 text-xs sm:text-sm font-mono font-bold flex items-center justify-center gap-2 cursor-pointer ${
+              className={`btn-raw-primary w-full sm:w-auto min-h-[46px] px-6 py-2.5 text-xs sm:text-sm font-serif font-bold flex items-center justify-center gap-2 cursor-pointer ${
                 !allAnswered ? 'opacity-50 cursor-not-allowed' : ''
               }`}
             >
@@ -216,8 +217,8 @@ export const QuizSection: React.FC<QuizProps> = ({
             </button>
           </>
         ) : (
-          <div className="w-full flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
-            <div className="font-mono text-xs sm:text-sm font-bold text-neutral-800">
+          <div className="w-full flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 font-serif">
+            <div className="font-serif text-xs sm:text-sm font-bold text-neutral-800">
               {score === quiz.length
                 ? (isEn
                     ? 'Excellent! You achieved full marks.'
@@ -228,7 +229,7 @@ export const QuizSection: React.FC<QuizProps> = ({
             </div>
             <button
               onClick={handleReset}
-              className="btn-raw-secondary w-full sm:w-auto min-h-[44px] px-5 py-2 font-mono text-xs font-bold flex items-center justify-center gap-2 cursor-pointer"
+              className="btn-raw-secondary w-full sm:w-auto min-h-[44px] px-5 py-2 font-serif text-xs font-bold flex items-center justify-center gap-2 cursor-pointer"
             >
               <RotateCcw className="w-4 h-4" />
               <span>{isEn ? 'Reset & Retake Quiz' : 'إعادة الاختبار من البداية'}</span>

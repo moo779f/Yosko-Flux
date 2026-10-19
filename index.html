@@ -15,6 +15,30 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
     <!-- السطر المضاف لتفعيل Tailwind CSS مباشرة -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      /* Critical Layout and Logo Constraints */
+      img[src*="logo.png"] {
+        max-height: 58px !important;
+        max-width: 280px !important;
+        width: auto !important;
+        height: auto !important;
+        object-fit: contain !important;
+        display: block !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
+      img[src*="logo-symbol"] {
+        max-height: 36px !important;
+        max-width: 120px !important;
+        width: auto !important;
+        height: auto !important;
+        object-fit: contain !important;
+        display: inline-block !important;
+      }
+      p, li, .font-serif, .font-sans {
+        line-height: 1.8 !important;
+      }
+    </style>
   </head>
   <body class="bg-white text-black antialiased selection:bg-black selection:text-white">
     <div id="root"></div>

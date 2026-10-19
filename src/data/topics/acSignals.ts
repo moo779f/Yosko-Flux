@@ -32,6 +32,11 @@ export const AC_SIGNALS_TOPICS: ResearchPaper[] = [
       'في شبكات الكهرباء بتردد 50Hz، تكتمل الدورة الواحدة في 20 ميلي ثانية (T = 1/50 = 0.02s).',
       'الموجات الكهربائية المشوهة تتكون من موجة جيبية أساسية نقية مضافاً إليها نتوءات وتوافقيات سريعة التردد.'
     ],
+    keyFindingsEn: [
+      'Period (T) is the elapsed time to complete one cycle; frequency (f) is cycles completed per second (f = 1/T).',
+      'In standard 50 Hz utility grids, each cycle completes in exactly 20 milliseconds (T = 1/50 = 0.02s).',
+      'Distorted waveforms consist of a pure fundamental sine wave bundled with higher-frequency harmonic ripples.'
+    ],
     whatILearned: [
       'تعلمت قراءة محوري شاشة راسم الإشارة: المحور الأفقي يمثل الزمن (الوقت)، والمحور الرأسي يمثل الجهد بالفولت.',
       'فهمت الفرق بين القيمة العظمى V_peak وقيمة V_pp (ضعف القيمة العظمى لموجة متناظرة).',
@@ -53,6 +58,7 @@ export const AC_SIGNALS_TOPICS: ResearchPaper[] = [
         heading: '1. معالم الموجة الجيبية: السعة، الزمن الدوري، والتردد',
         headingEn: '1. Waveform Anatomy: Amplitude, Period, and Frequency',
         body: 'عندما نوصل مجساً لقياس جهد تيار متردد، يظهر الرسم البياني لتغير الجهد مع الزمن v(t).\nلنتعرف على المعالم الأربعة الرئيسية:\n\n1. السعة العظمى (Peak Amplitude - V_max): أقصى ارتفاع تصله الموجة فوق خط الصفر.\n2. الجهد من القمة إلى القاع (Peak-to-Peak - V_pp): المسافة الرأسية الكاملة بين أعلى قمة وأدنى قاع (V_pp = 2 · V_max).\n3. الزمن الدوري (Period - T): الزمن المستغرق لإتمام دورة كاملة واحدة (من قمة إلى القمة التالية)، ويُقاس بالثواني أو الميلي ثانية.\n4. التردد (Frequency - f): عدد المرات التي تتكرر فيها الدورة الكاملة خلال ثانية واحدة، ويُقاس بالهيرتز (Hz)، ويرتبط بالزمن الدوري بالعلاقة العكسية البسيطة: f = 1 / T.',
+        bodyEn: 'When connecting a probe to an alternating voltage source, an oscilloscope graphs instantaneous voltage versus time v(t).\nLet us inspect the four primary parameters:\n\n1. Peak Amplitude (V_max): The maximum height reached above the zero reference baseline.\n2. Peak-to-Peak Voltage (V_pp): The total vertical span between the highest crest and lowest trough (V_pp = 2 · V_max).\n3. Period (T): The duration required to complete one full cycle (from one crest to the next), measured in seconds or milliseconds.\n4. Frequency (f): The number of complete cycles per second, measured in Hertz (Hz), inversely proportional to period: f = 1 / T.',
         equations: [
           'v(t) = V_{\\max} \\sin(2\\pi f t + \\phi) \\quad [\\text{الصيغة الزمنية للجهد المتردد}]',
           'f = \\frac{1}{T} \\iff T = \\frac{1}{f} \\quad [\\text{العلاقة بين التردد والزمن الدوري}]'
@@ -68,12 +74,14 @@ export const AC_SIGNALS_TOPICS: ResearchPaper[] = [
           caption: 'تحديد القيمة العظمى Vmax، وقيمة Vpp، والزمن الدوري T على منحنى الجهد الجيبي.',
           captionEn: 'Identifying peak voltage Vmax, peak-to-peak Vpp, and period T on an AC voltage waveform.'
         },
-        keyTakeaway: 'المحور الأفقي هو الزمن، والرأسي هو الفولت؛ والتردد f = 1/T يخبرنا بمدى سرعة تكرار النبضات.'
+        keyTakeaway: 'المحور الأفقي هو الزمن، والرأسي هو الفولت؛ والتردد f = 1/T يخبرنا بمدى سرعة تكرار النبضات.',
+        keyTakeawayEn: 'The horizontal axis tracks time, the vertical tracks voltage; frequency f = 1/T measures cycle repetition speed.'
       },
       {
         heading: '2. من الموجة النقية إلى الموجات المشوهة (Distorted Waveforms)',
         headingEn: '2. From Pure Sine Waves to Distorted Real-World Waveforms',
         body: 'في الكتب المدرسية، تكون الموجات الكهربائية دائماً جيبية ناعمة ونقية تماماً. لكن في الواقع العملي، عندما نصل شواحن الحواسيب، أو مصابيح LED، أو عواكس الطاقة الشمسية، نلاحظ أن موجة التيار لم تعد جيبية ملساء!\n\nهذه النتوءات والتموجات تسمى "التشوه" (Distortion). التشويه يحدث لأن الدوائر الإلكترونية الحديثة لا تسحب التيار بانسيابية مستمرة، بل تفتح وتغلق بوابات الترانزستور بسرعة آلاف المرات في الثانية، مما ينتج موجات مربعة أو مسننة تحتوي على ترددات دخيلة (توافقيات Harmonics) تحتاج إلى فلترة.',
+        bodyEn: 'In textbook diagrams, AC waveforms are consistently represented as perfectly smooth, pristine sine waves. In modern reality, however, connecting switched-mode power supplies, LED drivers, or solar inverters reveals that current waveforms deviate significantly from pure sinusoidal shapes!\n\nThese distortions occur because solid-state electronic switches do not draw continuous current; instead, they chop current thousands of times per second, generating pulsed square ripples containing unwanted higher harmonics that require dedicated filtering.',
         equations: [
           'v_{\\text{distorted}}(t) = V_1 \\sin(\\omega t) + V_3 \\sin(3\\omega t) + V_5 \\sin(5\\omega t) + \\dots',
           '\\text{Ripple Factor} = \\frac{V_{\\text{AC, ripple}}}{V_{\\text{DC}}}'
@@ -89,14 +97,15 @@ export const AC_SIGNALS_TOPICS: ResearchPaper[] = [
           caption: 'مقارنة بين موجة التبديل النبضي (PWM) والموجة الجيبية الناتجة بعد الفلترة.',
           captionEn: 'Comparison of raw pulsed PWM switching waveform and filtered fundamental sine wave.'
         },
-        keyTakeaway: 'الموجة المشوهة هي إشارة ناتجة عن أحمال إلكترونية سريعة التبديل، وتمهد لضرورة تحليل فورييه.'
+        keyTakeaway: 'الموجة المشوهة هي إشارة ناتجة عن أحمال إلكترونية سريعة التبديل، وتمهد لضرورة تحليل فورييه.',
+        keyTakeawayEn: 'Waveform distortion is introduced by fast-switching power electronics, creating the engineering necessity for Fourier harmonic analysis.'
       }
     ],
     simulationType: 'none',
-    videoUrl: 'https://www.youtube.com/embed/QxNf5gXgA10',
-    youtubeId: 'QxNf5gXgA10',
-    videoTitle: 'كيف نقرأ راسم الإشارة والموجات الكهربائية (The Engineering Mindset)',
-    videoTitleEn: 'How to Actually Use an Oscilloscope (The Engineering Mindset)',
+    videoUrl: 'https://www.youtube.com/embed/u4zyptPLlJI',
+    youtubeId: 'u4zyptPLlJI',
+    videoTitle: 'كيف نقرأ راسم الإشارة والموجات الكهربائية (SparkFun Electronics)',
+    videoTitleEn: 'How to Use an Oscilloscope (SparkFun Electronics)',
     simulationExperiments: [
       {
         id: 'wave-exp-1',
@@ -168,6 +177,11 @@ export const AC_SIGNALS_TOPICS: ResearchPaper[] = [
       'مشتقة وتكامل الدالة الجيبية يظلان دالة جيبية بنفس التردد مع إزاحة طور 90 درجة فقط، مما يجعل حل دوائر AC بسيطاً دون تشويه شكل الموجة.',
       'القيمة الفعالة V_rms = V_max / √2 تمثل الجهد المستمر المكافئ الذي يولد نفس القدرة الحرارية في مقاومة معينة.'
     ],
+    keyFindingsEn: [
+      'Rotating a coil at constant angular velocity within a uniform magnetic field produces a pure sinusoidal EMF per Faraday’s Law.',
+      'Derivatives and integrals of sinusoidal functions retain identical sinusoidal shape and frequency with a 90° phase shift, simplifying circuit math.',
+      'Root-Mean-Square (RMS) voltage V_rms = V_max / √2 represents the equivalent DC potential producing identical Joule heating in a resistive load.'
+    ],
     whatILearned: [
       'فهمت الأصل الهندسي لدالة الجيب: إنها مسقط نقطة تدور على دائرة نصف قطرها V_max على المحور الرأسي!',
       'أدركت أن جهد 220V في بيوتنا هو قيمة RMS؛ أي أن الجهد يتأرجح في الحقيقة بين +311 فولت و -311 فولت 50 مرة كل ثانية!',
@@ -189,6 +203,7 @@ export const AC_SIGNALS_TOPICS: ResearchPaper[] = [
         heading: '1. لماذا الجيب بالذات؟ فيزياء المولد الدوار وقانون فراداي',
         headingEn: '1. Why Sine Waves? Rotating Generators and Faraday\'s Law',
         body: 'تخيل ملفاً مستطيلاً من السلك يدور بسرعة زاوية ثابتة (ω) داخل مجال مغناطيسي منتظم (B).\nكمية خطوط الفيض المغناطيسي التي تقطع مساحة الملف في أي لحظة تعتمد على زاوية الميلان:\n\nΦ(t) = B · A · cos(ωt)\n\nوفق قانون فراداي للحث الكهرومغناطيسي، القوة الدافعة الكهربائية المتولدة (EMF) تساوي المعدل الزمني لتغير هذا الفيض (مشتقة الفيض بالنسبة للزمن):\n\ne(t) = - dΦ/dt = B · A · ω · sin(ωt)\n\nهذا هو السر! الطبيعة تصنع الجيب تلقائياً لأن الدوران الميكانيكي المستمر يترجم رياضياً إلى دالة جيبية خالصة. بالإضافة إلى ذلك، تتميز الدالة الجيبية بخاصية رياضية فريدة: إذا اشتققتها أو كاملتها (كما يحدث في معادلات المكثفات i = C dv/dt والملفات v = L di/dt)، يظل الناتج دالة جيبية بنفس التردد بالضبط!',
+        bodyEn: 'Imagine a rectangular coil of wire rotating at a constant angular velocity (ω) inside a uniform magnetic field (B).\nThe amount of magnetic flux cutting across the coil surface at any instant depends on its orientation angle:\n\nΦ(t) = B · A · cos(ωt)\n\nAccording to Faraday’s Law of Electromagnetic Induction, the induced electromotive force (EMF) equals the time rate of change of this flux:\n\ne(t) = - dΦ/dt = B · A · ω · sin(ωt)\n\nThis is the secret: nature creates sinusoidal waves organically because continuous physical rotational mechanics translates directly into trigonometric sine. Furthermore, sinusoids possess a unique mathematical property: differentiating or integrating them (as in capacitor i = C dv/dt and inductor v = L di/dt equations) preserves the exact same sinusoidal waveform and frequency, shifting only phase by 90°!',
         equations: [
           '\\Phi(t) = B \\cdot A \\cdot \\cos(\\omega t) \\quad [\\text{الفيض المغناطيسي عبر الملف الدوار}]',
           'e(t) = -\\frac{d\\Phi}{dt} = V_{\\max} \\sin(\\omega t) \\quad [\\text{الجهد الحثي المتولد وفق فراداي}]',
@@ -205,12 +220,14 @@ export const AC_SIGNALS_TOPICS: ResearchPaper[] = [
           caption: 'تولد الدالة الجيبية كمسقط لنصف القطر الدوار بسرعة زاوية ω.',
           captionEn: 'Generation of a sinusoidal wave as the projection of a radius rotating at angular velocity ω.'
         },
-        keyTakeaway: 'المولد الدوار ينتج الجيب كضرورة فيزيائية لقانون فراداي، والرياضيات تجعل حسابه في الدوائر متسقاً دون تشوه.'
+        keyTakeaway: 'المولد الدوار ينتج الجيب كضرورة فيزيائية لقانون فراداي، والرياضيات تجعل حسابه في الدوائر متسقاً دون تشوه.',
+        keyTakeawayEn: 'Rotating generators produce sine waves as a direct physical consequence of Faraday’s Law, and linear circuit operations preserve their harmonic purity.'
       },
       {
         heading: '2. زاوية الطور (Phase) ولغز القيمة الفعالة (RMS)',
         headingEn: '2. Phase Shift and the Mystery of Root Mean Square (RMS)',
         body: 'عندما يمر تيار متردد في مكثف أو ملف، لا يصعد التيار بالتزامن مع الجهد:\n- في الملف (Inductor): لأن الملف يكره التغير المفاجئ للتيار (v = L di/dt)، يضطر الجهد أن يسبق التيار بزاوية طور 90 درجة (π/2 rad).\n- في المكثف (Capacitor): الشحنات تتدفق أولاً لتملأ اللوحين قبل أن يرتفع الجهد (i = C dv/dt)، لذلك يسبق التيارُ الجهدَ بـ 90 درجة.\n\nولكن إذا كان الجهد يغير قيمته طوال الوقت، كيف نقول إن جهد بيوتنا 220 فولت؟\nهنا ابتكر المهندسون مفهوم القيمة الفعالة (RMS - Root Mean Square): هي القيمة المكافئة للتيار المستمر التي تبدد نفس القدرة الحرارية في مقاومة. لموجة جيبية متناظرة:\n\nV_rms = V_max / √2 ≈ 0.707 · V_max\n\nوهذا يعني أن جهد 220V في بيتك يصل إلى ذروة لحظية قدرها: V_max = 220 × 1.414 = 311 فولت!',
+        bodyEn: 'When AC current flows through reactive inductors and capacitors, current does not rise synchronously with voltage:\n- In an Inductor: Because it opposes sudden changes in current (v = L di/dt), voltage must lead current by a 90° phase shift (π/2 rad).\n- In a Capacitor: Charges must accumulate on the plates before voltage can build (i = C dv/dt), so current leads voltage by 90°.\n\nYet if voltage is continuously oscillating, why is domestic wall power rated at 220 volts?\nEngineers formulated the Root Mean Square (RMS) metric: the equivalent DC potential that dissipates identical thermal power in a resistive load. For a pure sinusoid:\n\nV_rms = V_max / √2 ≈ 0.707 · V_max\n\nThis reveals that the 220V RMS in your home swings to an instantaneous peak of: V_max = 220 × √2 ≈ 311.1 Volts twice per cycle!',
         equations: [
           'V_{\\text{rms}} = \\frac{V_{\\max}}{\\sqrt{2}} \\approx 0.7071 \\cdot V_{\\max}',
           'V_{\\max} = 220 \\times \\sqrt{2} \\approx 311.12 \\text{ V}',
@@ -227,12 +244,13 @@ export const AC_SIGNALS_TOPICS: ResearchPaper[] = [
           caption: 'تمثيل فرق الطور φ بين متجه الجهد ومتجه التيار في دائرة حثية.',
           captionEn: 'Vector diagram showing phase angle φ between voltage and current phasors.'
         },
-        keyTakeaway: 'جهد 220V هو متوسط التأثير الحراري RMS؛ وقمته اللحظية تتجاوز 311 فولت في كل دورة.'
+        keyTakeaway: 'جهد 220V هو متوسط التأثير الحراري RMS؛ وقمته اللحظية تتجاوز 311 فولت في كل دورة.',
+        keyTakeawayEn: '220V denotes the effective thermal heating RMS capability; instantaneous peaks cycle beyond 311 Volts.'
       }
     ],
     simulationType: 'none',
-    videoUrl: 'https://www.youtube.com/embed/wzJ_zG8Y0Lw',
-    youtubeId: 'wzJ_zG8Y0Lw',
+    videoUrl: 'https://www.youtube.com/embed/kcL2_D33k3o',
+    youtubeId: 'kcL2_D33k3o',
     videoTitle: 'مقدمة في التيار المتردد والمستمر والموجات الجيبية (The Engineering Mindset)',
     videoTitleEn: 'AC and DC Electricity Basics (The Engineering Mindset)',
     simulationExperiments: [
@@ -306,6 +324,11 @@ export const AC_SIGNALS_TOPICS: ResearchPaper[] = [
       'عند نقطة الرنين تصبح معاوقة الدائرة في حدها الأدنى Z_min = R، ويندفع التيار بأقصى سعة ممكنة.',
       'عامل الجودة Q يحدد مدى حدة قمة الرنين ودقتها في انتقاء التردد المطلوب وعزل الترددات المجاورة.'
     ],
+    keyFindingsEn: [
+      'At resonance, inductive reactance perfectly cancels capacitive reactance (X_L = X_C).',
+      'Total circuit impedance drops to its absolute minimum Z_min = R, maximizing current throughput.',
+      'Quality factor Q governs the sharpness of the resonant peak, determining station selectivity and noise rejection.'
+    ],
     whatILearned: [
       'فهمت كيف تلغي المعاوقة التفاعلية بعضها: X_L موجبة تخيلية (+jωL) و X_C سالبة تخيلية (-j/(ωC))، ومجموعهما عند الرنين صفر!',
       'تعلمت حساب مكثف الراديو: لاستقبال إذاعة 1000 kHz مع ملف 100 μH، نحتاج مكثفاً سعته 253.3 بيكوفاراد.',
@@ -327,6 +350,7 @@ export const AC_SIGNALS_TOPICS: ResearchPaper[] = [
         heading: '1. المعاوقة وحالة التوازن عند تردد الرنين (f₀)',
         headingEn: '1. Total Impedance & Cancellation at Resonant Frequency',
         body: 'في دائرة RLC متوالية موصولة بمصدر تيار متردد، يواجه التيار ثلاثة أنواع من الإعاقة:\n1. المقاومة الأومية (R): ثابتة ولا تتغير مع التردد.\n2. المفاعلة الحثية (X_L = 2πfL): تزداد خطياً كلما زاد التردد، لأن الملف يكره التغير السريع للتيار.\n3. المفاعلة السعوية (X_C = 1 / (2πfC)): تنخفض كلما زاد التردد، لأن المكثف يسمح للترددات العالية بالمرور بسهولة.\n\nالمعاوقة الكلية للدائرة تعطى بالمعادلة:\nZ = √[ R² + (X_L - X_C)² ]\n\nعند تردد محدد بالذات، تتساوى قيمتا X_L و X_C تماماً (X_L = X_C). عند هذه اللحظة، يصبح الفرق بينهما صفراً (X_L - X_C = 0)، فتصل المعاوقة الكلية إلى أقل قيمة ممكنة: Z = R! هذا التردد يسمى "تردد الرنين" (Resonant Frequency f₀).',
+        bodyEn: 'In a series RLC circuit excited by an AC voltage source, total current encounters three forms of impedance:\n1. Ohmic Resistance (R): Constant and independent of excitation frequency.\n2. Inductive Reactance (X_L = 2πfL): Increases linearly with frequency because an inductor opposes rapid current transitions.\n3. Capacitive Reactance (X_C = 1 / (2πfC)): Decreases inversely with frequency because a capacitor permits high-frequency charge shuttling.\n\nTotal circuit impedance is governed by:\nZ = √[ R² + (X_L - X_C)² ]\n\nAt one specific frequency, X_L and X_C become precisely identical (X_L = X_C). At this exact balance point, their net reactive opposition vanishes (X_L - X_C = 0), and total impedance collapses to its theoretical minimum: Z = R! This condition is known as Electrical Resonance (Resonant Frequency f₀ = 1 / [2π√(LC)]).',
         equations: [
           'X_L = 2\\pi f L, \\quad X_C = \\frac{1}{2\\pi f C}',
           'Z = \\sqrt{R^2 + (X_L - X_C)^2} \\xrightarrow{f = f_0} Z_{\\min} = R',
@@ -343,12 +367,14 @@ export const AC_SIGNALS_TOPICS: ResearchPaper[] = [
           caption: 'مخطط تبادل الطاقة اللحظية في دائرة RLC المتوالية عند الرنين.',
           captionEn: 'Instantaneous energy transfer cycle in series RLC at resonance.'
         },
-        keyTakeaway: 'عند تردد الرنين تتلاشى ممانعة المكثف والملف معاً، وتصبح الدائرة مقاومة أومية نقية يمر بها أقصى تيار.'
+        keyTakeaway: 'عند تردد الرنين تتلاشى ممانعة المكثف والملف معاً، وتصبح الدائرة مقاومة أومية نقية يمر بها أقصى تيار.',
+        keyTakeawayEn: 'At resonance, inductive and capacitive reactances mutually cancel to zero, leaving purely resistive impedance allowing peak current.'
       },
       {
         heading: '2. عامل الجودة (Q Factor)، عرض النطاق (BW)، وحساب مرشح الراديو',
         headingEn: '2. Quality Factor (Q), Bandwidth (BW), and Radio Tuner Design',
         body: 'لا تكتمل دراسة الرنين دون معرفة "مدى حدة" هذا الرنين. هذا ما يحدده عامل الجودة (Quality Factor - Q):\n\nQ = (1/R) · √(L/C) = (2π f₀ L) / R\n\n- إذا كانت المقاومة R صغيرة جداً، يكون Q كبيراً جداً، وتكون قمة الرنين حادة وانتقائية للغاية (Sharp Peak).\n- عرض النطاق الترددي (Bandwidth - BW) هو نطاق الترددات التي تسمح الدائرة بمرورها بقوة لا تقل عن 70.7% من أقصى تيار (نقاط نصف القدرة):\nBW = f₀ / Q\n\nمثال تطبيقي قمت بحسابه:\nنريد التقاط محطة راديو تبث عند f₀ = 1 MHz (1000 kHz). إذا كان لدينا ملف هوائي حثه L = 100 μH (100 × 10⁻⁶ H)، ما هي سعة المكثف المتغير المطلوبة؟\nمن معادلة الرنين f₀² = 1 / (4π² L C)، نجد:\nC = 1 / (4π² · f₀² · L) = 1 / (4 × 9.8696 × 10¹² × 100 × 10⁻⁶) ≈ 253.3 pF (بيكوفاراد).\nبضبط المكثف على 253.3 pF، تصبح الدائرة في حالة رنين تام مع المحطة وتلغي كل المحطات الأخرى!',
+        bodyEn: 'Resonant analysis requires evaluating its selectivity. This is quantified by the Quality Factor (Q):\n\nQ = (1/R) · √(L/C) = (2π f₀ L) / R\n\n- When series resistance R is small, Q is large, forming a tall and sharply tuned resonance peak with high selectivity.\n- Bandwidth (BW) defines the frequency spread where power transmission remains at or above half-power (-3 dB or 70.7% of peak current):\nBW = f₀ / Q\n\nSolved Engineering Example:\nTo tune an AM radio broadcast at f₀ = 1 MHz (1000 kHz) using a standard receiver coil of L = 100 μH (100 × 10⁻⁶ H), what tuning capacitance is required?\nFrom the resonant formula f₀ = 1 / (2π√LC):\nC = 1 / (4π² · f₀² · L) = 1 / (4 × 9.8696 × 10¹² × 100 × 10⁻⁶) ≈ 253.3 pF (picofarads).\nAdjusting the dial to 253.3 pF brings the tank into perfect resonance, capturing the desired carrier wave while suppressing adjacent transmitters!',
         equations: [
           'Q = \\frac{1}{R} \\sqrt{\\frac{L}{C}} = \\frac{\\omega_0 L}{R} \\quad [\\text{عامل الجودة للدائرة المتوالية}]',
           '\\text{BW} = \\frac{f_0}{Q} = \\frac{R}{2\\pi L} \\quad [\\text{عرض النطاق الترددي}]',
@@ -365,11 +391,12 @@ export const AC_SIGNALS_TOPICS: ResearchPaper[] = [
           caption: 'مخطط دائرة الرنين كمرشح تمرير نطاق (Bandpass Filter) في مستقبل راديو.',
           captionEn: 'Bandpass RLC tuning circuit isolating a single broadcast station.'
         },
-        keyTakeaway: 'كلما انخفضت المقاومة R ارتفع عامل الجودة Q، وصار المرشح أدق في عزل الترددات غير المرغوبة.'
+        keyTakeaway: 'كلما انخفضت المقاومة R ارتفع عامل الجودة Q، وصار المرشح أدق في عزل الترددات غير المرغوبة.',
+        keyTakeawayEn: 'Lower series resistance yields higher Q factor, narrowing filter bandwidth for pristine signal selectivity.'
       }
     ],
-    videoUrl: 'https://www.youtube.com/embed/hp-yXvB7P1E',
-    youtubeId: 'hp-yXvB7P1E',
+    videoUrl: 'https://www.youtube.com/embed/2GvqQvohP2k',
+    youtubeId: '2GvqQvohP2k',
     videoTitle: 'شرح وتجربة ظاهرة الرنين في دوائر RLC (The Organic Chemistry Tutor)',
     videoTitleEn: 'Series RLC Circuits, Resonant Frequency & Reactance (The Organic Chemistry Tutor)',
     videoTopics: [
@@ -377,6 +404,12 @@ export const AC_SIGNALS_TOPICS: ResearchPaper[] = [
       '03:15 - اشتقاق معادلة تردد الرنين f₀ = 1/(2π√LC)',
       '07:40 - مراقبة ذروة التيار وانخفاض المعاوقة عملياً',
       '11:20 - قياس عامل الجودة Q وعرض النطاق الترددي'
+    ],
+    videoTopicsEn: [
+      '00:00 - Introduction to series electrical resonance',
+      '03:15 - Deriving natural resonant frequency f₀ = 1/(2π√LC)',
+      '07:40 - Observing current peaking and minimum impedance',
+      '11:20 - Measuring quality factor Q and frequency bandwidth'
     ],
     simulationExperiments: [
       {
@@ -460,6 +493,11 @@ export const AC_SIGNALS_TOPICS: ResearchPaper[] = [
       'التوافقيات هي ترددات مضاعفة للتردد الأساسي (التوافقية الثالثة 150Hz، والخامسة 250Hz لشبكة 50Hz).',
       'الأحمال غير الخطية تولد تيارات توافقية ترفع حرارة المحولات وتهدر الطاقة، ويتم تنظيفها باستخدام مرشحات LC الترددية.'
     ],
+    keyFindingsEn: [
+      'Core Fourier principle: any repeating periodic waveform can be decomposed into a pure fundamental sinusoid and integer harmonic multiples.',
+      'Harmonics represent integer multiples of fundamental frequency (e.g., 3rd harmonic is 150Hz and 5th is 250Hz on a 50Hz grid).',
+      'Non-linear loads generate harmonic currents that overheat transformer cores; LC low-pass filters attenuate high-frequency distortion.'
+    ],
     whatILearned: [
       'فهمت معنى متسلسلة فورييه بدون تعقيد: الموجة المعقدة = قيمة ثابتة (DC) + موجة أساسية (50Hz) + توافقيات (150Hz, 250Hz, 350Hz...).',
       'تعلمت لماذا تحتوي الموجات المربعة المتناظرة على توافقيات فردية فقط (n = 1, 3, 5...).',
@@ -483,6 +521,7 @@ export const AC_SIGNALS_TOPICS: ResearchPaper[] = [
         heading: '1. الإشارات الدورية ولماذا نستخدم الموجات الجيبية كلبنات بناء',
         headingEn: '1. Periodic Signals and Sinusoidal Building Blocks',
         body: 'الإشارة الدورية (Periodic Signal) هي أي كمية كهربائية تعيد تكرار شكلها بدقة بعد زمن ثابت T:\nf(t + T) = f(t)\n\nالسؤال الذي طرحه فورييه: هل يمكن تركيب هذا الشكل المعقد عبر جمع موجات جيبية ناعمة؟\nالإجابة هي نعم! فالموجات الجيبية وجيب التمام تتميز بخاصية التعامد (Orthogonality): كل موجة جيبية بتردد مختلف تعتبر مستقلة تماماً عن الأخريات.\n\nصيغة فورييه البسيطة:\nf(t) = a₀/2 + Σ [ aₙ cos(n ω₀ t) + bₙ sin(n ω₀ t) ]\n\n- a₀/2: يمثل القيمة المتوسطة المستمرة (DC offset).\n- عندما n = 1: هذه هي "الموجة الأساسية" (Fundamental) بتردد 50Hz، وهي التي نريدها لتشغيل أجهزتنا.\n- عندما n = 2, 3, 4, 5...: هذه هي "التوافقيات" (Harmonics) بترددات مضاعفة (100Hz, 150Hz, 200Hz, 250Hz...).',
+        bodyEn: 'A periodic signal is any electrical quantity that precisely repeats its waveform after a fixed period T: f(t + T) = f(t).\n\nFourier asked: Can any arbitrary continuous periodic waveform be synthesized solely by summing smooth sinusoids?\nThe answer is yes! Sines and cosines possess mutual orthogonality: every sinusoid at a distinct harmonic frequency is mathematically independent of all others.\n\nFourier representation:\nf(t) = a₀/2 + Σ [ aₙ cos(n ω₀ t) + bₙ sin(n ω₀ t) ]\n\n- a₀/2: Represents the DC average offset.\n- n = 1: The fundamental harmonic at 50 Hz, delivering the primary work for power appliances.\n- n = 2, 3, 4, 5...: Higher harmonics at integer multiples (100Hz, 150Hz, 200Hz, 250Hz...). Symmetric square waves sum odd harmonics only (3rd, 5th, 7th...).',
         equations: [
           'f(t) = \\frac{a_0}{2} + \\sum_{n=1}^{\\infty} \\left[ a_n \\cos(n \\omega_0 t) + b_n \\sin(n \\omega_0 t) \\right]',
           '\\omega_0 = 2\\pi f_1 = \\frac{2\\pi}{T} \\quad [\\text{التردد الزاوي الأساسي}]',
@@ -499,12 +538,14 @@ export const AC_SIGNALS_TOPICS: ResearchPaper[] = [
           caption: 'طيف فورييه الترددي يوضح سعات المركبة الأساسية H1 والتوافقيات H3 و H5 و H7.',
           captionEn: 'Fourier frequency spectrum showing amplitudes of fundamental H1 and harmonics H3, H5, H7.'
         },
-        keyTakeaway: 'تحليل فورييه هو مثل المنشور الزجاجي الذي يحلل الضوء الأبيض إلى ألوان الطيف، يحلل الموجة الكهربائية إلى تردداتها النقية.'
+        keyTakeaway: 'تحليل فورييه هو مثل المنشور الزجاجي الذي يحلل الضوء الأبيض إلى ألوان الطيف، يحلل الموجة الكهربائية إلى تردداتها النقية.',
+        keyTakeawayEn: 'Fourier analysis functions like an optical prism for signals, refracting complex distorted waveforms into pure discrete harmonic spectral bars.'
       },
       {
         heading: '2. التوافقيات في شبكات الكهرباء وكيف ننظفها بمرشحات LC',
         headingEn: '2. Harmonics in Power Systems and LC Filter Cleanup',
         body: 'لماذا نهتم بالتوافقيات في الهندسة الكهربائية؟\nالسبب هو إلكترونيات القوى الحديثة: عواكس الألواح الشمسية، شواحن الهواتف، ومحركات التكييف الذكية (Inverter ACs) كلها تستخدم مفاتيح إلكترونية تولد تيارات مشوهة.\n\nتأثير التوافقيات الضار:\n1. تسخين المحولات: الترددات العالية (مثل 250Hz) تزيد فواقد التيارات الدوامية (Eddy Currents) في قلوب الحديد وتسخن المحولات.\n2. تشويه جهد الشبكة: معامل التشويه التوافقي الكلي (THD - Total Harmonic Distortion) يقيس نسبة الطاقة المشوهة إلى الطاقة النقية.\n\nكيف ننظف الإشارة؟\nالحل الهندسي هو تصميم مرشحات LC: نضع ملفاً على التوالي (يقاوم الترددات العالية X_L = 2πfL) ومكثفاً على التوازي مع الحمل (يسرب الترددات العالية إلى الأرضي X_C = 1/2πfC). فيمر تردد 50Hz النقي بسلام بينما تتلاشى التوافقيات المزعجة!',
+        bodyEn: 'Why do electrical engineers obsess over harmonics?\nBecause modern power electronics (solar PV inverters, variable-frequency drives, switching power supplies) chop currents at high frequencies, injecting severe harmonic pollution into the grid.\n\nHazardous consequences of harmonics:\n1. Transformer Overheating: High-frequency currents (150Hz, 250Hz) drastically magnify eddy current core losses and skin effects, causing premature failure.\n2. Waveform Distortion: Total Harmonic Distortion (THD) quantifies the ratio of unwanted harmonic power to the fundamental.\n\nEngineering remedy: Low-Pass LC Filters. A series inductor blocks high-frequency harmonic currents (X_L = 2πfL), while a shunt capacitor diverts remaining high frequencies safely to ground (X_C = 1/2πfC), letting clean 50Hz power flow to loads without distortion.',
         equations: [
           '\\text{THD} = \\frac{\\sqrt{V_2^2 + V_3^2 + V_4^2 + \\dots}}{V_1} \\times 100\\%',
           'f_c = \\frac{1}{2\\pi \\sqrt{L \\cdot C}} \\quad [\\text{تردد القطع لمرشح التمرير المنخفض LC}]'
@@ -520,7 +561,8 @@ export const AC_SIGNALS_TOPICS: ResearchPaper[] = [
           caption: 'مخطط تصفية موجات إلكترونيات القوى عبر مرشح LC لتحقيق معايير جودة القدرة.',
           captionEn: 'Power electronics wave filtering via LC low-pass stage to achieve grid THD standards.'
         },
-        keyTakeaway: 'التوافقيات حرارة مهدرة وتشويه، ومرشحات LC هي الدواء الهندسي لتنظيف تيار الشبكة.'
+        keyTakeaway: 'التوافقيات حرارة مهدرة وتشويه، ومرشحات LC هي الدواء الهندسي لتنظيف تيار الشبكة.',
+        keyTakeawayEn: 'Harmonics dissipate as destructive heating losses and voltage distortion; low-pass LC filters restore clean grid sinusoidal stability.'
       }
     ],
     videoUrl: 'https://www.youtube.com/embed/spUNpyF58BY',
@@ -532,6 +574,12 @@ export const AC_SIGNALS_TOPICS: ResearchPaper[] = [
       '04:30 - رسم الدوائر الدوارة وجمع الترددات الجيبية',
       '09:15 - كيفية استخراج طيف الترددات والمطالات',
       '14:00 - تطبيقات معالجة الإشارات وهندسة الكهرباء'
+    ],
+    videoTopicsEn: [
+      '00:00 - Visualizing the decomposition of complex signals',
+      '04:30 - Rotating epicycles and synthesizing sinusoidal waves',
+      '09:15 - Extracting frequency spectra and harmonic amplitudes',
+      '14:00 - Power engineering applications and filter design'
     ],
     simulationExperiments: [
       {
